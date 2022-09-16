@@ -6,6 +6,6 @@ Team Information
 | Dominik Luszczynski | luszczy5 | 1007119994 | dominik.luszczynski@mail.utoronto.ca | 647-545-5132 | GOD#1453 |
 | Kevin Xiong | xiongkev | 1007254597 | k.xiong@mail.utoronto.ca | 416-560-8896 | this is agony#3530 |
 | Bryan Wan | wanbrya1 | 100706442 | bryanedward.wan@mail.utoronto.ca | 437-983-0393 | bew#5098 |
-| - | - | - | - | - | - |
+| Ryan Ramroop | ramroo15 | 1007271131 | ryan.ramroop@mail.utoronto.ca | 647-554-7250 | dopplerz#7777 |
 | - | - | - | - | - | - |
 | - | - | - | - | - | - |
