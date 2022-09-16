@@ -4,7 +4,7 @@ Team Information
 | - | - | - | - | - | - |
 | Aviraj Waraich | waraic11 | 1006152057 | a.waraich@mail.utoronto.ca | 905-921-7409 | ThaExec#6187 |
 | Dominik Luszczynski | luszczy5 | 1007119994 | dominik.luszczynski@mail.utoronto.ca | 647-545-5132 | GOD#1453 |
-| - | - | - | - | - | - |
+| Kevin Xiong | xiongkev | 1007254597 | k.xiong@mail.utoronto.ca | 416-560-8896 | this is agony#3530 |
 | - | - | - | - | - | - |
 | - | - | - | - | - | - |
 | - | - | - | - | - | - |
