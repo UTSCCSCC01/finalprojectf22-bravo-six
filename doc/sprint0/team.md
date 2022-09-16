@@ -9,3 +9,4 @@ Team Information
 | Ryan Ramroop | ramroo15 | 1007271131 | ryan.ramroop@mail.utoronto.ca | 647-554-7250 | dopplerz#7777 |
 | Jason Kenneth Setiawan | setiawa4 | 1005787383 | jasonk.setiawan@mail.utoronto.ca | 437-986-2169 | iNubz#7704 |
 | - | - | - | - | - | - |
+**Discord Chat/Server Invite :** [https://discord.gg/4KZHuuxN]
