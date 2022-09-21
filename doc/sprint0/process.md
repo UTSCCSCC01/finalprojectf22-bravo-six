@@ -2,7 +2,7 @@
 
 ## Team Organization
 
-• Initially, everyone mutually agreed to an initial meeting on discord, where everyone introduced themselves, stated what we are each individually trying to accomplish,   discused the tasks for sprint 0 and what type of application we are trying to build. 
+• Initially, everyone mutually agreed to an initial meeting on discord, where everyone introduced themselves, stated what we are each individually trying to  accomplish,   discused the tasks for sprint 0 and what type of application we are trying to build. 
 
 • Everyone proposed and presented 1-2 potential app ideas for the project and through a democratic veto/elimination system, we deduced the options to 4, in which we all   discussed, debated and finally mutually agreed on an intensive fitness app.
 
@@ -29,4 +29,6 @@
 > process.md: Ryan
 
 > README.md: Kevin 
+
+• For every deliverable assigned, each assignee created their own private Google Document and completed it, and upon finishing, they released it for each group member to revise and edit each deliverable. 
 
