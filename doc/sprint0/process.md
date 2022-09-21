@@ -32,3 +32,4 @@
 
 • For every deliverable assigned, each assignee created their own private Google Document and completed it, and upon finishing, they released it for each group member to revise and edit each deliverable. 
 
+## Decision Making
