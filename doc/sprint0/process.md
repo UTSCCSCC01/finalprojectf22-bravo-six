@@ -6,25 +6,25 @@
 • Everyone proposed and presented 1-2 potential app ideas for the project and through a democratic veto/elimination system, we deduced the options to 4, in which we all   discussed, debated and finally mutually agreed on an intensive fitness app.
 • Each group member each took the initiative to choose which deliverable they preferred doing and assigned it to themselves as follows:  
 
-> team.md | everyone 
+> team.md: everyone 
 
-> team-contract.pdf | Jason creates & everyone signs it
+> team-contract.pdf: Jason creates & everyone signs it
 
-> summary.md | Dominik
+> summary.md: Dominik
 
-> competition.md | Dominik 
+> competition.md: Dominik 
 
-> personas.md | Avi
+> personas.md: Avi
 
-> PB.md | Porom
+> PB.md: Porom
 
-> Setup | Porom
+> Setup: Porom
 
-> UX / UI | Everyone participates
+> UX / UI: Everyone participates
 
-> done.md | Bryan 
+> done.md: Bryan 
 
-> process.md | Ryan
+> process.md: Ryan
 
-> README.md | Kevin 
+> README.md: Kevin 
 
