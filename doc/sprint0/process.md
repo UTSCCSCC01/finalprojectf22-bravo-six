@@ -7,14 +7,24 @@
 • Each group member each took the initiative to choose which deliverable they preferred doing and assigned it to themselves as follows:  
 
 > team.md | everyone 
+
 > team-contract.pdf | Jason creates & everyone signs it
+
 > summary.md | Dominik
+
 > competition.md | Dominik 
+
 > personas.md | Avi
+
 > PB.md | Porom
+
 > Setup | Porom
+
 > UX / UI | Everyone participates
+
 > done.md | Bryan 
+
 > process.md | Ryan
+
 > README.md | Kevin 
 
