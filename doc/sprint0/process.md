@@ -30,4 +30,14 @@
 
 • All decisions and discussion took place in our group Discord via text/voice channels which usually occured during meetings/standups. For example, choosing our project topic was a controversial topic and to solve this we all advocated ideas and implemented an anonymous polling system to allow for fair decision making.   
 
-## UserStory Point Allocation 
+## UserStory Points
+
+
+## Meetings
+
+• Meetings took place frequently (2-3 Days) and the times schedules were discussed beforehand to optimize everyones schedules. 
+• Meetings generally took 30 mins - 1hr in which everyone would discuss the tasks they performed and how they plan to contribute in the future 
+
+
+
+
