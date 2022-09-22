@@ -27,3 +27,7 @@
 • For every deliverable assigned, each assignee created their own private Google Document and completed it, and upon finishing, they released it on Github as a .MD file for other peers to revise and edit each file. 
 
 ## Decision Making
+
+• All decisions and discussion took place in our group Discord via text/voice channels which usually occured during meetings/standups. For example, choosing our project topic was a controversial topic and to solve this we all advocated ideas and implemented an anonymous polling system to allow for fair decision making.   
+
+## UserStory Point Allocation 
