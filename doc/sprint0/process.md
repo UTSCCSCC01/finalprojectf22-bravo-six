@@ -12,28 +12,17 @@
 | Task | Team Member(s) |
 | ----------- | ----------- | 
 | team.md | everyone |
+| team-contract.pdf | Jason created; everyone signs it |
+| summary.md | Dominik | 
+| competition.md | Dominik | 
+| personas.md | Avi |
+| PB.md | Porom |
+| Setup | Porom |
+| UX/UI | Everyone participated |
+| done.md | Bryan |
+| process.md | Ryan |
+| README.md | Kevin |
 
-> team.md: everyone 
-
-> team-contract.pdf: Jason creates & everyone signs it
-
-> summary.md: Dominik
-
-> competition.md: Dominik 
-
-> personas.md: Avi
-
-> PB.md: Porom
-
-> Setup: Porom
-
-> UX / UI: Everyone participates
-
-> done.md: Bryan 
-
-> process.md: Ryan
-
-> README.md: Kevin 
 
 • For every deliverable assigned, each assignee created their own private Google Document and completed it, and upon finishing, they released it on Github as a .MD file for other peers to revise and edit each file. 
 
