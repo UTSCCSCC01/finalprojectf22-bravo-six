@@ -1,10 +1,10 @@
-# summary.md
+# Summary
 
 Company Name: GainzHub 
 
 Objective: Build a collaborative fitness platform that is free to use and combines, into a single application, all different aspects of fitness that are generally found on different apps, such as nutrition logs, workouts, progress, and fitness calculators. The application also implements a social feed to allow users to post their progress and to connect with other individuals on their fitness journey, as well as Personal Trainers (PTs) and fitness influencers to guide them. In addition, gym owners, PTs, and fitness influencers can advertise and sell their products (gym memberships and plans) on the website to avoid users having to pay a membership for features.
 
-Key Personas: 
+Key Personas/Users: 
 
 • Henry Preston, a 24-year-old person who lives a sedentary lifestyle due to his office job, has many insecurities about being overweight. Henry had never cared about what and how much he ate, and never exercised mainly due to his sedentary job. 
 
