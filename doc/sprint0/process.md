@@ -30,6 +30,6 @@
 
 > README.md: Kevin 
 
-• For every deliverable assigned, each assignee created their own private Google Document and completed it, and upon finishing, they released it for each group member to revise and edit each deliverable. 
+• For every deliverable assigned, each assignee created their own private Google Document and completed it, and upon finishing, they released it on Github as a .MD file for other peers to revise and edit each file. 
 
 ## Decision Making
