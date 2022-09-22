@@ -8,6 +8,11 @@
 
 • Each group member each took the initiative to choose which deliverable they preferred doing and assigned it to themselves as follows:  
 
+
+| Task | Team Member(s) |
+| ----------- | ----------- | 
+| team.md | everyone |
+
 > team.md: everyone 
 
 > team-contract.pdf: Jason creates & everyone signs it
