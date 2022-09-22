@@ -36,6 +36,7 @@
 ## Meetings
 
 • Meetings took place frequently (2-3 Days) and the times schedules were discussed beforehand to optimize everyones schedules. 
+
 • Meetings generally took 30 mins - 1hr in which everyone would discuss the tasks they performed and how they plan to contribute in the future 
 
 
