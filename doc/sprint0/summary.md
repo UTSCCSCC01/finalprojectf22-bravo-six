@@ -8,7 +8,7 @@ Key Personas:
 
 • Henry Preston, a 24-year-old person who lives a sedentary lifestyle due to his office job, has many insecurities about being overweight. Henry had never cared about what and how much he ate, and never exercised mainly due to his sedentary job. 
 
-• Mark Davies, a 22-year-old gym enthusiast who works in construction, has a very active lifestyle because he is on his feet all day while working. Mark has been into fitness all his life. He was on different sport teams in high school, and he continues to be apart of several adult sport leagues, in addition to having a gym membership at Pan Am to stay active. 
+• Mark White, a 22-year-old gym enthusiast who works in construction, has a very active lifestyle because he is on his feet all day while working. Mark has been into fitness all his life. He was on different sport teams in high school, and he continues to be apart of several adult sport leagues, in addition to having a gym membership at Pan Am to stay active. 
 
 • Julia Florence, a 30-year-old personal trainer, spent years working towards her degree in biomechanics, and combined with her love of the gym, is extremely knowledgeable about all exercises. However, Julia is quite introverted and shy, and rarely goes up and talks to people she does not know.
 
