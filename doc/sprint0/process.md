@@ -51,7 +51,7 @@ Similarily, we defined Low Priority as:
 
 > Stories that are extra / add more to the User Experience
 
-• Moving forward, we plan to use Jira and its extraordinary Agile software to implement the Planning Poker technique to adress specific points (Fibonacci Sequence) for each User Story to get a better understanding of the stories and its difficulties, so we can work accordingly in a responsible manner.  
+• Moving forward, we plan to use Jira and its extraordinary Agile software to implement the Planning Poker technique to address specific points (using Fibonacci Sequence point system) for each User Story to get a better understanding of the stories and its difficulties, so we can work accordingly in a responsible manner.  
 
 
 ## Meetings
