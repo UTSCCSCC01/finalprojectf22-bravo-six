@@ -37,7 +37,7 @@
 
 ## Meetings
 
-• Meetings took place frequently (2-3 Days) and the times schedules were discussed beforehand to optimize everyones schedules. 
+• Meetings took place frequently (2-3 Days) and the times schedules were discussed beforehand to optimize everyones schedules (usually between 6:00 PM & 9:00 PM.) 
 
 • Meetings generally took 30 mins - 1hr in which everyone would discuss the tasks they performed and how they plan to contribute in the future 
 
@@ -47,5 +47,5 @@
 
 • We will also prioritize communication by utilizing the Discord chat more frequently to ensure everyone is working at a comfortable pace and to manage everyones progress. We will also consider holding meetings more frequently for the same reasons
 
-
+• Finally, we will start being more punctual and organized so that we are able to meet strict deadlines for upcoming sprints, so that there are minimal conflicts between us and the completion of the project. 
 
