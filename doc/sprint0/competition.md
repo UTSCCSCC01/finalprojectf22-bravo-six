@@ -69,7 +69,7 @@ Key Differences and Solutions:
     
 
 
-## References
+## Reference
 
 Hall, A. (2022, September 9). Best fitness apps of 2022. Forbes. Retrieved September 22, 2022,  from https://www.forbes.com/health/body/best-fitness-apps/ 
 
