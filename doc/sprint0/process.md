@@ -32,7 +32,23 @@
 
 ## User Story Points
 
-• 
+• For many, selecting priority for User Stories and overall tasks for a project is difficult and can take a lot of time to estimate. 
+
+• For us, upon the creation of User Stories, we created a rough outline of the tasks/stories that have high and low priority, since it will give us a better idea of how much work would go into implementing these features and the amount of members working on them.
+
+Although it was subjective, we defined High Priority as:
+
+> stories that would allow us to demo a functional app
+> stories that contribute to core functionality / features that put us above compeititors
+> stories that require a lot of work (Backend/Frontend intensive)
+
+
+Similarily, we defined Low Priority as:
+  
+> stories that do not require a lot of work (Backend/Frontend simple implementations)
+> stories that are extra / add more to the User Experience
+
+• Moving forward, we plan to use Jira and its extraordinary Agile software to implement the Planning Poker technique to adress specific points (Fibonacci Sequence) for each User Story to get a better understanding of the stories and its difficulties, so we can work accordingly in a responsible manner.  
 
 
 ## Meetings
