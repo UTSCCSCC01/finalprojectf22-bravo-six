@@ -30,7 +30,9 @@
 
 • All decisions and discussion took place in our group Discord via text/voice channels which usually occured during meetings/standups. For example, choosing our project topic was a controversial topic and to solve this we all advocated ideas and implemented an anonymous polling system to allow for fair decision making.   
 
-## UserStory Points
+## User Story Points
+
+• 
 
 
 ## Meetings
@@ -39,6 +41,11 @@
 
 • Meetings generally took 30 mins - 1hr in which everyone would discuss the tasks they performed and how they plan to contribute in the future 
 
+## Next Phase
+
+• Going into our next phase (Sprint 1), we will definitely consider being more collaborative to help each other since a lot of the technologies and languages we are utilizing are unfamiliar to some, therefore it is important that we work together to ensure better work flow. 
+
+• We will also prioritize communication by utilizing the Discord chat more frequently to ensure everyone is working at a comfortable pace and to manage everyones progress. We will also consider holding meetings more frequently for the same reasons
 
 
 
