@@ -64,7 +64,7 @@ Similarily, we defined Low Priority as:
 
 • Going into our next phase (Sprint 1), we will definitely consider being more collaborative to help each other since a lot of the technologies and languages we are utilizing are unfamiliar to some, therefore it is important that we work together to ensure better work flow. 
 
-• We will also prioritize communication by utilizing the Discord chat more frequently to ensure everyone is working at a comfortable pace and to manage everyones progress. We will also consider holding meetings more frequently for the same reasons
+• We will also prioritize communication by utilizing the Discord chat more frequently to ensure everyone is working at a comfortable pace and to manage everyones progress. We will also consider holding meetings more frequently for similar reasons.
 
 • Finally, we will start being more punctual and organized so that we are able to meet strict deadlines for upcoming sprints, so that there are minimal conflicts between us and the completion of the project. 
 
