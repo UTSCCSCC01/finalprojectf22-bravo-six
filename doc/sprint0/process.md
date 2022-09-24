@@ -11,7 +11,7 @@
 
 | Task | Team Member(s) |
 | ----------- | ----------- | 
-| team.md | everyone |
+| team.md | Everyone |
 | team-contract.pdf | Jason created; everyone signs it |
 | summary.md | Dominik | 
 | competition.md | Dominik | 
