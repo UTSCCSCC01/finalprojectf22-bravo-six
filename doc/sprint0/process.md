@@ -1,4 +1,4 @@
-# process.md
+# Sprint 0 Process
 
 ## Team Organization
 
@@ -25,6 +25,15 @@
 
 
 • For every deliverable assigned, each assignee created their own private Google Document and completed it, and upon finishing, they released it on Github as a .MD file for other peers to revise and edit each file. 
+
+## Tools
+
+| Tool | Description |
+| ----------- | ----------- | 
+| Discord | Free to use online chatting software used to communicate with teammates and utilized for scrum meetings |
+| Github / Git | Used as the version control system for the project (commits / sprints) |
+| Jira | Will be used for coordinating the work and planning sprints that is required for the project (Agile) |
+| Figma | Used for creating prototypes and frontend mock designs for the UX/UI of our app |
 
 ## Decision Making
 
