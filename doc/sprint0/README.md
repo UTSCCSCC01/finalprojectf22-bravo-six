@@ -1,18 +1,32 @@
-Hello friend! 
-Thank you for your interest in Gainzhub! Gainzhub is a new social media platform designed to aid and motivate anyone who’s passionate about fitness 
-or ready to begin their fitness journey. Gainzhub blends both fitness advice and instruction, with connection with friends so you and 
-your connections can motivate one another to be the healthiest you possible. 
+# finalproject22-bravo-six
+Gainzhub is a social media platform designed to aid and motivate anyone who’s passionate about fitness or ready to begin their fitness journey. 
 
-Installation requirements: 
+## Motivation
+
+Gainzhub blends both fitness advice and instruction, with connection to friends so you and your connections can motivate one another to be the healthiest you possible. 
+In addition, you will no longer need multiple apps to track calories, meal plans, workout plans, and recording your workouts. Gainzhub will allow you to 
+keep track of personal gains and socialize with others who are also setting personal goals for themselves.
+## Installation Requirements
+### Database
+We will be using MongoDB. Install [Here](https://www.mongodb.com/docs/manual/administration/install-community/).
+
+### Build and run procedure 
 Requires installation of Node js libraries and a modern browser. 
-
-Build and run procedure: 
 Download and build all files from the main repository. 
 As of 09/22/22 Gainzhub is only able to be run through your local host. 
 
-How to Contribute:
-The Gainzhub project utilizes Git flow to manage our Git branches. Please forward all issues to Github’s integrated issues board. 
-Any features added should notify the development team via a pull request.
+### Contribution
+Gainzhub utilizes Git flow to promote agile development and frequent deployment. \
 Our branches are named accordingly:
-Main - working repository
-Develop - repository for testing
+* Main - Working Repository
+  * Develop - Repository for Testing
+    * Feature1
+    * Feature2
+    
+### Github Issues
+Most issues will be discussed in discord and Github’s integrated issues board. 
+
+### Pull Request
+
+Development team should be notifies if any features are added via a pull request.
+
