@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Login from './screens/Login';
 import {useFonts} from 'expo-font'
 import AppStack from './navigator/AppStack'
+import Register from './screens/Register';
 
 export default function App() {
   let [fontsLoaded] = useFonts({

@@ -4,26 +4,43 @@ import {Colors} from '../components/colors'
 
 const {maroon, black} = Colors;
 
-const Login = ({navigation}) =>{
+const Register = ({navigation}) =>{
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
+    const [name, setName] = useState(","); //of the form: firstname,lastname
+
+    const handleName = (nameType, newName) =>{
+        let commaIdx = name.indexOf(',');
+        switch(nameType){
+            case 'firstName': //Set before the comma
+                setName(newName + name.slice(commaIdx, name.length));
+                break;
+            case 'lastName': //Set after the comma
+                setName(name.slice(0, commaIdx+1) + newName);
+                break;
+            default: //Do nothing
+                break;
+        }
+    }
+
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
             <View style={{flexDirection:'row', justifyContent:'center', paddingBottom: 30}}>
                 <View style = {{paddingRight: 50}}>
-                    <TouchableOpacity style={{borderBottomWidth: 1, borderBottomColor: 'black'}}>
+                    <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
                         <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                             Login
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <View>
-                    <TouchableOpacity onPress={()=> navigation.navigate('Register')} style={{paddingLeft: 50}} >
+                <View style={{paddingLeft: 50}}>
+                    <TouchableOpacity style={{borderBottomWidth: 1, borderBottomColor: 'black'}}>
                         <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                             Register
                         </Text>
                     </TouchableOpacity> 
                 </View>
+
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 50, fontWeight:"800",color:maroon}}>
@@ -32,12 +49,29 @@ const Login = ({navigation}) =>{
             </View>
             <View style={{paddingBottom: 34}}>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 24, fontWeight:"500",color:black, width: 244}}>
-                    Sign back in. {"\n"}
-                    We've missed you.
+                    Get started with your fitness career.
                 </Text>
             </View>
             <View style={{justifyContent:'center', alignItems:'center'}}>
-                <View style={styles.inputView}>
+                <View style={{flexDirection: "row"}}>
+                    <View style={[styles.inputView, {width: 165, margin:10}]}>
+                        <TextInput
+                        style={styles.inputText}
+                        placeholder="First Name"
+                        placeholderTextColor="#BDBDBD"
+                        onChangeText={(firstName) => handleName('firstName',firstName)}
+                        />
+                    </View>
+                    <View style={[styles.inputView, {width: 165, margin:10}]}>
+                        <TextInput
+                        style={styles.inputText}
+                        placeholder="Last Name"
+                        placeholderTextColor="#BDBDBD"
+                        onChangeText={(lastName) => handleName('lastName', lastName)}
+                        />
+                    </View>
+                </View>
+                <View style={[styles.inputView, {width: 350}]}>
                     <TextInput
                     style={styles.inputText}
                     placeholder="Email"
@@ -45,7 +79,7 @@ const Login = ({navigation}) =>{
                     onChangeText={(email) => setEmail(email)}
                     />
                 </View>
-                <View style={styles.inputView}>
+                <View style={[styles.inputView, {width: 350}]}>
                     <TextInput
                     style={styles.inputText}
                     placeholder="Password"
@@ -57,7 +91,7 @@ const Login = ({navigation}) =>{
                 <View style={{paddingBottom:15}}>
                     <TouchableOpacity style={[styles.TouchableOpacity]}>
                         <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
-                            Log In
+                            Sign Up
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -76,7 +110,6 @@ const styles = StyleSheet.create({
         padding: 30,
     },
     inputView:{
-        width: 350,
         height: 45,
 
         backgroundColor: "#F6F6F6",
@@ -106,4 +139,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Login;
+export default Register;
