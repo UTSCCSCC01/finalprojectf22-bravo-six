@@ -7,6 +7,7 @@ const AUTH_URI = "http://localhost:5000/auth/";
 export const postUser = async(userData) => {
     try{
         const data = await axios.post(AUTH_URI, userData);
+        console.log(data);
         return data;
     } catch(err){
         return err.response;

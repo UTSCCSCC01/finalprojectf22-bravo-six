@@ -61,7 +61,6 @@ const loginUser = asyncHandler(async(req, res) => {
 const registerUser = asyncHandler(async(req, res)=>{
     const errors = validationResult(req); //What were the validation results from the checks?
     const {firstName, lastName ,email, password} = req.body;
-    
     //Check if errors is not empty
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()[0].msg}); //Return

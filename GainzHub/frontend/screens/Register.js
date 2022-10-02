@@ -72,13 +72,20 @@ const Register = ({navigation}) =>{
             email,
             password
         }
-
+        console.log(userData)
         try{
             const data = await postUser(userData);
+            console.log(data);
             if(data.status != 200){
-                let toast = Toast.show(data.data.errors, {
+                Toast.show(data.data.errors, {
                     duration: Toast.durations.SHORT,
                 });
+            }
+            else{
+                Toast.show("Sucessfully Registered!", {
+                    duration: Toast.durations.SHORT,
+                });
+                navigation.navigate("Login");
             }
         } catch(e){
             console.log(e);
