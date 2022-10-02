@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
 import {Colors} from '../components/colors'
+import Toast from 'react-native-root-toast';
 import axios from 'axios';
 import { postUser } from '../requests/userRequests';
 import ErrorMSG from '../components/ErrorMsg';
@@ -10,7 +11,8 @@ const Register = ({navigation}) =>{
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
     const [name, setName] = useState(","); //of the form: firstname,lastname
-    const [errors,setErorrs] = useState([]);
+    const [formErrors, setFormErrors] = useState({"firstName": "", "lastName": "", 
+                                                    "email": "", "password": ""});
 
     const handleName = (nameType, newName) =>{
         let commaIdx = name.indexOf(',');
@@ -26,38 +28,63 @@ const Register = ({navigation}) =>{
         }
     }
 
-    const handleClick = useCallback(async() => {
-        const userData = {
-            firstName: name.split(',')[0],
-            lastName: name.split(',')[1],
-            email: email,
-            password: password
+    const handleClick = async() => {
+        //Check if the fields have been filled out
+        let currFormErrors = {"firstName": "", "lastName": "", 
+        "email": "", "password": ""};
+        let firstName = name.split(',')[0];
+        let lastName = name.split(',')[1];
+        
+        if(email.length == 0){
+            currFormErrors['email'] = 'Please enter an email';
         }
+        
+        if(firstName.length == 0){
+            currFormErrors['firstName'] = 'Please enter a first name';
+        }
+
+        if(lastName.length == 0){
+            currFormErrors['lastName'] = 'Please enter a last name';
+        }
+
+        if(password.length < 8){
+            currFormErrors['password'] = 'Password must be atleast 8 characters';
+        }
+        
+        setFormErrors(currFormErrors);
+
+        //Find the smallest string in the form errors (should be "" (emptry string))
+        const checkAllEmpty = Object.entries(currFormErrors).reduce((a,b) => a[1].length > b[1].length ? a : b)[1];
+        
+        //Check if its empty (if not it means there are errors) 
+        if(checkAllEmpty.length != 0){
+            const allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
+            allErrorMessages = allErrorMessages.trim();
+            console.log(allErrorMessages);
+            let toast = Toast.show(allErrorMessages, {
+                duration: Toast.durations.SHORT,
+            });
+            return;
+        }
+
+        const userData = {
+            firstName,
+            lastName,
+            email,
+            password
+        }
+
         try{
             const data = await postUser(userData);
-            if(data.status === 400){
-                // One or more fields inputted are invalid. Store in state to show user.
-                setErorrs(data.data.errors);
-
-            } else{
-                // Store JWT on LocalStorage?
+            if(data.status != 200){
+                let toast = Toast.show(data.data.errors, {
+                    duration: Toast.durations.LONG,
+                });
             }
         } catch(e){
             console.log(e);
         }
-    }, [errors]);
-
-
-    const errorHandler = (param) => {
-        const index = errors.findIndex(err => err.param === param);
-        if(index !== -1){
-            return errors[index].msg;
-        } else {
-            return "";
-        }
-    }
-
-    console.log(errors);
+    };
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
             <View style={{flexDirection:'row', justifyContent:'center', paddingBottom: 30}}>
@@ -89,35 +116,32 @@ const Register = ({navigation}) =>{
             </View>
             <View style={{justifyContent:'center', alignItems:'center'}}>
                 <View style={{flexDirection: "row"}}>
-                    <View style={[styles.inputView, {width: 165, margin:10}]}>
+                    <View style={[styles.inputView, {width: 165, margin:10}, formErrors['firstName'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                         <TextInput
                         style={styles.inputText}
                         placeholder="First Name"
                         placeholderTextColor="#BDBDBD"
                         onChangeText={(firstName) => handleName('firstName',firstName)}
                         />
-                        <ErrorMSG message = {errorHandler("firstName")}/>
                     </View>
-                    <View style={[styles.inputView, {width: 165, margin:10}]}>
+                    <View style={[styles.inputView, {width: 165, margin:10}, formErrors['lastName'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                         <TextInput
                         style={styles.inputText}
                         placeholder="Last Name"
                         placeholderTextColor="#BDBDBD"
                         onChangeText={(lastName) => handleName('lastName', lastName)}
                         />
-                        <ErrorMSG message = {errorHandler("lastName")}/>
                     </View>
                 </View>
-                <View style={[styles.inputView, {width: 350}]}>
+                <View style={[styles.inputView, {width: 350}, formErrors['email'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                     <TextInput
-                    style={styles.inputText}
+                    style={[styles.inputText]}
                     placeholder="Email"
                     placeholderTextColor="#BDBDBD"
                     onChangeText={(email) => setEmail(email)}
                     />
-                    <ErrorMSG message = {errorHandler("email")}/>
                 </View>
-                <View style={[styles.inputView, {width: 350}]}>
+                <View style={[styles.inputView, {width: 350}, formErrors['password'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                     <TextInput
                     style={styles.inputText}
                     placeholder="Password"
@@ -125,7 +149,6 @@ const Register = ({navigation}) =>{
                     secureTextEntry={true}
                     onChangeText={(password) => setPassword(password)}
                     />
-                    <ErrorMSG message = {errorHandler("password")}/>
                 </View>
                 <View style={{paddingBottom:15}}>
                     <TouchableOpacity onPress={handleClick} style={[styles.TouchableOpacity]}>
@@ -155,7 +178,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         marginBottom: 20,
-        marginTop: 20,
     },
     inputText:{
         height: 50,

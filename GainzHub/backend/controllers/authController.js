@@ -25,7 +25,7 @@ const loginUser = asyncHandler(async(req, res) => {
 
     //Check if there are errors
     if(!errors.isEmpty()){
-        return res.status(400).json({errors:errors.array()});
+        return res.status(400).json({errors:errors.array()[0].msg});
     }
     
     const {email, password} = req.body;
@@ -35,7 +35,7 @@ const loginUser = asyncHandler(async(req, res) => {
 
         //First check if the user exists
         if(!userExists){
-            return res.status(400).json({errors: [{message: 'Invalid Credentials'}]});
+            return res.status(400).json({errors: 'Invalid Credentials'});
         }
 
         //Compare password in database to password input
@@ -49,14 +49,12 @@ const loginUser = asyncHandler(async(req, res) => {
             });
         }
         else{
-            return res.status(400).json({msg: "Invalid Credentials"});
+            return res.status(400).json({errors: 'Invalid Credentials'});
         }
 
     }catch(error){
-        return res.status(500).send(error.message);
+        return res.status(500).json({errors: error.message});
     }
-    
-
 });
 
 
@@ -66,14 +64,14 @@ const registerUser = asyncHandler(async(req, res)=>{
     
     //Check if errors is not empty
     if(!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()}); //Return
+        return res.status(400).json({errors: errors.array()[0].msg}); //Return
     }
     
     try{
         //Check if the user already exists
         const userExists = await User.findOne({email}); //Find one user with {email: email} (shorthand {email})
         if(userExists){
-            return res.status(400).send("User already exists");
+            return res.status(400).json({errors:"User already exists"});
         }
         
         //hash password
@@ -98,7 +96,7 @@ const registerUser = asyncHandler(async(req, res)=>{
             })
         }
     }catch(error){
-        return res.status(500).send(error.message);
+        return res.status(500).json({errors: error.message});
     }
 });
 

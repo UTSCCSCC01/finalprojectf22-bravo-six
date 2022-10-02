@@ -11,7 +11,6 @@ const ErrorMSG = (props) => {
 const styles = StyleSheet.create({
     msgText:{
         color: '#FF0000',
-        marginTop: 3,
     },
     container:{
         flex: 1,
