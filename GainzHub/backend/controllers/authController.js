@@ -9,8 +9,8 @@ const checkLogin= [
     check('password', 'Please include a password with 8 or more characters').isLength({ min: 8})] //Check if 'password' field had 8
 
 const checkRegister = [
-    check('firstName', 'Please include a first name').not().isEmpty(), //Check if the 'user' field exists or if its empty
-    check('lastName', 'Please include a last name').not().isEmpty(), //Check if the 'user' field exists or if its empty
+    check('firstName', 'Please include a firstname').not().isEmpty(), //Check if the 'user' field exists or if its empty
+    check('lastName', 'Please include a lastname').not().isEmpty(), //Check if the 'user' field exists or if its empty
     check('email', 'Please include a valid email').isEmail(), //Check if the 'email' field is formatted like an email
     check('password', 'Please include a password with 8 or more characters').isLength({ min: 8})] //Check if 'password' field had 8
 
@@ -60,9 +60,9 @@ const loginUser = asyncHandler(async(req, res) => {
 });
 
 
-const registerUser = asyncHandler(async( req, res)=>{
+const registerUser = asyncHandler(async(req, res)=>{
     const errors = validationResult(req); //What were the validation results from the checks?
-    const {firstName, lastName,email, password} = req.body;
+    const {firstName, lastName ,email, password} = req.body;
     
     //Check if errors is not empty
     if(!errors.isEmpty()){

@@ -1,12 +1,14 @@
 import React, {useState} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
 import {Colors} from '../components/colors'
+import axios from 'axios';
 
 const {maroon, black} = Colors;
 
 const Login = ({navigation}) =>{
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
+
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
             <View style={{flexDirection:'row', justifyContent:'center', paddingBottom: 30}}>
@@ -73,17 +75,15 @@ const Login = ({navigation}) =>{
 
 const styles = StyleSheet.create({
     root:{
-        padding: 30,
+        padding: 40,
     },
     inputView:{
         width: 350,
         height: 45,
-
         backgroundColor: "#F6F6F6",
         borderColor: "#e8e8e8",
         borderWidth: 1,
         borderRadius: 8,
-
         marginBottom: 20,
     },
     inputText:{
