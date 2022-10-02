@@ -58,10 +58,9 @@ const Register = ({navigation}) =>{
         
         //Check if its empty (if not it means there are errors) 
         if(checkAllEmpty.length != 0){
-            const allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
+            let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
             allErrorMessages = allErrorMessages.trim();
-            console.log(allErrorMessages);
-            let toast = Toast.show(allErrorMessages, {
+            Toast.show(allErrorMessages, {
                 duration: Toast.durations.SHORT,
             });
             return;
@@ -78,7 +77,7 @@ const Register = ({navigation}) =>{
             const data = await postUser(userData);
             if(data.status != 200){
                 let toast = Toast.show(data.data.errors, {
-                    duration: Toast.durations.LONG,
+                    duration: Toast.durations.SHORT,
                 });
             }
         } catch(e){
