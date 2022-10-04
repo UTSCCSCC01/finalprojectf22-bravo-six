@@ -12,7 +12,8 @@ const checkRegister = [
     check('firstName', 'Please include a firstname').not().isEmpty(), //Check if the 'user' field exists or if its empty
     check('lastName', 'Please include a lastname').not().isEmpty(), //Check if the 'user' field exists or if its empty
     check('email', 'Please include a valid email').isEmail(), //Check if the 'email' field is formatted like an email
-    check('password', 'Please include a password with 8 or more characters').isLength({ min: 8})] //Check if 'password' field had 8
+    check('password', 'Please include a password with 8 or more characters').isLength({ min: 8}), //Check if 'password' field had 8
+    check('username', 'Please include a valid username').not().isEmpty()] //Check if the 'username' field is not empty
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -45,6 +46,7 @@ const loginUser = asyncHandler(async(req, res) => {
                 firstName: userExists.firstName,
                 lastName: userExists.lastName,
                 email: userExists.email,
+                username: userExists.username,
                 token: generateToken(userExists._id)
             });
         }
@@ -60,7 +62,7 @@ const loginUser = asyncHandler(async(req, res) => {
 
 const registerUser = asyncHandler(async(req, res)=>{
     const errors = validationResult(req); //What were the validation results from the checks?
-    const {firstName, lastName ,email, password} = req.body;
+    const {firstName, lastName ,email, password, username} = req.body;
     //Check if errors is not empty
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()[0].msg}); //Return
@@ -73,6 +75,11 @@ const registerUser = asyncHandler(async(req, res)=>{
             return res.status(400).json({errors:"User already exists"});
         }
         
+        const usernameExists = await User.findOne({username});
+        if(usernameExists){
+            return res.status(400).json({errors:"Username already exists"})
+        }
+        
         //hash password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -82,6 +89,7 @@ const registerUser = asyncHandler(async(req, res)=>{
             firstName,
             lastName,
             email,
+            username,
             password: hashedPassword,
         });
         
@@ -92,6 +100,7 @@ const registerUser = asyncHandler(async(req, res)=>{
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
+                username: user.username,
             })
         }
     }catch(error){

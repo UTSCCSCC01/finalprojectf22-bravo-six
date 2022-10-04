@@ -11,8 +11,9 @@ const Register = ({navigation}) =>{
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
     const [name, setName] = useState(","); //of the form: firstname,lastname
+    const [username, setUsername] = useState("");
     const [formErrors, setFormErrors] = useState({"firstName": "", "lastName": "", 
-                                                    "email": "", "password": ""});
+                                                    "email": "", "password": "", "username": ""});
 
     const handleName = (nameType, newName) =>{
         let commaIdx = name.indexOf(',');
@@ -31,7 +32,7 @@ const Register = ({navigation}) =>{
     const handleClick = async() => {
         //Check if the fields have been filled out
         let currFormErrors = {"firstName": "", "lastName": "", 
-        "email": "", "password": ""};
+        "email": "", "password": "", "username": ""};
         let firstName = name.split(',')[0];
         let lastName = name.split(',')[1];
         
@@ -49,6 +50,10 @@ const Register = ({navigation}) =>{
 
         if(password.length < 8){
             currFormErrors['password'] = 'Password must be atleast 8 characters';
+        }
+
+        if(username.length == 0){
+            currFormErrors['username'] = 'Please enter a username';
         }
         
         setFormErrors(currFormErrors);
@@ -70,7 +75,8 @@ const Register = ({navigation}) =>{
             firstName,
             lastName,
             email,
-            password
+            password,
+            username
         }
 
         try{
@@ -145,6 +151,14 @@ const Register = ({navigation}) =>{
                     placeholder="Email"
                     placeholderTextColor="#BDBDBD"
                     onChangeText={(email) => setEmail(email)}
+                    />
+                </View>
+                <View style={[styles.inputView, {width: 350}, formErrors['username'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
+                    <TextInput
+                    style={[styles.inputText]}
+                    placeholder="Username"
+                    placeholderTextColor="#BDBDBD"
+                    onChangeText={(username) => setUsername(username)}
                     />
                 </View>
                 <View style={[styles.inputView, {width: 350}, formErrors['password'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
