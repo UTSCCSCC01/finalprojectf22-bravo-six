@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
 import {Colors} from '../components/colors'
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
 import { loginUser } from '../requests/userRequests';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {maroon, black} = Colors;
 
@@ -11,6 +12,18 @@ const Login = ({navigation}) =>{
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
     const[formErrors, setFormErrors] = useState({email: "", password: ""});
+
+    //Logic to check if the user is already logged in
+    useEffect(() => {
+        const checkLoggedIn = async()=>{
+            const storedData = await AsyncStorage.getItem("userData");
+            if(storedData && storedData.length != 0){
+                navigation.navigate("TempLanding");
+            }
+        }
+        checkLoggedIn();
+    }, [])
+    
 
     const handleLogin = async() =>{
         //Validate fields first
@@ -52,6 +65,8 @@ const Login = ({navigation}) =>{
                 Toast.show("Sucessfully logged in!", {
                     duration: Toast.durations.SHORT,
                 })
+                await AsyncStorage.setItem('userData', data.data.token)
+
                 navigation.navigate("TempLanding");
             }
         }catch(e){
