@@ -2,12 +2,65 @@ import React, {useState} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
 import {Colors} from '../components/colors'
 import axios from 'axios';
+import Toast from 'react-native-root-toast';
+import { loginUser } from '../requests/userRequests';
 
 const {maroon, black} = Colors;
 
 const Login = ({navigation}) =>{
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
+    const[formErrors, setFormErrors] = useState({email: "", password: ""});
+
+    const handleLogin = async() =>{
+        //Validate fields first
+        let currFormErrors = {email: "", password: ""}
+        if (email.length == 0){
+            currFormErrors.email = "Please include an email";
+        }
+        
+        if(password.length == 0){
+            currFormErrors.password = "Please include a password";
+        }
+
+
+        setFormErrors(currFormErrors);
+        if(currFormErrors.email.length != 0 || currFormErrors.password.length != 0){
+            let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
+            Toast.show(allErrorMessages, {
+                duration: Toast.durations.SHORT,
+            });
+            return;
+        }
+
+        //Attempt login
+        const loginData = {
+            email,
+            password
+        }
+
+        try{
+            const data = await loginUser(loginData);
+            console.log(data);
+            if(data && data.status != 200){
+                Toast.show(data.data.errors,{
+                    duration: Toast.durations.SHORT,
+                });
+            }
+            else{
+                //Store the response in secure local storage
+                Toast.show("Sucessfully logged in!", {
+                    duration: Toast.durations.SHORT,
+                })
+                navigation.navigate("TempLanding");
+            }
+        }catch(e){
+            console.log(e);
+        }
+
+        //Display login results
+
+    }
 
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
@@ -39,7 +92,7 @@ const Login = ({navigation}) =>{
                 </Text>
             </View>
             <View style={{justifyContent:'center', alignItems:'center'}}>
-                <View style={styles.inputView}>
+                <View style={[styles.inputView, formErrors.email.length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                     <TextInput
                     style={styles.inputText}
                     placeholder="Email"
@@ -47,7 +100,7 @@ const Login = ({navigation}) =>{
                     onChangeText={(email) => setEmail(email)}
                     />
                 </View>
-                <View style={styles.inputView}>
+                <View style={[styles.inputView, formErrors.password.length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                     <TextInput
                     style={styles.inputText}
                     placeholder="Password"
@@ -57,7 +110,7 @@ const Login = ({navigation}) =>{
                     />
                 </View>
                 <View style={{paddingBottom:15}}>
-                    <TouchableOpacity style={[styles.TouchableOpacity]}>
+                    <TouchableOpacity style={[styles.TouchableOpacity]} onPress={handleLogin}>
                         <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                             Log In
                         </Text>

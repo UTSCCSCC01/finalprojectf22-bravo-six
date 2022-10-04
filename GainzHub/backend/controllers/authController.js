@@ -22,7 +22,7 @@ const generateToken = (id) => {
 
 const loginUser = asyncHandler(async(req, res) => {
     const errors = validationResult(req);
-
+    
     //Check if there are errors
     if(!errors.isEmpty()){
         return res.status(400).json({errors:errors.array()[0].msg});

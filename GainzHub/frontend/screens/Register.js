@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react
 import {Colors} from '../components/colors'
 import Toast from 'react-native-root-toast';
 import axios from 'axios';
-import { postUser } from '../requests/userRequests';
+import { registerUser } from '../requests/userRequests';
 import ErrorMSG from '../components/ErrorMsg';
 const {maroon, black} = Colors;
 
@@ -72,11 +72,11 @@ const Register = ({navigation}) =>{
             email,
             password
         }
-        console.log(userData)
+
         try{
-            const data = await postUser(userData);
+            const data = await registerUser(userData);
             console.log(data);
-            if(data.status != 200){
+            if(data && data.status != 200){
                 Toast.show(data.data.errors, {
                     duration: Toast.durations.SHORT,
                 });
