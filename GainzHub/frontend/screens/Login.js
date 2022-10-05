@@ -18,7 +18,7 @@ const Login = ({navigation}) =>{
         const checkLoggedIn = async()=>{
             const storedData = await AsyncStorage.getItem("userData");
             if(storedData && storedData.length != 0){
-                navigation.navigate("TempLanding");
+                navigation.navigate("CalorieCalculator");
             }
         }
         checkLoggedIn();
@@ -67,7 +67,7 @@ const Login = ({navigation}) =>{
                 })
                 await AsyncStorage.setItem('userData', data.data.token)
 
-                navigation.navigate("TempLanding");
+                navigation.navigate("Nutrition");
             }
         }catch(e){
             console.log(e);
@@ -91,6 +91,13 @@ const Login = ({navigation}) =>{
                     <TouchableOpacity onPress={()=> navigation.navigate('Register')} style={{paddingLeft: 50}} >
                         <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                             Register
+                        </Text>
+                    </TouchableOpacity> 
+                </View>
+                <View>
+                    <TouchableOpacity onPress={()=> navigation.navigate('Nutrition')} style={{paddingLeft: 50}} >
+                        <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
+                            Nutrition
                         </Text>
                     </TouchableOpacity> 
                 </View>
