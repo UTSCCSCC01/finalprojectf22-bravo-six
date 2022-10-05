@@ -1,13 +1,19 @@
-import React, {useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
 import {Colors} from '../components/colors'
-
+import Toast from 'react-native-root-toast';
+import axios from 'axios';
+import { registerUser } from '../requests/userRequests';
+import ErrorMSG from '../components/ErrorMsg';
 const {maroon, black} = Colors;
 
 const Register = ({navigation}) =>{
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
     const [name, setName] = useState(","); //of the form: firstname,lastname
+    const [username, setUsername] = useState("");
+    const [formErrors, setFormErrors] = useState({"firstName": "", "lastName": "", 
+                                                    "email": "", "password": "", "username": ""});
 
     const handleName = (nameType, newName) =>{
         let commaIdx = name.indexOf(',');
@@ -23,6 +29,74 @@ const Register = ({navigation}) =>{
         }
     }
 
+    const handleClick = async() => {
+        //Check if the fields have been filled out
+        let currFormErrors = {"firstName": "", "lastName": "", 
+        "email": "", "password": "", "username": ""};
+        let firstName = name.split(',')[0];
+        let lastName = name.split(',')[1];
+        
+        if(email.length == 0){
+            currFormErrors['email'] = 'Please enter an email';
+        }
+        
+        if(firstName.length == 0){
+            currFormErrors['firstName'] = 'Please enter a first name';
+        }
+
+        if(lastName.length == 0){
+            currFormErrors['lastName'] = 'Please enter a last name';
+        }
+
+        if(password.length < 8){
+            currFormErrors['password'] = 'Password must be atleast 8 characters';
+        }
+
+        if(username.length == 0){
+            currFormErrors['username'] = 'Please enter a username';
+        }
+        
+        setFormErrors(currFormErrors);
+
+        //Find the smallest string in the form errors (should be "" (emptry string))
+        const checkAllEmpty = Object.entries(currFormErrors).reduce((a,b) => a[1].length > b[1].length ? a : b)[1];
+        
+        //Check if its empty (if not it means there are errors) 
+        if(checkAllEmpty.length != 0){
+            let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
+            allErrorMessages = allErrorMessages.trim();
+            Toast.show(allErrorMessages, {
+                duration: Toast.durations.SHORT,
+            });
+            return;
+        }
+
+        const userData = {
+            firstName,
+            lastName,
+            email,
+            password,
+            username
+        }
+
+        try{
+            const data = await registerUser(userData);
+            console.log(data);
+            if(data && data.status != 200){
+                Toast.show(data.data.errors, {
+                    duration: Toast.durations.SHORT,
+                });
+            }
+            else{
+                Toast.show("Sucessfully Registered!", {
+                    duration: Toast.durations.SHORT,
+                });
+                navigation.navigate("Login");
+            }
+        } catch(e){
+            console.log(e);
+        }
+    };
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
             <View style={{flexDirection:'row', justifyContent:'center', paddingBottom: 30}}>
@@ -54,7 +128,7 @@ const Register = ({navigation}) =>{
             </View>
             <View style={{justifyContent:'center', alignItems:'center'}}>
                 <View style={{flexDirection: "row"}}>
-                    <View style={[styles.inputView, {width: 165, margin:10}]}>
+                    <View style={[styles.inputView, {width: 165, margin:10}, formErrors['firstName'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                         <TextInput
                         style={styles.inputText}
                         placeholder="First Name"
@@ -62,7 +136,7 @@ const Register = ({navigation}) =>{
                         onChangeText={(firstName) => handleName('firstName',firstName)}
                         />
                     </View>
-                    <View style={[styles.inputView, {width: 165, margin:10}]}>
+                    <View style={[styles.inputView, {width: 165, margin:10}, formErrors['lastName'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                         <TextInput
                         style={styles.inputText}
                         placeholder="Last Name"
@@ -71,15 +145,23 @@ const Register = ({navigation}) =>{
                         />
                     </View>
                 </View>
-                <View style={[styles.inputView, {width: 350}]}>
+                <View style={[styles.inputView, {width: 350}, formErrors['email'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                     <TextInput
-                    style={styles.inputText}
+                    style={[styles.inputText]}
                     placeholder="Email"
                     placeholderTextColor="#BDBDBD"
                     onChangeText={(email) => setEmail(email)}
                     />
                 </View>
-                <View style={[styles.inputView, {width: 350}]}>
+                <View style={[styles.inputView, {width: 350}, formErrors['username'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
+                    <TextInput
+                    style={[styles.inputText]}
+                    placeholder="Username"
+                    placeholderTextColor="#BDBDBD"
+                    onChangeText={(username) => setUsername(username)}
+                    />
+                </View>
+                <View style={[styles.inputView, {width: 350}, formErrors['password'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                     <TextInput
                     style={styles.inputText}
                     placeholder="Password"
@@ -89,9 +171,9 @@ const Register = ({navigation}) =>{
                     />
                 </View>
                 <View style={{paddingBottom:15}}>
-                    <TouchableOpacity style={[styles.TouchableOpacity]}>
+                    <TouchableOpacity onPress={handleClick} style={[styles.TouchableOpacity]}>
                         <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
-                            Sign Up
+                            Register
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -111,12 +193,10 @@ const styles = StyleSheet.create({
     },
     inputView:{
         height: 45,
-
         backgroundColor: "#F6F6F6",
         borderColor: "#e8e8e8",
         borderWidth: 1,
         borderRadius: 8,
-
         marginBottom: 20,
     },
     inputText:{
@@ -132,6 +212,7 @@ const styles = StyleSheet.create({
         height:51,
         width:343,
         borderRadius: 30,
+        marginTop: 30,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',

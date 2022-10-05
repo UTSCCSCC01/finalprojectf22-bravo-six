@@ -9,10 +9,11 @@ const checkLogin= [
     check('password', 'Please include a password with 8 or more characters').isLength({ min: 8})] //Check if 'password' field had 8
 
 const checkRegister = [
-    check('firstName', 'Please include a first name').not().isEmpty(), //Check if the 'user' field exists or if its empty
-    check('lastName', 'Please include a last name').not().isEmpty(), //Check if the 'user' field exists or if its empty
+    check('firstName', 'Please include a firstname').not().isEmpty(), //Check if the 'user' field exists or if its empty
+    check('lastName', 'Please include a lastname').not().isEmpty(), //Check if the 'user' field exists or if its empty
     check('email', 'Please include a valid email').isEmail(), //Check if the 'email' field is formatted like an email
-    check('password', 'Please include a password with 8 or more characters').isLength({ min: 8})] //Check if 'password' field had 8
+    check('password', 'Please include a password with 8 or more characters').isLength({ min: 8}), //Check if 'password' field had 8
+    check('username', 'Please include a valid username').not().isEmpty()] //Check if the 'username' field is not empty
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -22,10 +23,10 @@ const generateToken = (id) => {
 
 const loginUser = asyncHandler(async(req, res) => {
     const errors = validationResult(req);
-
+    
     //Check if there are errors
     if(!errors.isEmpty()){
-        return res.status(400).json({errors:errors.array()});
+        return res.status(400).json({errors:errors.array()[0].msg});
     }
     
     const {email, password} = req.body;
@@ -35,7 +36,7 @@ const loginUser = asyncHandler(async(req, res) => {
 
         //First check if the user exists
         if(!userExists){
-            return res.status(400).json({errors: [{message: 'Invalid Credentials'}]});
+            return res.status(400).json({errors: 'Invalid Credentials'});
         }
 
         //Compare password in database to password input
@@ -45,35 +46,38 @@ const loginUser = asyncHandler(async(req, res) => {
                 firstName: userExists.firstName,
                 lastName: userExists.lastName,
                 email: userExists.email,
+                username: userExists.username,
                 token: generateToken(userExists._id)
             });
         }
         else{
-            return res.status(400).json({msg: "Invalid Credentials"});
+            return res.status(400).json({errors: 'Invalid Credentials'});
         }
 
     }catch(error){
-        return res.status(500).send(error.message);
+        return res.status(500).json({errors: error.message});
     }
-    
-
 });
 
 
-const registerUser = asyncHandler(async( req, res)=>{
+const registerUser = asyncHandler(async(req, res)=>{
     const errors = validationResult(req); //What were the validation results from the checks?
-    const {firstName, lastName,email, password} = req.body;
-    
+    const {firstName, lastName ,email, password, username} = req.body;
     //Check if errors is not empty
     if(!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()}); //Return
+        return res.status(400).json({errors: errors.array()[0].msg}); //Return
     }
     
     try{
         //Check if the user already exists
         const userExists = await User.findOne({email}); //Find one user with {email: email} (shorthand {email})
         if(userExists){
-            return res.status(400).send("User already exists");
+            return res.status(400).json({errors:"User already exists"});
+        }
+        
+        const usernameExists = await User.findOne({username});
+        if(usernameExists){
+            return res.status(400).json({errors:"Username already exists"})
         }
         
         //hash password
@@ -85,6 +89,7 @@ const registerUser = asyncHandler(async( req, res)=>{
             firstName,
             lastName,
             email,
+            username,
             password: hashedPassword,
         });
         
@@ -95,10 +100,11 @@ const registerUser = asyncHandler(async( req, res)=>{
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
+                username: user.username,
             })
         }
     }catch(error){
-        return res.status(500).send(error.message);
+        return res.status(500).json({errors: error.message});
     }
 });
 

@@ -4,6 +4,8 @@ import Login from './screens/Login';
 import {useFonts} from 'expo-font'
 import AppStack from './navigator/AppStack'
 import Register from './screens/Register';
+import { RootSiblingParent } from 'react-native-root-siblings';
+import React from 'react';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -17,7 +19,9 @@ export default function App() {
   }
 
   return (
-    <AppStack/>
+    <RootSiblingParent>
+      <AppStack/>
+    </RootSiblingParent>
   );
 }
 
