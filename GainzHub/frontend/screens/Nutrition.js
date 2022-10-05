@@ -6,6 +6,9 @@ import axios from 'axios';
 import Toast from 'react-native-root-toast';
 import { loginUser } from '../requests/userRequests';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Progress from 'react-native-progress';
+//import CircularProgress from 'react-native-circular-progress-indicator';
+//import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
 //import * as Progress from 'react-native-progress'
 
@@ -32,6 +35,7 @@ const Nutrition = ({navigation}) =>{
 
     var caloriesAte = 1600; //would be the number of calories you ate today
     var calorieGoal = 2600; // would be the calorie goal for that user
+    var progress = caloriesAte/calorieGoal
 
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
@@ -67,10 +71,8 @@ const Nutrition = ({navigation}) =>{
                 </TouchableOpacity> 
             </View>
 
-            <View style={{textAlign:'center'}}>
-                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:maroon, marginBottom:20}}>
-                        Calories: {caloriesAte} / {calorieGoal}
-                </Text>
+            <View>
+                <Progress.Circle size={120} showsText={true} thickness={5}  progress={20}/>
             </View>
 
             <View>

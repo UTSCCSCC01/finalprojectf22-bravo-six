@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, Platform} from 'react-native'
 import {Colors} from '../components/colors'
 //import { Select } from "native-base";
@@ -8,6 +8,11 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {maroon, black} = Colors;
+
+const getUser = async() =>{
+    const value = await AsyncStorage.getItem('userData');
+    return value;
+}
 
 
 const CalorieCalculator = ({navigation}) => {
@@ -42,6 +47,18 @@ const CalorieCalculator = ({navigation}) => {
         { value: 'maintain', label: 'Maintain' },
         { value: 'cut', label: 'Cut' }
     ]);
+    const [userData, setUserData] = useState("No user data");
+    const [loggedIn, setLoggedIn] = useState(true);
+    useEffect(() =>{
+        const getStoredUser = async() =>{
+            const userDataStored = await AsyncStorage.getItem('userData');
+            if(!userDataStored || userDataStored.length == 0){
+                setLoggedIn(false);
+            }
+            setUserData(userDataStored);
+        }
+        getStoredUser();
+    }, [])
     
 
     const calculateCalories = () => {
@@ -76,6 +93,7 @@ const CalorieCalculator = ({navigation}) => {
         } else {
             setCalories((activity_level * (10 * weight + 6.25 * height - 5 * age + 5)) + dietNum);
         }
+
 
     }
 
