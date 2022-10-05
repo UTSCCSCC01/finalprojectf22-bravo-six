@@ -31,8 +31,7 @@ export const registerUser = async(userData) => {
 
 export const loginUser = async(userData)=>{
     try{
-        url = REQ_URI()
-        const data = await axios.post(add(REQ_URI()+'login'), userData);
+        const data = await axios.post(REQ_URI()+'login', userData);
         return data;
     }catch(err){
         return err.response;
