@@ -35,7 +35,6 @@ const Nutrition = ({navigation}) =>{
 
     var caloriesAte = 1600; //would be the number of calories you ate today
     var calorieGoal = 2600; // would be the calorie goal for that user
-    var progress = caloriesAte/calorieGoal
 
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
@@ -71,8 +70,9 @@ const Nutrition = ({navigation}) =>{
                 </TouchableOpacity> 
             </View>
 
-            <View>
-                <Progress.Circle size={120} showsText={true} thickness={5}  progress={20}/>
+            <View style={[{marginBottom:20}, {textAlign: 'center'}, {alignItems: 'center'}]}>
+                <Progress.Bar progress={caloriesAte/calorieGoal} width={300} height={10}/>
+                <Text style={{paddingLeft: -30}}> Progress {caloriesAte} / {calorieGoal} </Text>
             </View>
 
             <View>
