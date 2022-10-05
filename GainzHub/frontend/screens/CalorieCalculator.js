@@ -5,7 +5,7 @@ import {Colors} from '../components/colors'
 import RNPickerSelect from "react-native-picker-select";
 //import { Model, Query } from 'mongoose';
 import DropDownPicker from 'react-native-dropdown-picker';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {maroon, black} = Colors;
 
@@ -92,7 +92,7 @@ const CalorieCalculator = ({navigation}) => {
                 </View>
             </View>
             <View>
-                <Text style={{fontFamily: "Inter-Medium", fontSize: 40, fontWeight:"800",color:maroon, justifyContent:'center'}}>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, justifyContent:'center'}}>
                     Calculate Your Calories!
                 </Text>
             </View>
@@ -172,7 +172,7 @@ const CalorieCalculator = ({navigation}) => {
                         </TouchableOpacity>
                     </View>
                     <View>
-                    <Text style={{fontFamily: "Inter-Medium", fontSize: 40, fontWeight:"800",color:maroon, justifyContent:'center'}}>
+                    <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, justifyContent:'center'}}>
                         {"Calories Needed: "}{Number(calories).toFixed(2)}
                     </Text>
                 </View>
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
         height:51,
         width:343,
         borderRadius: 30,
-        marginTop: 30,
+        marginTop: 20,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
