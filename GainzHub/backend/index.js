@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express();
 const connectDB = require('./config/db');
 require("dotenv").config();
+const MuscleGroupModel = require('./models/Workouts');
 
 //connect database
 connectDB();
@@ -10,11 +11,15 @@ connectDB();
 app.use(express.json());
 app.use(cors());
 
-//tell express to use these routes
+app.post("/CreateWorkouts",async (req,res)=>{
+    const WorkLog = req.body;
+    const NewWorkLog = new MuscleGroupModel(WorkLog);
+    await NewWorkLog.save();
 
-app.use("/auth", require('./routes/authRoutes'));
+    res.json(WorkLog);
+});
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(3001,() => {
+    console.log("Sever Runs");
+});
 
