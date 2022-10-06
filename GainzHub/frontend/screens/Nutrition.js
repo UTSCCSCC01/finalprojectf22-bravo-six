@@ -75,6 +75,7 @@ const Nutrition = ({navigation}) =>{
             </View>
 
             <View style={[{marginBottom:20}, {textAlign: 'center'}, {alignItems: 'center'}]}>
+                <Text style={{fontFamily: 'Inter-Medium', fontWeight: '600', fontSize: 20}}> Calorie Goal: {calorieGoal}</Text>
                 <Progress.Bar progress={caloriesAte/calorieGoal} width={300} height={10}/>
                 <Text style={{paddingLeft: -30}}> Progress {caloriesAte} / {calorieGoal} </Text>
             </View>
