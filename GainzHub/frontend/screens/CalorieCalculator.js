@@ -6,6 +6,7 @@ import {Colors} from '../components/colors'
 //import { Model, Query } from 'mongoose';
 import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-root-toast';
 
 const {maroon, black} = Colors;
 
@@ -47,6 +48,9 @@ const CalorieCalculator = ({navigation}) => {
         { value: 'maintain', label: 'Maintain' },
         { value: 'cut', label: 'Cut' }
     ]);
+    const [formErrors, setFormErrors] = useState({"height": "", "weight": "", 
+    "age": "", "diet": "", "sex": "", "activity": ""});
+
     const [userData, setUserData] = useState("No user data");
     const [loggedIn, setLoggedIn] = useState(true);
     /*
@@ -66,6 +70,8 @@ const CalorieCalculator = ({navigation}) => {
     };
 
     const calculateCalories = () => {
+        let currFormErrors = {"height": "", "weight": "", 
+        "age": "", "diet": "", "sex": "", "activity": ""};
         var dietNum = 0;
         var activity_level = 0;
         if (activity === "bmr"){
@@ -90,6 +96,44 @@ const CalorieCalculator = ({navigation}) => {
             dietNum = 0;
         } else{
             dietNum = -300;
+        }
+
+        if(height.length == 0){
+            currFormErrors['height'] = 'Please enter an height';
+        }
+        
+        if(weight.length == 0){
+            currFormErrors['weight'] = 'Please enter a weight';
+        }
+
+        if(age.length == 0){
+            currFormErrors['age'] = 'Please enter an age';
+        }
+
+        if(activity.length == 0){
+            currFormErrors['activity'] = 'Please select an activity level';
+        }
+
+        if(diet.length == 0){
+            currFormErrors['diet'] = 'Please select a diet goal';
+        }
+
+        if(sex.length == 0){
+            currFormErrors['sex'] = 'Please select a sex';
+        }
+
+        setFormErrors(currFormErrors);
+
+        const checkAllEmpty = Object.entries(currFormErrors).reduce((a,b) => a[1].length > b[1].length ? a : b)[1];
+        
+        //Check if its empty (if not it means there are errors) 
+        if(checkAllEmpty.length != 0){
+            let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
+            allErrorMessages = allErrorMessages.trim();
+            Toast.show(allErrorMessages, {
+                duration: Toast.durations.SHORT,
+            });
+            return;
         }
 
         if(sex === "female"){
@@ -118,8 +162,8 @@ const CalorieCalculator = ({navigation}) => {
                     Calculate Your Calories!
                 </Text>
             </View>
-                <View style={{alignContent:'center'}}>
-                    <View style={[styles.inputView, {width: 350}]}>
+                <View style={[{alignContent:'center'}]}>
+                    <View style={[styles.inputView, {width: 350}, formErrors['height'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                         <TextInput
                         style={[styles.inputText]}
                         placeholder="Height (cm)"
@@ -127,7 +171,7 @@ const CalorieCalculator = ({navigation}) => {
                         onChangeText={(height) => setHeight(height)}
                         />
                     </View>
-                    <View style={[styles.inputView, {width: 350}]}>
+                    <View style={[styles.inputView, {width: 350}, formErrors['weight'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                         <TextInput
                         style={[styles.inputText]}
                         placeholder="Weight (kg)"
@@ -135,7 +179,7 @@ const CalorieCalculator = ({navigation}) => {
                         onChangeText={(weight) => setWeight(weight)}
                         />
                     </View>
-                    <View style={[styles.inputView, {width: 350}]}>
+                    <View style={[styles.inputView, {width: 350}, formErrors['age'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                         <TextInput
                         style={styles.inputText}
                         placeholder="Age"
@@ -143,7 +187,7 @@ const CalorieCalculator = ({navigation}) => {
                         onChangeText={(age) => setAge(age)}
                         />
                     </View>
-                    <View style={[styles.container, {width:350}]}>
+                    <View style={[styles.inputView, {width: 350}, formErrors['activity'].length == 0 ? {} : {borderColor: "red"}]}>
                         <DropDownPicker
                             zIndex={3000}
                             zIndexInverse={1000}
@@ -157,7 +201,7 @@ const CalorieCalculator = ({navigation}) => {
                             placeholder="Activity Level"
                         />
                     </View>
-                    <View style={[styles.container, {width:350}]}>
+                    <View style={[styles.inputView, {width: 350}, formErrors['sex'].length == 0 ? {} : {borderColor: "red"}]}>
                         <DropDownPicker
                             zIndex={3000}
                             zIndexInverse={1000}
@@ -171,7 +215,7 @@ const CalorieCalculator = ({navigation}) => {
                             placeholder="Sex"
                         />
                     </View>
-                    <View style={[styles.container, {width:350}]}>
+                    <View style={[styles.inputView, {width: 350}, formErrors['diet'].length == 0 ? {} : {borderColor: "red"}]}>
                         <DropDownPicker
                             zIndex={3000}
                             zIndexInverse={1000}
@@ -225,7 +269,9 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         fontSize: 14,
         alignContent: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        borderRadius: 8,
+        width: 350
 
     },
     TouchableOpacity:{
