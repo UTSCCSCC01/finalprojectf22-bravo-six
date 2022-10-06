@@ -21,31 +21,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
-    nutrition:{
-        calorieGoal:{
-            type: Number
-        },
-        caloriesAte: {
-            type: Number
-        },
-        carbs: {
-            type: Number
-        },
-        protein: {
-            type: Number
-        },
-        fat: {
-            type: Number
-        },
-        soduim: {
-            type: Number
-        },
-        vitaminA: {
-            type: Number
-        },
-        vitaminD: {
-            type: Number
-        }
+    calorieGoal: {
+        type: Number
+    },
+    caloriesAte:{
+        type:Number
     }
 });
 

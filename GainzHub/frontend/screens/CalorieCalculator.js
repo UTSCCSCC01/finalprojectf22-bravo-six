@@ -49,17 +49,22 @@ const CalorieCalculator = ({navigation}) => {
     ]);
     const [userData, setUserData] = useState("No user data");
     const [loggedIn, setLoggedIn] = useState(true);
+    /*
     useEffect(() =>{
         const getStoredUser = async() =>{
             const userDataStored = await AsyncStorage.getItem('userData');
-            if(!userDataStored || userDataStored.length == 0){
-                setLoggedIn(false);
-            }
-            setUserData(userDataStored);
+            setUserData(JSON.parse(userDataStored));
         }
         getStoredUser();
-    }, [])
-    
+    }, []);
+    */
+
+    //console.log(userData);
+
+    const updateCalorieGoal = () => {
+        
+
+    };
 
     const calculateCalories = () => {
         var dietNum = 0;
@@ -93,7 +98,7 @@ const CalorieCalculator = ({navigation}) => {
         } else {
             setCalories((activity_level * (10 * weight + 6.25 * height - 5 * age + 5)) + dietNum);
         }
-
+        updateCalorieGoal();
 
     }
 

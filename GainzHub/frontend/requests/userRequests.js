@@ -37,3 +37,12 @@ export const loginUser = async(userData)=>{
         return err.response;
     }
 }
+
+export const updateUserField = async(userData)=>{
+    try{
+        axios.put(REQ_URI()+'updateUserField', userData);
+    }catch(err){
+        return err.response;
+    }
+}
+

@@ -22,6 +22,8 @@ const getUser = async() =>{
 const Nutrition = ({navigation}) =>{
     const [userData, setUserData] = useState("No user data");
     const [loggedIn, setLoggedIn] = useState(true);
+    const [caloriesAte, setCaloriesAte] = useState(0);
+    const [calorieGoal, setCalorieGoal] = useState(2000);
     useEffect(() =>{
         const getStoredUser = async() =>{
             const userDataStored = await AsyncStorage.getItem('userData');
@@ -33,8 +35,10 @@ const Nutrition = ({navigation}) =>{
         getStoredUser();
     }, [])
 
-    var caloriesAte = 1600; //would be the number of calories you ate today
-    var calorieGoal = 2600; // would be the calorie goal for that user
+    const getStoredGoal = () => {
+        setCalorieGoal(AsyncStorage.getItem('calorieGoal'));
+        setCaloriesAte(AsyncStorage.getItem('caloriesAte'));
+    }
 
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>

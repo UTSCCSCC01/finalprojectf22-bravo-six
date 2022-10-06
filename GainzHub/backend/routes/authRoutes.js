@@ -5,5 +5,6 @@ const {registerUser, checkRegister, checkLogin, loginUser} = require('../control
 
 router.post("/", checkRegister, registerUser);
 router.post("/login", checkLogin, loginUser);
+router.put("/updateUserField");
 
 module.exports = (router);
