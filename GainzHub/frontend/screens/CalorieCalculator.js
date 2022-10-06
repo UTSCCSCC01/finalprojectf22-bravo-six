@@ -103,7 +103,7 @@ const CalorieCalculator = ({navigation}) => {
 
   
     return(
-        <View style={[styles.root, {paddingLeft: 20}]}>
+        <View style={[styles.root, {paddingLeft: 15}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 30}}>
                 <View style = {{paddingRight: 50}}>
                     <TouchableOpacity onPress={()=> navigation.navigate('Nutrition')}>
@@ -114,11 +114,11 @@ const CalorieCalculator = ({navigation}) => {
                 </View>
             </View>
             <View>
-                <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, justifyContent:'center', marginBottom:10}}>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center', marginBottom:10}}>
                     Calculate Your Calories!
                 </Text>
             </View>
-                <View style={{justifyContent:'center', alignItems:'center'}}>
+                <View style={{alignContent:'center'}}>
                     <View style={[styles.inputView, {width: 350}]}>
                         <TextInput
                         style={[styles.inputText]}
@@ -194,7 +194,7 @@ const CalorieCalculator = ({navigation}) => {
                         </TouchableOpacity>
                     </View>
                     <View>
-                    <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, justifyContent:'center'}}>
+                    <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center'}}>
                         {"Calories Needed: "}{Number(calories).toFixed(2)}
                     </Text>
                 </View>
