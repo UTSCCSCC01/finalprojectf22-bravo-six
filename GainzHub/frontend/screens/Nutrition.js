@@ -145,9 +145,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     TouchableOpacity:{
-        height:40,
-        width:125,
-        borderRadius: 15,
+        height:51,
+        width:343,
+        borderRadius: 30,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
