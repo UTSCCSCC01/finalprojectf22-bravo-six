@@ -110,13 +110,12 @@ const Nutrition = ({navigation}) =>{
                 </Text>
             </View>
 
-            <View>
-            <Button
-                onPress={() => navigation.navigate('Nutrition_AddFood')}
-                style={{textAlign:'center'}}
-                title="Add Food"
-                color = 'maroon'
-            />
+            <View style={{paddingBottom:15, alignItems:'center'}}>
+                <TouchableOpacity onPress={()=> navigation.navigate('Nutriton_AddFood')} style={[styles.TouchableOpacity]}>
+                    <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
+                        Add Food
+                    </Text>
+                </TouchableOpacity>
             </View>
             
 
@@ -146,9 +145,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     TouchableOpacity:{
-        height:51,
-        width:343,
-        borderRadius: 30,
+        height:40,
+        width:125,
+        borderRadius: 15,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
