@@ -20,6 +20,12 @@ const UserSchema = new mongoose.Schema({
     username:{
         type: String,
         unique: true
+    },
+    calorieGoal:{
+        type: Number
+    },
+    caloriesAte:{
+        type: Number
     }
 });
 
