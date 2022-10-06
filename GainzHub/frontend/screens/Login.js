@@ -12,6 +12,7 @@ const Login = ({navigation}) =>{
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
     const[formErrors, setFormErrors] = useState({email: "", password: ""});
+    const[show, setShow] = useState(true);
 
     //Logic to check if the user is already logged in
     useEffect(() => {
@@ -72,9 +73,7 @@ const Login = ({navigation}) =>{
         }catch(e){
             console.log(e);
         }
-
         //Display login results
-
     }
 
     return(
@@ -115,15 +114,25 @@ const Login = ({navigation}) =>{
                     onChangeText={(email) => setEmail(email)}
                     />
                 </View>
-                <View style={[styles.inputView, formErrors.password.length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
-                    <TextInput
-                    style={styles.inputText}
-                    placeholder="Password"
-                    placeholderTextColor="#BDBDBD"
-                    secureTextEntry={true}
-                    onChangeText={(password) => setPassword(password)}
-                    />
+                <View style = {styles.inputView}>
+                    <View style={{flex:1}}>
+                        <TextInput
+                        style={styles.inputText}
+                        placeholder="Password"
+                        placeholderTextColor="#BDBDBD"
+                        secureTextEntry={show}
+                        onChangeText={(password) => setPassword(password)}
+                        />
+                    </View>
+                    <View style = {{flex:1, padding: 4}}>
+                        <TouchableOpacity onPress={() => {setShow(!show)}} style={{height: 5, Width: 5, alignItems: "end", justifyContent: "center"}}>
+                            <Text style={{fontFamily: "Inter-Medium", fontSize: 12, fontWeight:"800",color:maroon}}> 
+                                Show
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
+                
                 <View style={{paddingBottom:15}}>
                     <TouchableOpacity style={[styles.TouchableOpacity]} onPress={handleLogin}>
                         <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
@@ -170,6 +179,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    showPassword:{
+        flexDirection:'row',
+        width: window.width,
+        margin: 20,
+        padding:4,
+        alignItems:'center',
+        justifyContent:'center',
+        borderWidth:1,
+        borderColor:'#e8e8e8',
+        borderRadius:8,
+        backgroundColor:'#F6F6F6',
     },
 });
 
