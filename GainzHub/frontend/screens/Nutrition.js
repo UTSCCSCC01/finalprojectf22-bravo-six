@@ -35,6 +35,7 @@ const Nutrition = ({navigation}) =>{
         getStoredUser();
     }, [])
 
+    // Here we get the calorieGoal and caloriesAte from the database so that we can show the progress to the user
     const getStoredGoal = () => {
         setCalorieGoal(AsyncStorage.getItem('calorieGoal'));
         setCaloriesAte(AsyncStorage.getItem('caloriesAte'));

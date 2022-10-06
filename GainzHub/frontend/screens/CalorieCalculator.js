@@ -62,8 +62,7 @@ const CalorieCalculator = ({navigation}) => {
     //console.log(userData);
 
     const updateCalorieGoal = () => {
-        
-
+        // add calories to user.calorieGoal in the database
     };
 
     const calculateCalories = () => {
