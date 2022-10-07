@@ -7,13 +7,14 @@ import Toast from 'react-native-root-toast';
 import { loginUser } from '../requests/userRequests';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
-import Tab from '../components/NavBar'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
 //import * as Progress from 'react-native-progress'
 
 const {maroon, black} = Colors;
+
 const Tab = createBottomTabNavigator();
 
 const getUser = async() =>{
