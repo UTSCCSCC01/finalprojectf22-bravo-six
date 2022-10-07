@@ -65,7 +65,7 @@ const Nutrition = ({navigation}) =>{
                 setCalorieGoal(response.data);
             });
         }
-        getStoredGoal();
+        //getStoredGoal();
     }, [])
 
     
