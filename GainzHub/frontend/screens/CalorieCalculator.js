@@ -152,7 +152,7 @@ const CalorieCalculator = ({navigation}) => {
             setCalories(Number(((activity_level * (10 * weight + 6.25 * height - 5 * age + 5)) + dietNum)).toFixed(0));
             //updateCalorieGoal();
         }
-        updateCalorieGoal();
+        
 
     }
 
@@ -241,17 +241,22 @@ const CalorieCalculator = ({navigation}) => {
                             disableBorderRadius={true}
                         />
                     </View>
+                    <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center'}}>
+                        {"Calories Needed: "}{calories}
+                    </Text>
                     <View style={{paddingBottom:15}}>
                         <TouchableOpacity onPress={calculateCalories} style={[styles.TouchableOpacity]}>
                             <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                                 Calculate
                             </Text>
                         </TouchableOpacity>
+                        <TouchableOpacity onPress={updateCalorieGoal} style={[styles.TouchableOpacity]}>
+                            <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
+                                Save
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                     <View>
-                    <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center'}}>
-                        {"Calories Needed: "}{calories}
-                    </Text>
                 </View>
             </View>
         </View>
