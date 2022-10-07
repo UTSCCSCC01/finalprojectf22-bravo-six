@@ -4,7 +4,7 @@ const asyncHandler = require('express-async-handler');
 const User = require("../models/User");
 
 const getCalorieGoal = async(req, res) =>{
-    const userId = req.params.header;
+    const userId = req.user;
 
     User.findOne({_id: userId},  (err, data)=>{
         if(err){

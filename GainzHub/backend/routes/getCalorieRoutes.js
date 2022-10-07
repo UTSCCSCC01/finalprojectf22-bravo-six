@@ -6,5 +6,4 @@ const { JWTAuth } = require('../middleware/JWTAuth');
 
 router.get("/getCalorieGoal", JWTAuth, getCalorieGoal);
 
-
 module.exports = (router);

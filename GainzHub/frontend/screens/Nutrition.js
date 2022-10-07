@@ -8,6 +8,7 @@ import { loginUser } from '../requests/userRequests';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useIsFocused } from '@react-navigation/native';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
@@ -28,6 +29,7 @@ const Nutrition = ({navigation}) =>{
     const [caloriesAte, setCaloriesAte] = useState(0);
     const [calorieGoal, setCalorieGoal] = useState('');
     const [fullUserData, setFullUserData] = useState({});
+    const isFocused = useIsFocused();
 
     useEffect(() =>{
         const getStoredUser = async() =>{
@@ -61,12 +63,12 @@ const Nutrition = ({navigation}) =>{
                 headers: {
                     'x-auth-token': token,
                 }
-            }).then((response) => {
-                setCalorieGoal(response.data);
-            });
+            })
+            console.log(response);
+            setCalorieGoal(response.data.calorieGoal);
         }
-        //getStoredGoal();
-    }, [])
+        getStoredGoal();
+    }, [isFocused])
 
     
 
