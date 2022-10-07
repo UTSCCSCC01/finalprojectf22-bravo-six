@@ -16,7 +16,7 @@ const getUser = async() =>{
 }
 
 
-const CalorieCalculator = ({navigation}) => {
+const CalorieCalculator = ({navigation: { goBack }}) => {
     const [sex, setSex] = useState("");
     const [diet, setDiet] = useState("");
     const [activity, setActivity] = useState("");
@@ -161,7 +161,7 @@ const CalorieCalculator = ({navigation}) => {
         <View style={[styles.root, {paddingLeft: 15}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 30}}>
                 <View style = {{paddingRight: 50}}>
-                    <TouchableOpacity onPress={()=> navigation.navigate('Nutrition')}>
+                    <TouchableOpacity onPress={()=> goBack()}>
                         <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                             Back
                         </Text>
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
 
     },
     TouchableOpacity:{
-        height:51,
+        height:25,
         width:343,
         borderRadius: 30,
         marginTop: 20,
