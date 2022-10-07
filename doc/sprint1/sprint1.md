@@ -34,3 +34,28 @@ We plan to finish the following stories
 
 ## BRAV-37
 - Design the UI for the workout plans page
+
+# Spikes/Blockers
+- Unfamiliarity with React-Native, and the MERN stack in general
+- Work capacity will fluxuate based off our personal schedules (ie. exam season, times of increased workload)
+
+# Team Capacity
+___
+| Member | Estimated hours of work per day |
+|---|---|
+| Porom Kamal | 4|
+| Ryan Ramroop | 4|
+| Kevin Xiong  | 4|
+| Dominik Luszczynski  | 4|
+| Bryan Wan | 4|
+| Aviraj Waraich  | 4|
+|Jason Kenneth Setiawan | 4|
+
+# Participants
+- Porom Kamal
+- Ryan Ramroop
+- Kevin Xiong 
+- Dominik Luszczynski 
+- Bryan Wan 
+- Aviraj Waraich 
+- Jason Kenneth Setiawan
