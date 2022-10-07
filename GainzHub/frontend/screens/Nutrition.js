@@ -26,7 +26,8 @@ const Nutrition = ({navigation}) =>{
     const [userData, setUserData] = useState("No user data");
     const [loggedIn, setLoggedIn] = useState(true);
     const [caloriesAte, setCaloriesAte] = useState(0);
-    const [calorieGoal, setCalorieGoal] = useState(2000);
+    const [calorieGoal, setCalorieGoal] = useState('');
+    const [fullUserData, setFullUserData] = useState({});
 
     useEffect(() =>{
         const getStoredUser = async() =>{
@@ -52,10 +53,22 @@ const Nutrition = ({navigation}) =>{
     }, [loggedIn]);
 
     // Here we get the calorieGoal and caloriesAte from the database so that we can show the progress to the user
-    const getStoredGoal = () => {
-        setCalorieGoal(AsyncStorage.getItem('calorieGoal'));
-        setCaloriesAte(AsyncStorage.getItem('caloriesAte'));
-    }
+    useEffect(() => {
+        const getStoredGoal = async() => {
+            const token = await AsyncStorage.getItem("userData");
+    
+            const response  = await axios.get('http://localhost:5000/getCals/getCalorieGoal', {
+                headers: {
+                    'x-auth-token': token,
+                }
+            }).then((response) => {
+                setCalorieGoal(response.data);
+            });
+        }
+        getStoredGoal();
+    }, [])
+
+    
 
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
