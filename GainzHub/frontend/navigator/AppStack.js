@@ -6,7 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import Login from '../screens/Login'
 import Register from '../screens/Register';
 import TempLanding from '../screens/TempLanding';
-import Landing from '../screens/Landing';
+import NavBar from '../components/NavBar';
 const Stack = createStackNavigator();
 
 const AppStack = ()=>{
@@ -19,7 +19,7 @@ const AppStack = ()=>{
                 <Stack.Screen name = "Login" component={Login}/>
                 <Stack.Screen name = "Register" component={Register}/>
                 <Stack.Screen name = "TempLanding" component={TempLanding}/>
-                <Stack.Screen name = "Landing" component={Landing}/>
+                <Stack.Screen name = "NavBar" component={NavBar}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
