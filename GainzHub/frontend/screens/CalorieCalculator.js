@@ -7,7 +7,6 @@ import {Colors} from '../components/colors'
 import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-root-toast';
-
 const {maroon, black} = Colors;
 
 const getUser = async() =>{
