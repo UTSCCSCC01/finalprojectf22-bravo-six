@@ -6,9 +6,17 @@ import { Colors } from './colors';
 
 export const ButtonSwitch = (props) => {
 
-    const ovalPos = useRef(new Animated.Value(0)).current;
     const navigation = useNavigation();
     const route = useRoute();
+
+    let ovalPos = null;
+    if(route.name == "Login"){
+        ovalPos = new Animated.Value(0);
+    }
+    else{
+        ovalPos = new Animated.Value(100);
+    }
+    
 
     const buttonHandler = (param) =>{
         if(param === 1){
@@ -27,7 +35,7 @@ export const ButtonSwitch = (props) => {
             easing: Easing.ease,
             useNativeDriver:false,
         }).start(() =>{
-            navigation.navigate(param);
+            navigation.push(param);
         })
     }
 

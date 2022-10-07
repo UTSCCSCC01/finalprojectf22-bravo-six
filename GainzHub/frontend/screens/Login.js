@@ -79,7 +79,7 @@ const Login = ({navigation}) =>{
     }
 
     return(
-        <View style={[styles.root, {paddingLeft: 20}]}>
+        <View style={[styles.root, {paddingLeft: 20, flex:1}]}>
             <ButtonSwitch first = "Login" second = "Register" navigation/>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 50, fontWeight:"800",color:maroon}}>
