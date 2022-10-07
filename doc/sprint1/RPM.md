@@ -19,6 +19,8 @@ Our goal for sprint one is to complete user authentication, and login features i
 - BRAV-33
 - BRAV-35
 - BRAV-43
+- BRAV-39
+- BRAV-37
 
 ### Sprint 2:
 Our goal for sprint 2 is to complete our nutrition and workout page functionality completely and begin UI mockups and designs for the progress tracking page.
@@ -34,7 +36,6 @@ Therefore the following tickets must be completed:
 - BRAV-6
 - BRAV-7
 - BRAV-8
-- BRAV-39
 - BRAV-9
 - BRAV-10
 - BRAV-11
