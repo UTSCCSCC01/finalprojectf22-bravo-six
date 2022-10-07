@@ -13,6 +13,7 @@ app.use(cors());
 //tell express to use these routes
 
 app.use("/auth", require('./routes/authRoutes'));
+app.use("/change", require("./routes/changeRoutes"));
 
 const PORT = process.env.PORT || 5000;
 

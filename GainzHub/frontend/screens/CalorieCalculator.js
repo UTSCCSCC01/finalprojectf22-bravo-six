@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import axios from 'axios';
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, Platform} from 'react-native'
 import {Colors} from '../components/colors'
 //import { Select } from "native-base";
@@ -52,20 +53,29 @@ const CalorieCalculator = ({navigation}) => {
 
     const [userData, setUserData] = useState("No user data");
     const [loggedIn, setLoggedIn] = useState(true);
-    /*
-    useEffect(() =>{
-        const getStoredUser = async() =>{
-            const userDataStored = await AsyncStorage.getItem('userData');
-            setUserData(JSON.parse(userDataStored));
-        }
-        getStoredUser();
-    }, []);
-    */
+   
 
-    //console.log(userData);
-
-    const updateCalorieGoal = () => {
+    const updateCalorieGoal = async() => {
         // add calories to user.calorieGoal in the database
+        const token = await AsyncStorage.getItem("userData");
+
+        const response = await axios.post('http://localhost:5000/change/changeCalorieGoal',
+                                        {newCalorieGoal: calories}, {
+            headers:{
+                "x-auth-token": token,
+            }
+        });
+
+        if(response.status == 200){
+            Toast.show("Success!", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+        else{
+            Toast.show("Could not update calorie goal", {
+                duration: Toast.durations.SHORT,
+            })
+        }
     };
 
     const calculateCalories = () => {
@@ -136,9 +146,9 @@ const CalorieCalculator = ({navigation}) => {
         }
 
         if(sex === "female"){
-            setCalories((activity_level * (10 * weight + 6.25 * height - 5 * age -161)) + dietNum);
+            setCalories(((activity_level * (10 * weight + 6.25 * height - 5 * age -161)) + dietNum).toFixed(2));
         } else {
-            setCalories((activity_level * (10 * weight + 6.25 * height - 5 * age + 5)) + dietNum);
+            setCalories(((activity_level * (10 * weight + 6.25 * height - 5 * age + 5)) + dietNum).toFixed(2));
         }
         updateCalorieGoal();
 
@@ -238,7 +248,7 @@ const CalorieCalculator = ({navigation}) => {
                     </View>
                     <View>
                     <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center'}}>
-                        {"Calories Needed: "}{Number(calories).toFixed(2)}
+                        {"Calories Needed: "}{calories}
                     </Text>
                 </View>
             </View>
