@@ -5,6 +5,7 @@ import Toast from 'react-native-root-toast';
 import axios from 'axios';
 import { registerUser } from '../requests/userRequests';
 import ErrorMSG from '../components/ErrorMsg';
+import ShowPasswordBtn from '../components/ShowPasswordBtn';
 const {maroon, black} = Colors;
 
 const Register = ({navigation}) =>{
@@ -163,7 +164,7 @@ const Register = ({navigation}) =>{
                     onChangeText={(username) => setUsername(username)}
                     />
                 </View>
-                <View style={[styles.inputView, {width: 350}, formErrors['password'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
+                <View style={[styles.inputView, {width: 350, flexDirection:"row"}, formErrors['password'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
                     <View style={{flex:1}}>
                         <TextInput
                         style={styles.inputText}
@@ -173,15 +174,7 @@ const Register = ({navigation}) =>{
                         onChangeText={(password) => setPassword(password)}
                         />
                     </View>
-
-                    <View style = {{flex:1, padding: 4}}>
-                        <TouchableOpacity onPress={() => {setShow(!show)}} style={{height: 5, Width: 5, alignItems: "end", justifyContent: "center"}}>
-                            <Text style={{fontFamily: "Inter-Medium", fontSize: 12, fontWeight:"800",color:maroon}}> 
-                                Show
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-
+                    <ShowPasswordBtn onPress={()=>{setShow(!show)}}/>
                 </View>
                 <View style={{paddingBottom:15}}>
                     <TouchableOpacity onPress={handleClick} style={[styles.TouchableOpacity]}>

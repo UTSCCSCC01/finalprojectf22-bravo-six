@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
 import {Colors} from '../components/colors'
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
 import { loginUser } from '../requests/userRequests';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ShowPasswordBtn from '../components/ShowPasswordBtn';
 
 const {maroon, black} = Colors;
 
@@ -25,7 +26,6 @@ const Login = ({navigation}) =>{
         checkLoggedIn();
     }, [])
     
-
     const handleLogin = async() =>{
         //Validate fields first
         let currFormErrors = {email: "", password: ""}
@@ -114,8 +114,8 @@ const Login = ({navigation}) =>{
                     onChangeText={(email) => setEmail(email)}
                     />
                 </View>
-                <View style = {styles.inputView}>
-                    <View style={{flex:1}}>
+                <View style = {[styles.inputView, {flexDirection:"row"}]}>
+                    <View style={{width:300, height:40}}>
                         <TextInput
                         style={styles.inputText}
                         placeholder="Password"
@@ -124,13 +124,7 @@ const Login = ({navigation}) =>{
                         onChangeText={(password) => setPassword(password)}
                         />
                     </View>
-                    <View style = {{flex:1, padding: 4}}>
-                        <TouchableOpacity onPress={() => {setShow(!show)}} style={{height: 5, Width: 5, alignItems: "end", justifyContent: "center"}}>
-                            <Text style={{fontFamily: "Inter-Medium", fontSize: 12, fontWeight:"800",color:maroon}}> 
-                                Show
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                    <ShowPasswordBtn onPress={() => {setShow(!show)}}/>
                 </View>
                 
                 <View style={{paddingBottom:15}}>
