@@ -22,10 +22,12 @@ const UserSchema = new mongoose.Schema({
         unique: true
     },
     calorieGoal:{
-        type: Number
+        type: Number,
+        default: 0
     },
     caloriesAte:{
-        type: Number
+        type: Number,
+        default: 0
     }
 });
 

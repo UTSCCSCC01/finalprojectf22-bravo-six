@@ -60,7 +60,7 @@ const CalorieCalculator = ({navigation}) => {
         const token = await AsyncStorage.getItem("userData");
 
         const response = await axios.post('http://localhost:5000/change/changeCalorieGoal',
-                                        {newCalorieGoal: calories}, {
+                                        {newCalorieGoal: Number(calories)}, {
             headers:{
                 "x-auth-token": token,
             }
@@ -146,9 +146,11 @@ const CalorieCalculator = ({navigation}) => {
         }
 
         if(sex === "female"){
-            setCalories(((activity_level * (10 * weight + 6.25 * height - 5 * age -161)) + dietNum).toFixed(2));
+            setCalories(Number(((activity_level * (10 * weight + 6.25 * height - 5 * age -161)) + dietNum)).toFixed(0));
+            //updateCalorieGoal();
         } else {
-            setCalories(((activity_level * (10 * weight + 6.25 * height - 5 * age + 5)) + dietNum).toFixed(2));
+            setCalories(Number(((activity_level * (10 * weight + 6.25 * height - 5 * age + 5)) + dietNum)).toFixed(0));
+            //updateCalorieGoal();
         }
         updateCalorieGoal();
 

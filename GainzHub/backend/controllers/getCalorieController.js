@@ -11,7 +11,9 @@ const getCalorieGoal = async(req, res) =>{
             return res.status(400).json({error: "Cant get value"});
         }
         else{
-            return res.status(200).json({calorieGoal: data.calorieGoal});
+            if(data.calorieGoal != null){
+                return res.status(200).json({calorieGoal: data.calorieGoal});
+            }
         }
     });
 }
