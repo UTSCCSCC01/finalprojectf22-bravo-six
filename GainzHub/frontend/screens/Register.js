@@ -1,10 +1,11 @@
-import React, {useCallback, useEffect, useState} from 'react'
+ import React, {useCallback, useEffect, useState} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
 import {Colors} from '../components/colors'
 import Toast from 'react-native-root-toast';
 import axios from 'axios';
 import { registerUser } from '../requests/userRequests';
 import ErrorMSG from '../components/ErrorMsg';
+import ShowPasswordBtn from '../components/ShowPasswordBtn';
 const {maroon, black} = Colors;
 
 const Register = ({navigation}) =>{
@@ -14,6 +15,8 @@ const Register = ({navigation}) =>{
     const [username, setUsername] = useState("");
     const [formErrors, setFormErrors] = useState({"firstName": "", "lastName": "", 
                                                     "email": "", "password": "", "username": ""});
+    
+    const[show, setShow] = useState(true);
 
     const handleName = (nameType, newName) =>{
         let commaIdx = name.indexOf(',');
@@ -161,14 +164,17 @@ const Register = ({navigation}) =>{
                     onChangeText={(username) => setUsername(username)}
                     />
                 </View>
-                <View style={[styles.inputView, {width: 350}, formErrors['password'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
-                    <TextInput
-                    style={styles.inputText}
-                    placeholder="Password"
-                    placeholderTextColor="#BDBDBD"
-                    secureTextEntry={true}
-                    onChangeText={(password) => setPassword(password)}
-                    />
+                <View style={[styles.inputView, {width: 350, flexDirection:"row"}, formErrors['password'].length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
+                    <View style={{flex:1}}>
+                        <TextInput
+                        style={styles.inputText}
+                        placeholder="Password"
+                        placeholderTextColor="#BDBDBD"
+                        secureTextEntry={show}
+                        onChangeText={(password) => setPassword(password)}
+                        />
+                    </View>
+                    <ShowPasswordBtn onPress={()=>{setShow(!show)}}/>
                 </View>
                 <View style={{paddingBottom:15}}>
                     <TouchableOpacity onPress={handleClick} style={[styles.TouchableOpacity]}>
