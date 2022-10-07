@@ -18,7 +18,7 @@ const Login = ({navigation}) =>{
         const checkLoggedIn = async()=>{
             const storedData = await AsyncStorage.getItem("userData");
             if(storedData && storedData.length != 0){
-                navigation.navigate("TempLanding");
+                navigation.navigate("ChangeLastName");
             }
         }
         checkLoggedIn();
@@ -67,7 +67,7 @@ const Login = ({navigation}) =>{
                 })
                 await AsyncStorage.setItem('userData', data.data.token)
 
-                navigation.navigate("TempLanding");
+                navigation.navigate("ChangeLastName");
             }
         }catch(e){
             console.log(e);
