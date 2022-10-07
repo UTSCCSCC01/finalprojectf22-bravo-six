@@ -18,7 +18,7 @@ const Login = ({navigation}) =>{
         const checkLoggedIn = async()=>{
             const storedData = await AsyncStorage.getItem("userData");
             if(storedData && storedData.length != 0){
-                navigation.navigate("Nutriton");
+                navigation.navigate("Nutrition");
             }
         }
         checkLoggedIn();
