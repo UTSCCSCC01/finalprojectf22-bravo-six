@@ -5,7 +5,9 @@ import axios from 'axios';
 import Toast from 'react-native-root-toast';
 import { loginUser } from '../requests/userRequests';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ButtonSwitch } from '../components/ButtonSwitch';
 import ShowPasswordBtn from '../components/ShowPasswordBtn';
+
 
 const {maroon, black} = Colors;
 
@@ -77,23 +79,8 @@ const Login = ({navigation}) =>{
     }
 
     return(
-        <View style={[styles.root, {paddingLeft: 20}]}>
-            <View style={{flexDirection:'row', justifyContent:'center', paddingBottom: 30}}>
-                <View style = {{paddingRight: 50}}>
-                    <TouchableOpacity style={{borderBottomWidth: 1, borderBottomColor: 'black'}}>
-                        <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                            Login
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
-                    <TouchableOpacity onPress={()=> navigation.navigate('Register')} style={{paddingLeft: 50}} >
-                        <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                            Register
-                        </Text>
-                    </TouchableOpacity> 
-                </View>
-            </View>
+        <View style={[styles.root, {paddingLeft: 20, flex:1}]}>
+            <ButtonSwitch first = "Login" second = "Register" navigation/>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 50, fontWeight:"800",color:maroon}}>
                     Welcome
