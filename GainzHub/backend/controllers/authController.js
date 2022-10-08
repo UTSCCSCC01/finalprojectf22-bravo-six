@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const {check, validationResult} = require('express-validator');
 const asyncHandler = require('express-async-handler');
 const User = require("../models/User");
+const Workouts = require("../models/Workouts");
 
 const checkLogin= [
     check('email', 'Please include a valid email').isEmail(), //Check if the 'email' field is formatted like an email
@@ -108,9 +109,34 @@ const registerUser = asyncHandler(async(req, res)=>{
     }
 });
 
+const CreateWorkout = asyncHandler(async(req, res)=>{
+    const errors = validationResult(req);
+    const {MuscleGroup, Workout} = req.body;
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()[0].msg}); //Return
+    }
+    
+    try{
+        const workout = new Workouts({
+            MuscleGroup, 
+            Workout
+        });
+        if(workout){
+            await workout.save();
+            return res.status(200).json({
+                MuscleGroup: workout.MuscleGroup,
+                Workout: workout.Workout
+            })
+        }
+    }catch(error){
+        //return res.status(500).json({errors: error.message});
+    }
+});
+
 module.exports = {
     registerUser,
     loginUser,
+    CreateWorkout,
     checkRegister,
     checkLogin,
 }
