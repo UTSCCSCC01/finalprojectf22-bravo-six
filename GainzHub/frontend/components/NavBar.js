@@ -19,10 +19,7 @@ export default function Landing({ navigation }) {
         <Tab.Navigator 
             screenOptions={{ headerShown: false }}   
             tabBarOptions={{activeTintColor: '#FF0000', inactiveTintColor: '#000000'}
-        }
-            
-        >
-
+        }>
         <Tab.Screen name="Social" component={Home}
             options={{
                 tabBarLabel: 'Social',

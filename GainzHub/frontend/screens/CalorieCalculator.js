@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import axios from 'axios';
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, Platform} from 'react-native'
 import {Colors} from '../components/colors'
 //import { Select } from "native-base";
@@ -15,7 +16,7 @@ const getUser = async() =>{
 }
 
 
-const CalorieCalculator = ({navigation}) => {
+const CalorieCalculator = ({navigation: { goBack }}) => {
     const [sex, setSex] = useState("");
     const [diet, setDiet] = useState("");
     const [activity, setActivity] = useState("");
@@ -52,20 +53,29 @@ const CalorieCalculator = ({navigation}) => {
 
     const [userData, setUserData] = useState("No user data");
     const [loggedIn, setLoggedIn] = useState(true);
-    /*
-    useEffect(() =>{
-        const getStoredUser = async() =>{
-            const userDataStored = await AsyncStorage.getItem('userData');
-            setUserData(JSON.parse(userDataStored));
-        }
-        getStoredUser();
-    }, []);
-    */
+   
 
-    //console.log(userData);
-
-    const updateCalorieGoal = () => {
+    const updateCalorieGoal = async() => {
         // add calories to user.calorieGoal in the database
+        const token = await AsyncStorage.getItem("userData");
+
+        const response = await axios.post('http://localhost:5000/change/changeCalorieGoal',
+                                        {newCalorieGoal: Number(calories)}, {
+            headers:{
+                "x-auth-token": token,
+            }
+        });
+
+        if(response.status == 200){
+            Toast.show("Success!", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+        else{
+            Toast.show("Could not update calorie goal", {
+                duration: Toast.durations.SHORT,
+            })
+        }
     };
 
     const calculateCalories = () => {
@@ -136,11 +146,13 @@ const CalorieCalculator = ({navigation}) => {
         }
 
         if(sex === "female"){
-            setCalories((activity_level * (10 * weight + 6.25 * height - 5 * age -161)) + dietNum);
+            setCalories(Number(((activity_level * (10 * weight + 6.25 * height - 5 * age -161)) + dietNum)).toFixed(0));
+            //updateCalorieGoal();
         } else {
-            setCalories((activity_level * (10 * weight + 6.25 * height - 5 * age + 5)) + dietNum);
+            setCalories(Number(((activity_level * (10 * weight + 6.25 * height - 5 * age + 5)) + dietNum)).toFixed(0));
+            //updateCalorieGoal();
         }
-        updateCalorieGoal();
+        
 
     }
 
@@ -149,7 +161,7 @@ const CalorieCalculator = ({navigation}) => {
         <View style={[styles.root, {paddingLeft: 15}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 30}}>
                 <View style = {{paddingRight: 50}}>
-                    <TouchableOpacity onPress={()=> navigation.navigate('Nutrition')}>
+                    <TouchableOpacity onPress={()=> goBack()}>
                         <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                             Back
                         </Text>
@@ -229,17 +241,22 @@ const CalorieCalculator = ({navigation}) => {
                             disableBorderRadius={true}
                         />
                     </View>
+                    <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center'}}>
+                        {"Calories Needed: "}{calories}
+                    </Text>
                     <View style={{paddingBottom:15}}>
                         <TouchableOpacity onPress={calculateCalories} style={[styles.TouchableOpacity]}>
                             <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                                 Calculate
                             </Text>
                         </TouchableOpacity>
+                        <TouchableOpacity onPress={updateCalorieGoal} style={[styles.TouchableOpacity]}>
+                            <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
+                                Save
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                     <View>
-                    <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center'}}>
-                        {"Calories Needed: "}{Number(calories).toFixed(2)}
-                    </Text>
                 </View>
             </View>
         </View>
@@ -274,7 +291,7 @@ const styles = StyleSheet.create({
 
     },
     TouchableOpacity:{
-        height:51,
+        height:25,
         width:343,
         borderRadius: 30,
         marginTop: 20,
