@@ -2,7 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useEffect, useState, useRef } from 'react';
 import {Text, View, StyleSheet, Switch, TouchableOpacity, Animated, Easing} from 'react-native'
 import { Colors } from './colors';
-
+import React from 'react';
 
 export const ButtonSwitch = (props) => {
 
