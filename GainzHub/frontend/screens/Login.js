@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
 import {Colors} from '../components/colors'
 import axios from 'axios';
@@ -6,6 +6,8 @@ import Toast from 'react-native-root-toast';
 import { loginUser } from '../requests/userRequests';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ButtonSwitch } from '../components/ButtonSwitch';
+import ShowPasswordBtn from '../components/ShowPasswordBtn';
+
 
 const {maroon, black} = Colors;
 
@@ -13,19 +15,19 @@ const Login = ({navigation}) =>{
     const[email, setEmail] = useState("");
     const[password, setPassword] = useState("");
     const[formErrors, setFormErrors] = useState({email: "", password: ""});
+    const[show, setShow] = useState(true);
 
     //Logic to check if the user is already logged in
     useEffect(() => {
         const checkLoggedIn = async()=>{
             const storedData = await AsyncStorage.getItem("userData");
             if(storedData && storedData.length != 0){
-                navigation.navigate("TempLanding");
+                navigation.navigate("NavBar");
             }
         }
         checkLoggedIn();
     }, [])
     
-
     const handleLogin = async() =>{
         //Validate fields first
         let currFormErrors = {email: "", password: ""}
@@ -68,14 +70,12 @@ const Login = ({navigation}) =>{
                 })
                 await AsyncStorage.setItem('userData', data.data.token)
 
-                navigation.navigate("TempLanding");
+                navigation.navigate("NavBar");
             }
         }catch(e){
             console.log(e);
         }
-
         //Display login results
-
     }
 
     return(
@@ -101,15 +101,19 @@ const Login = ({navigation}) =>{
                     onChangeText={(email) => setEmail(email)}
                     />
                 </View>
-                <View style={[styles.inputView, formErrors.password.length == 0 ? {borderColor: "#e8e8e8"} : {borderColor: "red"}]}>
-                    <TextInput
-                    style={styles.inputText}
-                    placeholder="Password"
-                    placeholderTextColor="#BDBDBD"
-                    secureTextEntry={true}
-                    onChangeText={(password) => setPassword(password)}
-                    />
+                <View style = {[styles.inputView, {flexDirection:"row"}]}>
+                    <View style={{width:300, height:40}}>
+                        <TextInput
+                        style={styles.inputText}
+                        placeholder="Password"
+                        placeholderTextColor="#BDBDBD"
+                        secureTextEntry={show}
+                        onChangeText={(password) => setPassword(password)}
+                        />
+                    </View>
+                    <ShowPasswordBtn onPress={() => {setShow(!show)}}/>
                 </View>
+                
                 <View style={{paddingBottom:15}}>
                     <TouchableOpacity style={[styles.TouchableOpacity]} onPress={handleLogin}>
                         <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
@@ -156,6 +160,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    showPassword:{
+        flexDirection:'row',
+        width: window.width,
+        margin: 20,
+        padding:4,
+        alignItems:'center',
+        justifyContent:'center',
+        borderWidth:1,
+        borderColor:'#e8e8e8',
+        borderRadius:8,
+        backgroundColor:'#F6F6F6',
     },
 });
 
