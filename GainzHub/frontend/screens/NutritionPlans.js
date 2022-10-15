@@ -99,12 +99,12 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         textAlign: 'center',
         borderRadius: 8,
-        width: 350
+        width: '100%'
 
     },
     TouchableOpacity:{
         height:25,
-        width:343,
+        width:'100%',
         borderRadius: 30,
         marginTop: 20,
         backgroundColor: '#8D0A0A',
