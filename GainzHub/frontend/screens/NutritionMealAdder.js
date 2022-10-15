@@ -62,7 +62,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     Create Your Own Meal Plan!
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: 350}]}>
+            <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Plan Name"
@@ -76,7 +76,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     Breakfast
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: 350}]}>
+            <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Meal Name"
@@ -84,7 +84,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                 onChangeText={(breakfastMeal) => setBreakfastMeal(breakfastMeal)}
                 />
             </View>
-            <View style={[styles.inputView, {width: 350}]}>
+            <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Ingredients (serving size)"
@@ -93,7 +93,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                 />
             </View>
             <View style={[{flexDirection:'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 30}]}>
-                <View style={[styles.inputViewRow, {width: 100}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}]}>
                     <TextInput
                     style={[styles.inputTextRow]}
                     placeholder="Calories"
@@ -101,7 +101,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     onChangeText={(breakfastCalories) => setBreakfastCalories(breakfastCalories)}
                     />
                 </View>
-                <View style={[styles.inputViewRow, {width: 100}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}]}>
                     <TextInput
                         style={[styles.inputTextRow]}
                         placeholder="Protein"
@@ -116,7 +116,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     Lunch
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: 350}]}>
+            <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Meal Name"
@@ -124,7 +124,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                 onChangeText={(lunchMeal) => setLunchMeal(lunchMeal)}
                 />
             </View>
-            <View style={[styles.inputView, {width: 350}]}>
+            <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Ingredients (serving size)"
@@ -133,7 +133,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                 />
             </View>
             <View style={[{flexDirection:'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 30}]}>
-                <View style={[styles.inputViewRow, {width: 100}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}]}>
                     <TextInput
                     style={[styles.inputTextRow]}
                     placeholder="Calories"
@@ -141,7 +141,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     onChangeText={(lunchCalories) => setLunchCalories(lunchCalories)}
                     />
                 </View>
-                <View style={[styles.inputViewRow, {width: 100}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}]}>
                     <TextInput
                         style={[styles.inputTextRow]}
                         placeholder="Protein"
@@ -156,7 +156,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     Dinner
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: 350}]}>
+            <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Meal Name"
@@ -164,7 +164,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                 onChangeText={(dinnerMeal) => setDinnerMeal(dinnerMeal)}
                 />
             </View>
-            <View style={[styles.inputView, {width: 350}]}>
+            <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Ingredients (serving size)"
@@ -173,7 +173,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                 />
             </View>
             <View style={[{flexDirection:'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 30}]}>
-                <View style={[styles.inputViewRow, {width: 100}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}]}>
                     <TextInput
                     style={[styles.inputTextRow]}
                     placeholder="Calories"
@@ -181,7 +181,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     onChangeText={(dinnerCalories) => setDinnerCalories(dinnerCalories)}
                     />
                 </View>
-                <View style={[styles.inputViewRow, {width: 100}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}]}>
                     <TextInput
                         style={[styles.inputTextRow]}
                         placeholder="Protein"
@@ -196,7 +196,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     Snacks
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: 350}]}>
+            <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Snacks"
@@ -205,7 +205,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                 />
             </View>
             <View style={[{flexDirection:'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 30}]}>
-                <View style={[styles.inputViewRow, {width: 100}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}]}>
                     <TextInput
                     style={[styles.inputTextRow]}
                     placeholder="Calories"
@@ -213,7 +213,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     onChangeText={(snackCalories) => setSnackCalories(snackCalories)}
                     />
                 </View>
-                <View style={[styles.inputViewRow, {width: 100}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}]}>
                     <TextInput
                         style={[styles.inputTextRow]}
                         placeholder="Protein"
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         textAlign: 'left',
         borderRadius: 8,
-        width: 350
+        width: '100%'
 
     },
     inputViewRow:{
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     },
     TouchableOpacity:{
         height:25,
-        width:343,
+        width:'100%',
         borderRadius: 30,
         marginTop: 20,
         backgroundColor: '#8D0A0A',
