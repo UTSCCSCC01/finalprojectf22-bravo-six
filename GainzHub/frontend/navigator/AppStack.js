@@ -29,6 +29,7 @@ const AppStack = ()=>{
                 <Stack.Screen name = "CalorieCalculator" component={CalorieCalculator}/>
                 <Stack.Screen name = "NutritionAddFood" component={NutritionAddFood}/>
                 <Stack.Screen name = "NutritionFoodViewer" component={NutritionFoodViewer}/>
+                <Stack.Screen name = "NutritionPlans" component={NutritionPlans}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
