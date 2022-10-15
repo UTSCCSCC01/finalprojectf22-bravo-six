@@ -94,7 +94,7 @@ const Nutrition = ({navigation}) =>{
                        Daily
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Nutriton_Plans')} style={{paddingLeft: 70}} >
+                <TouchableOpacity onPress={()=> navigation.navigate('NutritionPlans')} style={{paddingLeft: 70}} >
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                        Plans
                     </Text>
