@@ -99,7 +99,6 @@ const NutritionPlans = ({navigation}) => {
                 </TouchableOpacity> 
             </View>
         </View>
-
        );
 }
 
