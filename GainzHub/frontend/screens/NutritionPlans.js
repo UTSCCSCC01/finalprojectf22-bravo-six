@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, FlatList, SafeAreaView} from 'react-native'
 //import Slider from '@react-native-community/slider';
 import {Colors} from '../components/colors'
 import axios from 'axios';
@@ -24,6 +24,30 @@ const getUser = async() =>{
 }
 // NEED to have the goBack but also need to navigate through pages *FIGURE THAT OUT LATER*
 const NutritionPlans = ({navigation}) => {
+    const test = [{
+        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+        title: 'First Test Meal Plan',
+      },
+      {
+        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+        title: 'Second Meal Plan',
+      },
+      {
+        id: '58694a0f-3da1-471f-bd96-145571e29d72',
+        title: 'Third Meal Plan',
+      }
+    ];
+
+    const Item = ({ title }) => (
+        <View style={[styles.inputView, {width: '100%'}]}>
+            <Text style={styles.inputText}>{title}</Text>
+        </View>
+      );
+      
+    
+    const renderItem = ({ item }) => (
+        <Item title={item.title} />
+    );
     
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
@@ -63,6 +87,14 @@ const NutritionPlans = ({navigation}) => {
                     Meal Plan Library
                 </Text>
             </View>
+            <SafeAreaView>
+                <FlatList
+                    data={test}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+                    scrollEnabled={true}
+                />
+            </SafeAreaView>
             <View>
                 <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealAdder')} style={[styles.TouchableOpacity]} >
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color: "white"}}>
@@ -89,18 +121,17 @@ const styles = StyleSheet.create({
         alignContent: 'center'
     },
     inputText:{
-        height: 50,
+        height: 30,
         flex: 1,
         marginRight: 30,
         padding: 10,
         fontFamily: "Inter-Medium",
         fontWeight: "500",
-        fontSize: 14,
+        fontSize: 20,
         alignContent: 'center',
-        textAlign: 'center',
+        textAlign: 'left',
         borderRadius: 8,
         width: '100%'
-
     },
     TouchableOpacity:{
         height:25,
@@ -122,6 +153,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         backgroundColor: "#F6F6F6",
         borderColor: "#e8e8e8"
+    },
+    listBox:{
 
     }
 });
