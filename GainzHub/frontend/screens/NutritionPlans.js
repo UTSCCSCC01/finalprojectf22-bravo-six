@@ -39,8 +39,17 @@ const NutritionPlans = ({navigation}) => {
     ];
 
     const Item = ({ title }) => (
-        <View style={[styles.inputView, {width: '100%'}]}>
-            <Text style={styles.inputText}>{title}</Text>
+        <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
+            <View style={[styles.inputView, {width: '75%'}]}>
+                <Text style={styles.inputText}>{title}</Text>
+            </View>
+           
+            <TouchableOpacity onPress={()=> navigation.navigate('Placeholder')} style={[styles.TouchableOpacityList]} >
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
+                    Publish
+                </Text>
+            </TouchableOpacity> 
+            
         </View>
       );
       
@@ -98,7 +107,7 @@ const NutritionPlans = ({navigation}) => {
             <View>
                 <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealAdder')} style={[styles.TouchableOpacity]} >
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color: "white"}}>
-                        Meal Adder
+                        Create A Meal Plan
                     </Text>
                 </TouchableOpacity> 
             </View>
@@ -113,12 +122,10 @@ const styles = StyleSheet.create({
     },
     inputView:{
         height: 45,
-        backgroundColor: "#FFFFFF",
         borderColor: "black",
         borderWidth: 1,
         borderRadius: 8,
-        marginBottom: 20,
-        alignContent: 'center'
+        marginBottom: 20
     },
     inputText:{
         height: 30,
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
         padding: 10,
         fontFamily: "Inter-Medium",
         fontWeight: "500",
-        fontSize: 20,
+        fontSize: 18,
         alignContent: 'center',
         textAlign: 'left',
         borderRadius: 8,
@@ -154,9 +161,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#F6F6F6",
         borderColor: "#e8e8e8"
     },
-    listBox:{
-
-    }
+    TouchableOpacityList:{
+        height:35,
+        width:'20%',
+        borderRadius: 30,
+        marginTop: 8,
+        backgroundColor: '#8D0A0A',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 export default NutritionPlans;
