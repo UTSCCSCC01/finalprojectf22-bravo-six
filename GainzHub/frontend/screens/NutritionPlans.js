@@ -44,12 +44,13 @@ const NutritionPlans = ({navigation}) => {
         }
         getStoredMealPlans();
     }, [isFocused])
-    
-    const Item = ({ name }) => (
+    //onPress={()=> navigation.navigate('NutritonMealPlanInfo')}
+
+    const renderItem = ({ item }) => (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
-            <View style={[styles.inputView, {width: '75%'}]}>
-                <Text style={styles.inputText}>{name}</Text>
-            </View>
+            <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {item})} style={[styles.inputView, {width: '75%'}]}>
+                <Text style={styles.inputText}>{item.planName}</Text>
+            </TouchableOpacity>
            
             <TouchableOpacity onPress={()=> navigation.navigate('Placeholder')} style={[styles.TouchableOpacityList]} >
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
@@ -59,11 +60,6 @@ const NutritionPlans = ({navigation}) => {
             
         </View>
       );
-      
-    
-    const renderItem = ({ item }) => (
-        <Item name={item.planName} />
-    );
     
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
