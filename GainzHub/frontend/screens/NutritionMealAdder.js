@@ -27,18 +27,161 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
     const [breakfastMeal, setBreakfastMeal] = useState("");
     const [breakfastIngredients, setBreakfastIngredients] = useState("");
     const [breakfastCalories, setBreakfastCalories] = useState("");
-    const [breakfastProtien, setBreakfastProtein] = useState("");
+    const [breakfastProtein, setBreakfastProtein] = useState("");
     const [lunchMeal, setLunchMeal] = useState("");
     const [lunchIngredients, setLunchIngredients] = useState("");
     const [lunchCalories, setLunchCalories] = useState("");
-    const [lunchProtien, setLunchProtein] = useState("");
+    const [lunchProtein, setLunchProtein] = useState("");
     const [dinnerMeal, setDinnerMeal] = useState("");
     const [dinnerIngredients, setDinnerIngredients] = useState("");
     const [dinnerCalories, setDinnerCalories] = useState("");
-    const [dinnerProtien, setDinnerProtein] = useState("");
+    const [dinnerProtein, setDinnerProtein] = useState("");
     const [snacks, setSnacks] = useState("");
     const [snackCalories, setSnackCalories] = useState("");
-    const [snackProtien, setSnackProtein] = useState("");
+    const [snackProtein, setSnackProtein] = useState("");
+    const [formErrors, setFormErrors] = useState({"planName": "",
+        "breakfastMeal": "",
+        "breakfastIngredients": "",
+        "breakfastCalories": "",
+        "breakfastProtein": "",
+        "lunchMeal": "",
+        "lunchIngredients": "",
+        "lunchCalories": "",
+        "lunchProtein": "",
+        "dinnerMeal": "",
+        "dinnerIngredients": "",
+        "dinnerCalories": "",
+        "dinnerProtein": "",
+        "snacks": "",
+        "snackCalories": "",
+        "snackProtein": ""
+    })
+
+    const addMealPlan = async() => {
+        //check that all fields have values
+        let currFormErrors = {"planName": "",
+            "breakfastMeal": "",
+            "breakfastIngredients": "",
+            "breakfastCalories": "",
+            "breakfastProtein": "",
+            "lunchMeal": "",
+            "lunchIngredients": "",
+            "lunchCalories": "",
+            "lunchProtein": "",
+            "dinnerMeal": "",
+            "dinnerIngredients": "",
+            "dinnerCalories": "",
+            "dinnerProtein": "",
+            "snacks": "",
+            "snackCalories": "",
+            "snackProtein": ""
+        };
+
+        if(planName.length == 0){
+            currFormErrors['planName'] = 'Please enter a Name';
+        }
+        
+        if(breakfastMeal.length == 0){
+            currFormErrors['breakfastMeal'] = 'Please enter a Breakfast Meal';
+        }
+
+        if(breakfastCalories.length == 0){
+            currFormErrors['breakfastCalories'] = 'Please enter Breakfast Calories';
+        }
+
+        if(breakfastProtein.length == 0){
+            currFormErrors['breakfastProtein'] = 'Please enter Breakfast Protein';
+        }
+
+        if(lunchMeal.length == 0){
+            currFormErrors['lunchMeal'] = 'Please enter a Lunch Meal';
+        }
+
+        if(lunchCalories.length == 0){
+            currFormErrors['lunchCalories'] = 'Please enter Lunch Calories';
+        }
+
+        if(lunchProtein.length == 0){
+            currFormErrors['lunchProtein'] = 'Please enter Lunch Protein';
+        }
+
+        if(dinnerMeal.length == 0){
+            currFormErrors['dinnerMeal'] = 'Please enter a Dinner Meal';
+        }
+
+        if(dinnerCalories.length == 0){
+            currFormErrors['dinnerCalories'] = 'Please enter Dinner Calories';
+        }
+
+        if(dinnerProtein.length == 0){
+            currFormErrors['dinnerProtein'] = 'Please enter Dinner Protein';
+        }
+
+        if(snacks.length == 0){
+            currFormErrors['snacks'] = 'Please enter some snacks';
+        }
+
+        if(snackCalories.length == 0){
+            currFormErrors['snackCalories'] = 'Please enter Snack Calories';
+        }
+
+        if(snackProtein.length == 0){
+            currFormErrors['snackProtein'] = 'Please enter Snack Protein';
+        }
+
+        setFormErrors(currFormErrors);
+
+        const checkAllEmpty = Object.entries(currFormErrors).reduce((a,b) => a[1].length > b[1].length ? a : b)[1];
+        
+        //Check if its empty (if not it means there are errors) 
+        if(checkAllEmpty.length != 0){
+            let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
+            allErrorMessages = allErrorMessages.trim();
+            Toast.show(allErrorMessages, {
+                duration: Toast.durations.SHORT,
+            });
+            return;
+        }
+
+        // add calories to user.calorieGoal in the database
+        const token = await AsyncStorage.getItem("userData");
+
+        const response = await axios.post('http://localhost:5000/addMealPlan/addPersonalMealPlan',
+                                        {newMealPlan:
+                                        {
+                                            planName: planName,
+                                            breakfastMeal: breakfastMeal,
+                                            breakfastIngredients: breakfastIngredients,
+                                            breakfastCalories: breakfastCalories,
+                                            breakfastProtein: breakfastProtein,
+                                            lunchMeal: lunchMeal,
+                                            lunchIngredients: lunchIngredients,
+                                            lunchCalories: lunchCalories,
+                                            lunchProtein: lunchProtein,
+                                            dinnerMeal: dinnerMeal,
+                                            dinnerIngredients: dinnerIngredients,
+                                            dinnerCalories: dinnerCalories,
+                                            dinnerProtein: dinnerProtein,
+                                            snacks: snacks,
+                                            snackCalories: snackCalories,
+                                            snackProtein: snackProtein
+                                        }}, {
+            headers:{
+                "x-auth-token": token,
+            }
+        });
+
+        if(response.status == 200){
+            Toast.show("Success!", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+        else{
+            Toast.show("Could not add meal plan", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+    };
 
     
     return(
@@ -62,7 +205,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     Create Your Own Meal Plan!
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: '100%'}]}>
+            <View style={[styles.inputView, {width: '100%'}, formErrors['planName'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Plan Name"
@@ -76,7 +219,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     Breakfast
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: '100%'}]}>
+            <View style={[styles.inputView, {width: '100%'}, formErrors['breakfastMeal'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Meal Name"
@@ -87,13 +230,13 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
             <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
-                placeholder="Ingredients (serving size)"
+                placeholder="Ingredients (serving size) (Optional)"
                 placeholderTextColor="black"
                 onChangeText={(breakfastIngredients) => setBreakfastIngredients(breakfastIngredients)}
                 />
             </View>
             <View style={[{flexDirection:'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 30}]}>
-                <View style={[styles.inputViewRow, {width: '35%'}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}, formErrors['breakfastCalories'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                     <TextInput
                     style={[styles.inputTextRow]}
                     placeholder="Calories"
@@ -101,7 +244,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     onChangeText={(breakfastCalories) => setBreakfastCalories(breakfastCalories)}
                     />
                 </View>
-                <View style={[styles.inputViewRow, {width: '35%'}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}, formErrors['breakfastProtein'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                     <TextInput
                         style={[styles.inputTextRow]}
                         placeholder="Protein"
@@ -116,7 +259,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     Lunch
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: '100%'}]}>
+            <View style={[styles.inputView, {width: '100%'}, formErrors['lunchMeal'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Meal Name"
@@ -127,13 +270,13 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
             <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
-                placeholder="Ingredients (serving size)"
+                placeholder="Ingredients (serving size) (Optional)"
                 placeholderTextColor="black"
                 onChangeText={(lunchIngredients) => setLunchIngredients(lunchIngredients)}
                 />
             </View>
             <View style={[{flexDirection:'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 30}]}>
-                <View style={[styles.inputViewRow, {width: '35%'}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}, formErrors['lunchCalories'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                     <TextInput
                     style={[styles.inputTextRow]}
                     placeholder="Calories"
@@ -141,12 +284,12 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     onChangeText={(lunchCalories) => setLunchCalories(lunchCalories)}
                     />
                 </View>
-                <View style={[styles.inputViewRow, {width: '35%'}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}, formErrors['lunchProtein'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                     <TextInput
                         style={[styles.inputTextRow]}
                         placeholder="Protein"
                         placeholderTextColor="black"
-                        onChangeText={(lunchProtien) => setLunchProtein(lunchProtien)}
+                        onChangeText={(lunchProtein) => setLunchProtein(lunchProtein)}
                     />
                 </View>
             </View>
@@ -156,7 +299,7 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     Dinner
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: '100%'}]}>
+            <View style={[styles.inputView, {width: '100%'}, formErrors['dinnerMeal'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Meal Name"
@@ -167,13 +310,13 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
             <View style={[styles.inputView, {width: '100%'}]}>
                 <TextInput
                 style={[styles.inputText]}
-                placeholder="Ingredients (serving size)"
+                placeholder="Ingredients (serving size) (Optional)"
                 placeholderTextColor="black"
                 onChangeText={(dinnerIngredients) => setDinnerIngredients(dinnerIngredients)}
                 />
             </View>
             <View style={[{flexDirection:'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 30}]}>
-                <View style={[styles.inputViewRow, {width: '35%'}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}, formErrors['dinnerCalories'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                     <TextInput
                     style={[styles.inputTextRow]}
                     placeholder="Calories"
@@ -181,12 +324,12 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     onChangeText={(dinnerCalories) => setDinnerCalories(dinnerCalories)}
                     />
                 </View>
-                <View style={[styles.inputViewRow, {width: '35%'}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}, formErrors['dinnerProtein'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                     <TextInput
                         style={[styles.inputTextRow]}
                         placeholder="Protein"
                         placeholderTextColor="black"
-                        onChangeText={(dinnerProtien) => setDinnerProtein(dinnerProtien)}
+                        onChangeText={(dinnerProtein) => setDinnerProtein(dinnerProtein)}
                     />
                 </View>
             </View>
@@ -196,16 +339,16 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     Snacks
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: '100%'}]}>
+            <View style={[styles.inputView, {width: '100%'}, formErrors['snacks'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Snacks"
                 placeholderTextColor="black"
-                onChangeText={(dinnerMeal) => setDinnerMeal(dinnerMeal)}
+                onChangeText={(snacks) => setSnacks(snacks)}
                 />
             </View>
             <View style={[{flexDirection:'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 30}]}>
-                <View style={[styles.inputViewRow, {width: '35%'}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}, formErrors['snackCalories'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                     <TextInput
                     style={[styles.inputTextRow]}
                     placeholder="Calories"
@@ -213,18 +356,18 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                     onChangeText={(snackCalories) => setSnackCalories(snackCalories)}
                     />
                 </View>
-                <View style={[styles.inputViewRow, {width: '35%'}]}>
+                <View style={[styles.inputViewRow, {width: '35%'}, formErrors['snackProtein'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                     <TextInput
                         style={[styles.inputTextRow]}
                         placeholder="Protein"
                         placeholderTextColor="black"
-                        onChangeText={(snackProtien) => setSnackProtein(snackProtien)}
+                        onChangeText={(snackProtein) => setSnackProtein(snackProtein)}
                     />
                 </View>
             </View>
 
             <View>
-                <TouchableOpacity style={[styles.TouchableOpacity]}>
+                <TouchableOpacity onPress={addMealPlan} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                         Save
                     </Text>
