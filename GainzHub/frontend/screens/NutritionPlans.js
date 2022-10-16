@@ -83,7 +83,7 @@ const NutritionPlans = ({navigation}) => {
             </View>
             <NutritionNav navigation={navigation}/>
             <View>
-                <Text style = {{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:26}}>
+                <Text style = {{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:26, paddingBottom:10}}>
                     Meal Plan Library
                 </Text>
             </View>
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
         height:25,
         width:'100%',
         borderRadius: 30,
-        marginTop: 20,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',

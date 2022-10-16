@@ -424,7 +424,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         textAlign: 'left',
         borderRadius: 8,
-        width: 100
+        width: '100%'
 
     },
     TouchableOpacity:{
