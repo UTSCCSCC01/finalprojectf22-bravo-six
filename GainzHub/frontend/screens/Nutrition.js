@@ -127,7 +127,7 @@ const Nutrition = ({navigation}) =>{
             </View>
 
             <View style={{paddingBottom:15, alignItems:'center'}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('Nutriton_AddFood')} style={[styles.TouchableOpacity]}>
+                <TouchableOpacity onPress={()=> navigation.navigate('NutritionAddFood')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                         Add Food
                     </Text>
