@@ -14,6 +14,8 @@ const TempLanding = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);    
     useEffect(()=>{
         const handleLogout = async() =>{
+            //Remove the token from local storage
+            await AsyncStorage.removeItem("userData");
             navigation.navigate("Login");
         }
 
