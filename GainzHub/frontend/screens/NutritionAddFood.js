@@ -36,46 +36,72 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
     const [formErrors, setFormErrors] = useState({
         "foodName": "",
         "foodProtein": "",
-        "foodCalories": "",
-        "foodCarbs": "",
-        "foodFat": "",
-        "lunchMeal": "",
-        "foodSodium": "",
-        "foodSugar": "",
+        "foodCalories": ""
     })
 
-    /*
-    useEffect(() => {
-        const getStoredMealPlans = async() => {
-            const token = await AsyncStorage.getItem("userData");
-    
-            const response  = await axios.get('http://localhost:5000/getPMP/getPersonalMealPlans', {
-                headers: {
-                    'x-auth-token': token,
-                }
-            })
-            console.log(response);
-            setMealPlans(response.data.personalMealPlans);
-        }
-        getStoredMealPlans();
-    }, [isFocused])
-    */
-    //onPress={()=> navigation.navigate('NutritonMealPlanInfo')}
+    const logFood = async() => {
+        //check that all fields have values
+        let currFormErrors = {
+            "foodName": "",
+            "foodProtein": "",
+            "foodCalories": ""
+        };
 
-    const renderItem = ({ item }) => (
-        <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
-            <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {item})} style={[styles.inputView, {width: '75%'}]}>
-                <Text style={styles.inputText}>{item.planName}</Text>
-            </TouchableOpacity>
-           
-            <TouchableOpacity onPress={()=> navigation.navigate('Placeholder')} style={[styles.TouchableOpacityList]} >
-                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
-                    Publish
-                </Text>
-            </TouchableOpacity> 
-            
-        </View>
-      );
+        if(foodName.length == 0){
+            currFormErrors['foodName'] = 'Please enter a Name';
+        }
+        
+        if(foodProtein.length == 0 || isNaN(foodProtein)){
+            currFormErrors['foodProtein'] = 'Please enter a valid Protein value (must be a number)';
+        }
+
+        if(foodCalories.length == 0 || isNaN(foodCalories)){
+            currFormErrors['foodCalories'] = 'Please enter a valid Calorie Value (must be a number)';
+        }
+        setFormErrors(currFormErrors);
+
+        const checkAllEmpty = Object.entries(currFormErrors).reduce((a,b) => a[1].length > b[1].length ? a : b)[1];
+        
+        //Check if its empty (if not it means there are errors) 
+        if(checkAllEmpty.length != 0){
+            let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
+            allErrorMessages = allErrorMessages.trim();
+            Toast.show(allErrorMessages, {
+                duration: Toast.durations.SHORT,
+            });
+            return;
+        }
+
+        // add calories to user.calorieGoal in the database
+        const token = await AsyncStorage.getItem("userData");
+
+        const response = await axios.post('http://localhost:5000/logFood/logFood',
+                                        {newFood:
+                                        {
+                                           foodName: foodName,
+                                           foodCalories: foodCalories,
+                                           foodProtein: foodProtein,
+                                           foodCarbs: foodCarbs,
+                                           foodFat: foodFat,
+                                           foodSugar: foodSugar,
+                                           foodSodium: foodSodium
+                                        }}, {
+            headers:{
+                "x-auth-token": token,
+            }
+        });
+
+        if(response.status == 200){
+            Toast.show("Success!", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+        else{
+            Toast.show("Could not add food", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+    };
     
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
@@ -127,7 +153,7 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
                 onChangeText={(foodProtein) => setFoodProtein(foodProtein)}
                 />
             </View>
-            <View style={[styles.inputView, {width: '100%'}, formErrors['foodFat'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}, {alignItems: 'center'}]}>
+            <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Fat (Optional)"
@@ -135,7 +161,7 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
                 onChangeText={(foodFat) => setFoodFat(foodFat)}
                 />
             </View>
-            <View style={[styles.inputView, {width: '100%'}, formErrors['foodCarbs'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}, {alignItems: 'center'}]}>
+            <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}]}>
                 <TextInput
                     style={[styles.inputText]}
                     placeholder="Carbohydrates (Optional)"
@@ -143,7 +169,7 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
                     onChangeText={(foodCarbs) => setFoodCarbs(foodCarbs)}
                 />
             </View>
-            <View style={[styles.inputView, {width: '100%'}, formErrors['foodSodium'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}, {alignItems: 'center'}]}>
+            <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}]}>
                 <TextInput
                 style={[styles.inputText]}
                 placeholder="Sodium (Optional)"
@@ -151,7 +177,7 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
                 onChangeText={(foodSodium) => setFoodSodium(foodSodium)}
                 />
             </View>
-            <View style={[styles.inputView, {width: '100%'}, formErrors['foodSugar'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}, {alignItems: 'center'}]}>
+            <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}]}>
                 <TextInput
                     style={[styles.inputText]}
                     placeholder="Sugar (Optional)"
@@ -160,7 +186,7 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
                 />
             </View>
             <View style={[{alignItems: 'center'}]}>
-                <TouchableOpacity style={[styles.TouchableOpacity]}>
+                <TouchableOpacity onPress={logFood} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 18, color: "white"}}>
                         Add
                     </Text>
