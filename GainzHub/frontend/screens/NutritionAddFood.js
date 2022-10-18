@@ -112,11 +112,13 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
             <View style={[styles.inputView, {width: '100%'}, formErrors['foodCalories'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}, {alignItems: 'center'}]}>
                 <TextInput
                 style={[styles.inputText]}
+                keyboardType='numeric'
                 placeholder="Calories"
                 placeholderTextColor="black"
                 onChangeText={(foodCalories) => setfoodCalories(foodCalories)}
                 />
             </View>
+            
             <View style={[styles.inputView, {width: '100%'}, formErrors['foodProtein'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}, {alignItems: 'center'}]}>
                 <TextInput
                 style={[styles.inputText]}
@@ -228,16 +230,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     container: {
-        alignItems: 'center',
+        flex: 1,
+        padding: 20,
         justifyContent: 'center',
-        textAlign: 'center',
-        width:'70%',
-        marginBottom: 20,
-        fontFamily: "Inter-Medium",
-        fontWeight: "500",
-        fontSize: 16,
-        backgroundColor: "#F6F6F6",
-        borderColor: "#e8e8e8"
+        backgroundColor: '#ecf0f1',
 
     }
 });
