@@ -240,7 +240,7 @@ Your Mark: 20 / 20
 - 1 mark = documentation has been created for frontend and backend systems with some errors
 - 0 marks = documentation has not been created
 
-Your Mark: \_\_ / 14
+Your Mark: 14 / 14
 
 ---
 
@@ -248,4 +248,4 @@ Note: This mark will be updated after demo is finished
 
 ## Total Mark
 
-71.5 / 89
+85.5 / 89
