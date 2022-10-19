@@ -62,7 +62,7 @@ const NutritionPlans = ({navigation}) => {
       );
     
     return(
-        <View style={[styles.root, {paddingLeft: 20}]}>
+        <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
                 <View style = {{paddingRight: 50}}>
                     <TouchableOpacity onPress={()=> navigation.pop()}>
@@ -83,14 +83,14 @@ const NutritionPlans = ({navigation}) => {
                     Meal Plan Library
                 </Text>
             </View>
-            <SafeAreaView>
+            <View style={{flex:1}}>
                 <FlatList
                     data={mealPlans}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                     scrollEnabled={true}
                 />
-            </SafeAreaView>
+            </View>
             <View>
                 <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealAdder')} style={[styles.TouchableOpacity]} >
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color: "white"}}>

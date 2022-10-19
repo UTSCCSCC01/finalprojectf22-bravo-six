@@ -15,7 +15,7 @@ import { useIsFocused } from '@react-navigation/native';
 //import * as Progress from 'react-native-progress'
 const {maroon, black} = Colors;
 
-const Tab = createBottomTabNavigator();
+//const Tab = createBottomTabNavigator();
 
 const getUser = async() =>{
     const value = await AsyncStorage.getItem('userData');
