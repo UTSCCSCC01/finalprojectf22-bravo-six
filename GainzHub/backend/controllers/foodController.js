@@ -22,15 +22,20 @@ const getFoodLog = async(req, res) =>{
 const logFood = async(req, res) =>{
     const userId = req.user;
     const {newFood} = req.body;
-
-    User.findOneAndUpdate({_id: userId}, {$push:{food: newFood}}, {$inc:{caloriesAte: newFood.foodCalories}}, (err)=>{
-        if(err){
-            return res.status(400).json({error: "Cant update"});
-        }
-        else{
-            return res.status(200).json({message: "Success", food: newFood});
-        }
-    });
+    console.log(userId)
+    let test = await User.findById(userId);
+    User.findOneAndUpdate({_id: userId}, {
+                                        $inc:{caloriesAte: newFood.foodCalories},
+                                        $push:{food: newFood}, 
+                                        }, 
+        (err)=>{
+            if(err){
+                return res.status(400).json({error: "Cant update"});
+            }
+            else{
+                return res.status(200).json({message: "Success", food: newFood});
+            }
+        });
 }
 
 const getCalorieGoal = async(req, res) =>{
