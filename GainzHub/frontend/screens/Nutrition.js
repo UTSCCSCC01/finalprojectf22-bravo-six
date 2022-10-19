@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar} from 'react-native'
 //import Slider from '@react-native-community/slider';
 import {Colors} from '../components/colors'
 import axios from 'axios';
@@ -23,13 +23,16 @@ const getUser = async() =>{
     return value;
 }
 
+
 const Nutrition = ({navigation}) =>{
     const [userData, setUserData] = useState("No user data");
     const [loggedIn, setLoggedIn] = useState(true);
     const [caloriesAte, setCaloriesAte] = useState(0);
     const [calorieGoal, setCalorieGoal] = useState('');
     const [fullUserData, setFullUserData] = useState({});
+    const [food, setFood] = useState({});
     const isFocused = useIsFocused();
+   
 
     useEffect(() =>{
         const getStoredUser = async() =>{
@@ -59,7 +62,7 @@ const Nutrition = ({navigation}) =>{
         const getStoredGoal = async() => {
             const token = await AsyncStorage.getItem("userData");
     
-            const response  = await axios.get('http://localhost:5000/getCals/getCalorieGoal', {
+            const response  = await axios.get('http://localhost:5000/nutrition/getCalorieGoal', {
                 headers: {
                     'x-auth-token': token,
                 }
@@ -70,10 +73,46 @@ const Nutrition = ({navigation}) =>{
         getStoredGoal();
     }, [isFocused])
 
+    useEffect(() => {
+        const getStoredAte = async() => {
+            const token = await AsyncStorage.getItem("userData");
     
+            const response  = await axios.get('http://localhost:5000/nutrition/getCaloriesAte', {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            console.log(response);
+            setCaloriesAte(response.data.caloriesAte);
+        }
+        getStoredAte();
+    }, [isFocused])
 
+    useEffect(() => {
+        const getStoredFood= async() => {
+            const token = await AsyncStorage.getItem("userData");
+
+            const response  = await axios.get('http://localhost:5000/nutrition/getFoodLog', {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            console.log(response);
+            setFood(response.data.food);
+        }
+        getStoredFood();
+    }, [isFocused])
+
+
+    const renderItem = ({ item }) => (
+        <TouchableOpacity onPress={()=> navigation.navigate('NutritionFoodViewer', {item})} style={[styles.inputView, {width: '100%'}]}>
+            <Text style={styles.inputText}>Food: {item.foodName}, Calories {item.foodCalories}, Protein {item.foodProtein}</Text>
+        </TouchableOpacity>
+    );
+
+    
     return(
-        <View style={[styles.root, {paddingLeft: 20}]}>
+        <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
                 <View style = {{paddingRight: 50}}>
                     <TouchableOpacity onPress={()=> setLoggedIn(false)}>
@@ -88,33 +127,38 @@ const Nutrition = ({navigation}) =>{
                     Nutrition
                 </Text>
             </View>
-            <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center'}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('Nutriton')} style={{paddingLeft: 40}} >
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
+            <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center', paddingHorizontal:30, justifyContent:'space-between'}}>
+                <TouchableOpacity onPress={()=> navigation.navigate('Nutrition')}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
                        Daily
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Nutriton_Plans')} style={{paddingLeft: 70}} >
+                <TouchableOpacity onPress={()=> navigation.navigate('Nutriton_Plans')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                        Plans
                     </Text>
                 </TouchableOpacity> 
-                <TouchableOpacity onPress={()=> navigation.navigate('Nutriton_Explore')} style={{paddingLeft: 60}} >
+                <TouchableOpacity onPress={()=> navigation.navigate('Nutriton_Explore')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                         Explore
                     </Text>
                 </TouchableOpacity> 
             </View>
 
-            <View style={[{marginBottom:20}, {textAlign: 'center'}, {alignItems: 'center'}]}>
+            <View style={[{marginBottom:20},{textAlign: 'center'}, {alignItems: 'center'}]}>
                 <Text style={{fontFamily: 'Inter-Medium', fontWeight: '600', fontSize: 20}}> Calorie Goal: {calorieGoal}</Text>
-                <Progress.Bar progress={caloriesAte/calorieGoal} width={300} height={10}/>
-                <Text style={{paddingLeft: -30}}> Progress {caloriesAte} / {calorieGoal} </Text>
+                {console.log(parseFloat(caloriesAte/calorieGoal))}
+                <Progress.Bar 
+                    progress={!isNaN(calorieGoal) && !isNaN(caloriesAte) && caloriesAte != 0 && calorieGoal != 0 && parseFloat(caloriesAte/calorieGoal) >= 0 && parseFloat(caloriesAte/calorieGoal) <= 1 ? parseFloat((caloriesAte/calorieGoal).toFixed(2)) : 0}
+                    width={300}
+                    height={15}
+                />
+                <Text style={{paddingLeft: -30, fontSize: 16}}> Progress {caloriesAte} / {calorieGoal} </Text>
             </View>
 
-            <View>
-                <TouchableOpacity onPress={()=> navigation.navigate('CalorieCalculator')} style={{textAlign:'center', marginBottom: 20}} >
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
+            <View style={[{paddingBottom: 15}]}>
+                <TouchableOpacity onPress={()=> navigation.navigate('CalorieCalculator')} style={[styles.TouchableOpacity, {width:'100%'}]} >
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '500', fontSize:16, color:"white"}}>
                         Calculate Your Calories Here!
                     </Text>
                 </TouchableOpacity> 
@@ -126,15 +170,22 @@ const Nutrition = ({navigation}) =>{
                 </Text>
             </View>
 
-            <View style={{paddingBottom:15, alignItems:'center'}}>
+            <View style={[{flex:1}]}>
+                <FlatList
+                    data={food}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+                    scrollEnabled={true}
+                />
+            </View>
+
+            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
                 <TouchableOpacity onPress={()=> navigation.navigate('NutritionAddFood')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                         Add Food
                     </Text>
                 </TouchableOpacity>
             </View>
-            
-
         </View>
     );
 }
@@ -144,30 +195,33 @@ const styles = StyleSheet.create({
         padding: 30,
     },
     inputView:{
-        height: 45,
+        height: 60,
         backgroundColor: "#F6F6F6",
         borderColor: "#e8e8e8",
         borderWidth: 1,
         borderRadius: 8,
-        marginBottom: 20,
+        marginBottom: 10
     },
     inputText:{
-        height: 50,
-        flex: 1,
-        marginLeft: 10,
+        height: 30,
+        marginRight: 30,
         padding: 10,
         fontFamily: "Inter-Medium",
         fontWeight: "500",
-        fontSize: 16,
+        fontSize: 18,
+        alignContent: 'center',
+        textAlign: 'left',
+        borderRadius: 8,
+        width: 300
     },
     TouchableOpacity:{
         height:40,
-        width:125,
+        width:'50%',
         borderRadius: 15,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
-    },
+    }
 });
 
 
