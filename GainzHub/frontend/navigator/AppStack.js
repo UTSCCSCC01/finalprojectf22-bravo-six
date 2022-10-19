@@ -9,6 +9,8 @@ import TempLanding from '../screens/TempLanding';
 import NavBar from '../components/NavBar';
 import CalorieCalculator from '../screens/CalorieCalculator';
 import Nutrition from '../screens/Nutrition';
+import NutritionAddFood from '../screens/NutritionAddFood';
+import NutritionFoodViewer from '../screens/NutritionFoodViewer';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +27,8 @@ const AppStack = ()=>{
                 <Stack.Screen name = "NavBar" component={NavBar}/>
                 <Stack.Screen name = "Nutrition" component={Nutrition}/>
                 <Stack.Screen name = "CalorieCalculator" component={CalorieCalculator}/>
+                <Stack.Screen name = "NutritionAddFood" component={NutritionAddFood}/>
+                <Stack.Screen name = "NutritionFoodViewer" component={NutritionFoodViewer}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
