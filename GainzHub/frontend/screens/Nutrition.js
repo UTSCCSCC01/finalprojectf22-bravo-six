@@ -62,7 +62,7 @@ const Nutrition = ({navigation}) =>{
         const getStoredGoal = async() => {
             const token = await AsyncStorage.getItem("userData");
     
-            const response  = await axios.get('http://localhost:5000/getCals/getCalorieGoal', {
+            const response  = await axios.get('http://localhost:5000/nutrition/getCalorieGoal', {
                 headers: {
                     'x-auth-token': token,
                 }
@@ -77,7 +77,7 @@ const Nutrition = ({navigation}) =>{
         const getStoredAte = async() => {
             const token = await AsyncStorage.getItem("userData");
     
-            const response  = await axios.get('http://localhost:5000/getCals/getCaloriesAte', {
+            const response  = await axios.get('http://localhost:5000/nutrition/getCaloriesAte', {
                 headers: {
                     'x-auth-token': token,
                 }
@@ -92,7 +92,7 @@ const Nutrition = ({navigation}) =>{
         const getStoredFood= async() => {
             const token = await AsyncStorage.getItem("userData");
 
-            const response  = await axios.get('http://localhost:5000/getFood/getFoodLog', {
+            const response  = await axios.get('http://localhost:5000/nutrition/getFoodLog', {
                 headers: {
                     'x-auth-token': token,
                 }
