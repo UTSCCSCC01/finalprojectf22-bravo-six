@@ -47,7 +47,7 @@ Planning Meetings Total Mark: 5 / 5
   - 1 mark = At least 2 group members or more have not sent their updates or is low-quality
   - 0 marks = At least 3 group members or more have not sent their updates or is low-quality
 
-Daily Stand-ups Total Mark: 9 / 10
+Daily Stand-ups Total Mark: 10 / 10
 
 ---
 
