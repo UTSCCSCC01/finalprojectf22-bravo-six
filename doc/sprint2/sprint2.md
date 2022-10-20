@@ -30,10 +30,13 @@ We plan to finish the following stories
 - New UI provides a clear UI 
 
 ## BRAV-68
-- 
+- Implemented MongoDB Trigger to Reset caloriesAte
+- Same Implementation will used to cleare other sutdf such foods eaten in day for all users at 12:00am
 
 # Spikes/Blockers
-- Unfamiliarity with React-Native, and the MERN stack in general
+- Using JS Native is still fairly new to many of us so it takes alot of research before implementing something
+- Alot of members have midterms and assignments for whole week
+- Only week given for the Sprint2 so Task needed to split
 - Work capacity will fluxuate based off our personal schedules (ie. exam season, times of increased workload)
 
 # Team Capacity
