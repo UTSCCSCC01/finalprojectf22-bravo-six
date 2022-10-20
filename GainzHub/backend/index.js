@@ -17,7 +17,7 @@ app.use("/auth", require('./routes/authRoutes'));
 app.use("/change", require("./routes/changeRoutes"));
 app.use("/nutrition", require("./routes/foodRoutes"));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
