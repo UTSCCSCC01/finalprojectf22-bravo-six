@@ -1,7 +1,7 @@
 # TODO
 * Planning Meetings - 
   * SR(N-1).md - Completed 
-  * sprintN.md - 
+  * sprintN.md - Nearly Completed
 * Daily Stand-ups - 2/3 Completed
 * User Stories - 
 * Tracking on trello - 
@@ -10,4 +10,4 @@
   * CRC Cards -
   * Software Architecture Diagram - 
 * Documentation - 
-* Sprint Demo - Completed Eventually
+* Sprint Demo - Eventually Completed
