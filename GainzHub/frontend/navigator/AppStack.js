@@ -11,6 +11,7 @@ import CalorieCalculator from '../screens/CalorieCalculator';
 import Nutrition from '../screens/Nutrition';
 import NutritionAddFood from '../screens/NutritionAddFood';
 import NutritionFoodViewer from '../screens/NutritionFoodViewer';
+import NutritionPlans from '../screens/NutritionPlans';
 
 const Stack = createStackNavigator();
 
