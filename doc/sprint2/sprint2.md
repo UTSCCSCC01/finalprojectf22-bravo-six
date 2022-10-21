@@ -1,11 +1,7 @@
 # Sprint 2 Planning Meetings
-The Sprint 2 planning meeting was held on Oct 16th, 2022 on Discord. During this meeting we discussed our goal for Sprint 2, and the stories we would accomplish by the end of the sprint. We also discussed how we are going to break down the stories into subtask, and distribute the tasks in a way to optimize development efficiency.
+The Sprint 2 planning meeting was held on Oct 16th, 2022 on Discord. During this meeting we discussed our goal for Sprint 2, and the stories we would accomplish by the end of the sprint. We agreed to break down stories into subtasks due to their large size, and discussed how we would divide them. Tasks were then distributed in an optimized way, due to the sheer amount of assignments and midterms from other courses, to improve development efficiency. 
 
-Different tasks were evenly distributed and we started planning when should each member report back to the team with either a completed task or a part of the completed task.
-
-Different tasks were also broken down into subtasks because we only  had w week for sprint2. A lot of feedback was given to us from the Project Demo which we made sure to keep in mind. Project Demo was also due this week so we had to come prepared as a team to give our best out.
-
-Because of only a week given we had to add a extra meeting on Sunday to keep a minumum of 3 meetings.
+Due to reading week, we decided to have an extra meeting on Sunday to enure at least 3 standups were completed.
 
 # Sprint Goal (Stories)
 We plan to finish the following stories
