@@ -41,8 +41,8 @@ const NutritionPlans = ({navigation}) => {
                     'x-auth-token': token,
                 }
             })
-            console.log(response);
-            setMealPlans(response.data.personalMealPlans);
+            console.log(response.data);
+            setMealPlans(response.data);
         }
         getStoredMealPlans();
     }, [isFocused]);
@@ -106,15 +106,6 @@ const NutritionPlans = ({navigation}) => {
         </View>
        );
 }
-
-/**
- *                     <FlatList
-                        data={mealPlans}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id}
-                        scrollEnabled={true}
-                    />
- */
 
 const styles = StyleSheet.create({
     root:{
