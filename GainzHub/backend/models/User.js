@@ -102,6 +102,10 @@ const UserSchema = new mongoose.Schema({
         },
         snackProtein:{
             type: Number
+        },
+        published:{
+            type: Boolean,
+            default: false,
         }
     }]
 });

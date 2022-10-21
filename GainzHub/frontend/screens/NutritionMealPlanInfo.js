@@ -17,7 +17,7 @@ import { useIsFocused } from '@react-navigation/native';
 const {maroon, black} = Colors;
 
 const NutritionMealPlanInfo = ({route, navigation: { goBack }}) => {
-    const mealPlan = route.params.item;
+    const mealPlan = route.params.obj;
     console.log(mealPlan);
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>

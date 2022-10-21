@@ -11,6 +11,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import NutritionNav from '../components/NutritionNav';
+import { ScrollView } from 'react-native-gesture-handler';
+import MealPlanItem from '../components/MealPlanItem';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
@@ -43,23 +45,24 @@ const NutritionPlans = ({navigation}) => {
             setMealPlans(response.data.personalMealPlans);
         }
         getStoredMealPlans();
-    }, [isFocused])
-    //onPress={()=> navigation.navigate('NutritonMealPlanInfo')}
+    }, [isFocused]);
 
     const renderItem = ({ item }) => (
-        <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
-            <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {item})} style={[styles.inputView, {width: '75%'}]}>
-                <Text style={styles.inputText}>{item.planName}</Text>
-            </TouchableOpacity>
-           
-            <TouchableOpacity onPress={()=> navigation.navigate('Placeholder')} style={[styles.TouchableOpacityList]} >
-                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
-                    Publish
-                </Text>
-            </TouchableOpacity> 
-            
-        </View>
+        <MealPlanItem obj={item} navigation={navigation} handlePublish={handlePublish}/>
       );
+    
+    const handlePublish = (obj) =>{
+        const isPublished = obj.published;
+
+        //If it is published, request to remove it from publish cluster
+        if(isPublished){
+            //Delete request to publish cluster
+        }
+        //else, request to add to publish cluster
+        else{
+            //Post request to publish cluster
+        }
+    }
     
     return(
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -83,13 +86,15 @@ const NutritionPlans = ({navigation}) => {
                     Meal Plan Library
                 </Text>
             </View>
-            <View style={{flex:1}}>
-                <FlatList
-                    data={mealPlans}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                    scrollEnabled={true}
-                />
+            <View style={{flex:1, maxHeight:'600px'}}>
+                <ScrollView>
+                    <FlatList
+                        data={mealPlans}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        scrollEnabled={true}
+                    />
+                </ScrollView>
             </View>
             <View>
                 <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealAdder')} style={[styles.TouchableOpacity]} >
@@ -101,6 +106,15 @@ const NutritionPlans = ({navigation}) => {
         </View>
        );
 }
+
+/**
+ *                     <FlatList
+                        data={mealPlans}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        scrollEnabled={true}
+                    />
+ */
 
 const styles = StyleSheet.create({
     root:{
