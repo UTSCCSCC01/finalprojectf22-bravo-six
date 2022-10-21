@@ -11,6 +11,10 @@ import CalorieCalculator from '../screens/CalorieCalculator';
 import Nutrition from '../screens/Nutrition';
 import NutritionAddFood from '../screens/NutritionAddFood';
 import NutritionFoodViewer from '../screens/NutritionFoodViewer';
+import Workout from '../screens/Workout';
+import WorkoutAddPlan from '../screens/WorkoutAddPlan';
+import WorkoutExplore from '../screens/WorkoutExplore';
+import WorkoutLogs from '../screens/WorkoutLogs';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +33,10 @@ const AppStack = ()=>{
                 <Stack.Screen name = "CalorieCalculator" component={CalorieCalculator}/>
                 <Stack.Screen name = "NutritionAddFood" component={NutritionAddFood}/>
                 <Stack.Screen name = "NutritionFoodViewer" component={NutritionFoodViewer}/>
+                <Stack.Screen name = "Workout" component={Workout}/>
+                <Stack.Screen name = "WorkoutAddPlan" component={WorkoutAddPlan}/>
+                <Stack.Screen name = "WorkoutExplore" component={WorkoutExplore}/>
+                <Stack.Screen name = "WorkoutLogs" component={WorkoutLogs}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
