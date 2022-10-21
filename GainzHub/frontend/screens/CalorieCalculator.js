@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, Platform} from 'react-native'
+import {Text, View, StyleSheet, TouchableOpacity, Button, Platform} from 'react-native'
 import {Colors} from '../components/colors'
+import { TextInput } from 'react-native-paper';
 //import { Select } from "native-base";
 //import RNPickerSelect from "react-native-picker-select";
 //import { Model, Query } from 'mongoose';
@@ -53,7 +54,6 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
 
     const [userData, setUserData] = useState("No user data");
     const [loggedIn, setLoggedIn] = useState(true);
-   
 
     const updateCalorieGoal = async() => {
         // add calories to user.calorieGoal in the database
@@ -175,27 +175,30 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
             </View>
                 <View style={[{alignContent:'center'}]}>
                     <View style={[styles.inputView, {width: 350}, formErrors['height'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
-                        <TextInput
-                        style={[styles.inputText]}
-                        placeholder="Height (cm)"
-                        placeholderTextColor='black'
-                        onChangeText={(height) => setHeight(height)}
+                        <TextInput 
+                            style={styles.textInputLine}
+                            activeUnderlineColor={Colors.maroon} 
+                            mode = "flat" label = "Height" 
+                            placeholder = "Enter Height (cm)"
+                            onChangeText={(height) => setHeight(height)}
                         />
                     </View>
                     <View style={[styles.inputView, {width: 350}, formErrors['weight'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
-                        <TextInput
-                        style={[styles.inputText]}
-                        placeholder="Weight (kg)"
-                        placeholderTextColor="black"
-                        onChangeText={(weight) => setWeight(weight)}
+                        <TextInput 
+                            style={styles.textInputLine}
+                            activeUnderlineColor={Colors.maroon} 
+                            mode = "flat" label = "Weight" 
+                            placeholder = "Enter Weight (kg)"
+                            onChangeText={(weight) => setWeight(weight)}
                         />
                     </View>
                     <View style={[styles.inputView, {width: 350}, formErrors['age'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
-                        <TextInput
-                        style={styles.inputText}
-                        placeholder="Age"
-                        placeholderTextColor="black"
-                        onChangeText={(age) => setAge(age)}
+                        <TextInput 
+                            style={styles.textInputLine}
+                            activeUnderlineColor={Colors.maroon} 
+                            mode = "flat" label = "Age" 
+                            placeholder = "Enter Age"
+                            onChangeText={(age) => setAge(age)}
                         />
                     </View>
                     <View style={[styles.inputView, {width: 350}, formErrors['activity'].length == 0 ? {} : {borderColor: "red"}]}>
@@ -241,6 +244,7 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
                             disableBorderRadius={true}
                         />
                     </View>
+                    
                     <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center'}}>
                         {"Calories Needed: "}{calories}
                     </Text>
@@ -268,13 +272,7 @@ const styles = StyleSheet.create({
         padding: 30,
     },
     inputView:{
-        height: 45,
-        backgroundColor: "#FFFFFF",
-        borderColor: "black",
-        borderWidth: 1,
-        borderRadius: 8,
         marginBottom: 20,
-        alignContent: 'center'
     },
     inputText:{
         height: 50,
@@ -298,6 +296,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    textInputLine:{
+        backgroundColor: Colors.appBackground,
     },
     container: {
         alignItems: 'center',
