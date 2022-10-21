@@ -1,11 +1,11 @@
 # Sprint 2 Planning Meetings
 The Sprint 2 planning meeting was held on Oct 16th, 2022 on Discord. During this meeting we discussed our goal for Sprint 2, and the stories we would accomplish by the end of the sprint. We also discussed how we are going to break down the stories into subtask, and distribute the tasks in a way to optimize development efficiency.
 
-Different task were evenely distributed and we started planning when should member's report back to the team with either completed task or a part of the completed task.
+Different tasks were evenly distributed and we started planning when should each member report back to the team with either a completed task or a part of the completed task.
 
-Different task were also broken down into subtask because only week for the sprint2. Alot of feedback was given to us from the Project Demo which we to sure to keep in our mind. Project Demo was also due this week so we had to come preared as a team to give our best out.
+Different tasks were also broken down into subtasks because we only  had w week for sprint2. A lot of feedback was given to us from the Project Demo which we made sure to keep in mind. Project Demo was also due this week so we had to come prepared as a team to give our best out.
 
-Because of only a week given we had to add a extra meeting on sunday to keep a minumum of 3 meetings.
+Because of only a week given we had to add a extra meeting on Sunday to keep a minumum of 3 meetings.
 
 # Sprint Goal (Stories)
 We plan to finish the following stories
@@ -36,11 +36,11 @@ We plan to finish the following stories
 
 ## BRAV 67
 - Changed formatting of food log UI
-- New UI provides a clear UI 
+- New UI provides a clearer and neater version of the food log's representation
 
 ## BRAV-68
 - Implemented MongoDB Trigger to Reset caloriesAte
-- Same Implementation will used to cleare other sutdf such foods eaten in day for all users at 12:00am
+- Same implementation will used to clear other stuff such as the amount of food eaten in day for all users at 12:00am
 
 ## BRAV-45
 - Implemented UI for Button to direct user to new page to add new food.
@@ -79,8 +79,8 @@ We plan to finish the following stories
 # Spikes/Blockers
 - Using JS Native is still fairly new to many of us so it takes alot of research before implementing something
 - Certain stories/tasks need other stories/tasks to be completed first.
-- Alot of members have midterms and assignments for whole week
-- Work capacity will fluxuate based off our personal schedules (ie. exam season, times of increased workload)
+- Alot of members have midterms and assignments for the whole week
+- Work capacity will fluctuate based off our personal schedules (ie. exam season, times of increased workload)
 - Certain UI issues, for example sliders not working properly on web (reported issue online)
 
 # Team Capacity
