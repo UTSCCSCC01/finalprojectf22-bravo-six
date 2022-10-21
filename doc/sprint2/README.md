@@ -9,8 +9,8 @@
 * schedule.pdf - Waiting until 9 [Everyone Finished] Avi
 * Sprint Completion - Completed
 * System Design:
-  * CRC Cards - Needs Update Dom
-  * Software Architecture Diagram - Needs Update Kevin
+  * CRC Cards - Should be completed
+  * Software Architecture Diagram - Should be completed
 * Documentation - **Completed**
 * Sprint Demo - **Eventually Completed**
 * PB - Needs Update
