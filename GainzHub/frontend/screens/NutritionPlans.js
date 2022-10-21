@@ -34,7 +34,7 @@ const NutritionPlans = ({navigation}) => {
         const getStoredMealPlans = async() => {
             const token = await AsyncStorage.getItem("userData");
     
-            const response  = await axios.get('http://localhost:5000/getPMP/getPersonalMealPlans', {
+            const response  = await axios.get('http://localhost:5001/nutrition/getPersonalMealPlans', {
                 headers: {
                     'x-auth-token': token,
                 }
