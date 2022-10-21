@@ -61,6 +61,18 @@ const Workout = ({navigation}) =>{
                     </Text>
                 </TouchableOpacity> 
             </View>
+            <View style={{paddingLeft: 5}}>
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:black, marginBottom:20}}>
+                        Workout Plans
+                </Text>
+            </View>
+            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
+                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutAddPlan')} style={[styles.TouchableOpacity]}>
+                    <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
+                        Add Plan
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
