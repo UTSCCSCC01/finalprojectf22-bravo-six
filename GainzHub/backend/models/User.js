@@ -28,7 +28,29 @@ const UserSchema = new mongoose.Schema({
     caloriesAte:{
         type: Number,
         default: 0
-    }
+    },
+    food:[{
+        foodName:{
+            type: String
+        },
+        foodCalories:{
+            type: Number
+        },
+        foodProtein:{
+            type: Number
+        },
+        foodCarbs:{
+            type: Number
+        },
+        foodFat:{
+            type: Number
+        },
+        foodSugar:{
+            type: Number
+        },
+        foodSodium:{
+            type: Number
+        }}],
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

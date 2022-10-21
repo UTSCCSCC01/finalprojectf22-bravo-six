@@ -14,7 +14,6 @@ const ShowPasswordBtn = ({onPress}) =>{
                 </Text>
             </TouchableOpacity>
         </View>
-
     );
 }
 

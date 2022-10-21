@@ -1,9 +1,9 @@
 import axios from "axios";
 import { Platform, processColor } from "react-native";
 
-const AUTH_DEV_URI = "http://localhost:5000/auth/";
+const AUTH_DEV_URI = "http://localhost:5001/auth/";
 
-const ANDROID_DEV_URI = "http://10.0.2.2:5000/auth/";
+const ANDROID_DEV_URI = "http://10.0.2.2:5001/auth/";
 
 const REQ_URI = () =>{
     switch(Platform.OS) {
