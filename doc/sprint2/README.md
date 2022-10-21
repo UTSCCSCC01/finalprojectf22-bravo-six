@@ -2,7 +2,7 @@
 * Planning Meetings - ?
   * SR(N-1).md - Completed 
   * sprintN.md - Nearly Completed
-* Daily Stand-ups - 2/3 Completed
+* Daily Stand-ups - Completed
 * User Stories - ?
 * Tracking on trello - ?
 * burndown.pdf - ?
