@@ -9,10 +9,10 @@ Because of only a week given we had to add a extra meeting on sunday to keep a m
 
 # Sprint Goal (Stories)
 We plan to finish the following stories
-- BRAV-65
-- BRAV-66
-- BRAV-67
-- BRAV-68
+- BRAV-65 (Kevin)
+- BRAV-66 (Bryan)
+- BRAV-67 (Jason)
+- BRAV-68 (Avi)
 
 # Task Breakdown
 
