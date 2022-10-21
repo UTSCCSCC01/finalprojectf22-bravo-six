@@ -13,6 +13,14 @@ We plan to finish the following stories
 - BRAV-66 (Bryan)
 - BRAV-67 (Jason)
 - BRAV-68 (Avi)
+- BRAV-45 (Dominik)
+- BRAV-46 (Dominik)
+- BRAV-47 (Dominik)
+- BRAV-48 (Dominik)
+- BRAV-62 (Dominik)
+- BRAV-3 
+- BRAV-4
+
 
 # Task Breakdown
 
@@ -33,10 +41,33 @@ We plan to finish the following stories
 - Implemented MongoDB Trigger to Reset caloriesAte
 - Same Implementation will used to cleare other sutdf such foods eaten in day for all users at 12:00am
 
+## BRAV-45
+- Implemented UI for Button to direct user to new page to add new food.
+- Implemented UI for input for food (calories, protein, carbs, etc.)
+- Implemented UI for Button to save food to database.
+- Implemented UI for list of logged food for user to see.
+
+## BRAV-46
+- Create backend methods (MongoDB trigger), to let user save a food into their food log.
+- Implement backend methods to get all logged foods from the user, and connect them to the UI list.
+- Implement UI and logic to display logged food information depending on which item is clicked in the list.
+
+## BRAV-47
+- Implement UI for Button to direct user to new page to add a meal plan.
+- Implemented UI for input for meal plan (breakfast, lunch, dinner, snacks information)
+- Implemented UI for Button to save meal plan to database.
+- Implemented UI for list of saved meal plans, along with button to publish them (publish not implemented yet).
+
+## BRAV-48
+- Create backend methods and routes to save meal plan, and all its info into MongoDB.
+- Create backend methods and routes to get all meal plans so that they can be displayed in the UI list.
+
+## BRAV-62
+- Create UI and logic to display meal plan information depending on which item is clicked in the list.
+
 # Spikes/Blockers
 - Using JS Native is still fairly new to many of us so it takes alot of research before implementing something
 - Alot of members have midterms and assignments for whole week
-- Only week given for the Sprint2 so Task needed to split
 - Work capacity will fluxuate based off our personal schedules (ie. exam season, times of increased workload)
 
 # Team Capacity
