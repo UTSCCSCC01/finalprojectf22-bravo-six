@@ -5,12 +5,12 @@
 * Daily Stand-ups - **Completed**
 * User Stories - ?
 * Tracking on trello - Double Check 
-* burndown.pdf - Done Waiting until 9 to finish questions [Everyone Finished]
-* schedule.pdf - Waiting until 9 [Everyone Finished]
+* burndown.pdf - Done Waiting until 9 to finish questions [Everyone Finished] Porom
+* schedule.pdf - Waiting until 9 [Everyone Finished] Avi
 * Sprint Completion - Completed
 * System Design:
-  * CRC Cards - Needs Update
-  * Software Architecture Diagram - Needs Update
+  * CRC Cards - Needs Update Dom
+  * Software Architecture Diagram - Needs Update Kevin
 * Documentation - **Completed**
 * Sprint Demo - **Eventually Completed**
 * PB - Needs Update
