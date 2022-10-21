@@ -22,6 +22,7 @@ function NutritionStackScreen(){
     return(
         <NutritionStack.Navigator
             initialRouteName='Daily'
+            screenOptions={{headerShown: false}}
         >
             <NutritionStack.Screen name= "Daily" component={Nutrition}/>
             <NutritionStack.Screen name="Plan" component={NutritionPlans}/>

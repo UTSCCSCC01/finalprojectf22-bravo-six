@@ -44,12 +44,13 @@ const NutritionPlans = ({navigation}) => {
         }
         getStoredMealPlans();
     }, [isFocused])
-    
-    const Item = ({ name }) => (
+    //onPress={()=> navigation.navigate('NutritonMealPlanInfo')}
+
+    const renderItem = ({ item }) => (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
-            <View style={[styles.inputView, {width: '75%'}]}>
-                <Text style={styles.inputText}>{name}</Text>
-            </View>
+            <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {item})} style={[styles.inputView, {width: '75%'}]}>
+                <Text style={styles.inputText}>{item.planName}</Text>
+            </TouchableOpacity>
            
             <TouchableOpacity onPress={()=> navigation.navigate('Placeholder')} style={[styles.TouchableOpacityList]} >
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
@@ -59,14 +60,9 @@ const NutritionPlans = ({navigation}) => {
             
         </View>
       );
-      
-    
-    const renderItem = ({ item }) => (
-        <Item name={item.planName} />
-    );
     
     return(
-        <View style={[styles.root, {paddingLeft: 20}]}>
+        <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
                 <View style = {{paddingRight: 50}}>
                     <TouchableOpacity onPress={()=> navigation.pop()}>
@@ -87,14 +83,14 @@ const NutritionPlans = ({navigation}) => {
                     Meal Plan Library
                 </Text>
             </View>
-            <SafeAreaView>
+            <View style={{flex:1}}>
                 <FlatList
                     data={mealPlans}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                     scrollEnabled={true}
                 />
-            </SafeAreaView>
+            </View>
             <View>
                 <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealAdder')} style={[styles.TouchableOpacity]} >
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color: "white"}}>

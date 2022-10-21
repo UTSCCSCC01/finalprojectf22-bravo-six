@@ -13,6 +13,7 @@ import NutritionAddFood from '../screens/NutritionAddFood';
 import NutritionFoodViewer from '../screens/NutritionFoodViewer';
 import NutritionPlans from '../screens/NutritionPlans';
 import NutritionMealAdder from '../screens/NutritionMealAdder';
+import NutritionMealPlanInfo from '../screens/NutritionMealPlanInfo';
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,7 @@ const AppStack = ()=>{
                 <Stack.Screen name = "NutritionFoodViewer" component={NutritionFoodViewer}/>
                 <Stack.Screen name = "NutritionPlans" component={NutritionPlans}/>
                 <Stack.Screen name = "NutritionMealAdder" component={NutritionMealAdder}/>
+                <Stack.Screen name = "NutritionMealPlanInfo" component={NutritionMealPlanInfo}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
