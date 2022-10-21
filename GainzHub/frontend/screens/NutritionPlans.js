@@ -9,6 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
+import NutritionNav from '../components/NutritionNav';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
@@ -22,6 +24,7 @@ const getUser = async() =>{
     const value = await AsyncStorage.getItem('userData');
     return value;
 }
+
 // NEED to have the goBack but also need to navigate through pages *FIGURE THAT OUT LATER*
 const NutritionPlans = ({navigation}) => {
     const test = [{
@@ -62,7 +65,7 @@ const NutritionPlans = ({navigation}) => {
         <View style={[styles.root, {paddingLeft: 20}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
                 <View style = {{paddingRight: 50}}>
-                    <TouchableOpacity onPress={()=> navigation.navigate('Nutrition')}>
+                    <TouchableOpacity onPress={()=> navigation.pop()}>
                         <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                             Back
                         </Text>
@@ -74,23 +77,7 @@ const NutritionPlans = ({navigation}) => {
                     Nutrition
                 </Text>
             </View>
-            <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center'}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('Nutrition')} style={{paddingLeft: 40}} >
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                       Daily
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('NutritonPlans')} style={{paddingLeft: 70}} >
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color: maroon}}>
-                       Plans
-                    </Text>
-                </TouchableOpacity> 
-                <TouchableOpacity onPress={()=> navigation.navigate('Nutriton_Explore')} style={{paddingLeft: 60}} >
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                        Explore
-                    </Text>
-                </TouchableOpacity> 
-            </View>
+            <NutritionNav navigation={navigation}/>
             <View>
                 <Text style = {{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:26}}>
                     Meal Plan Library

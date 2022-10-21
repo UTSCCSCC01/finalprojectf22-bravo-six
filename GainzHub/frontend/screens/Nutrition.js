@@ -9,14 +9,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
+import NutritionPlans from './NutritionPlans';
+import NutritionNav from '../components/NutritionNav';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
 //import * as Progress from 'react-native-progress'
 
 const {maroon, black} = Colors;
-
-const Tab = createBottomTabNavigator();
 
 const getUser = async() =>{
     const value = await AsyncStorage.getItem('userData');
@@ -32,7 +32,6 @@ const Nutrition = ({navigation}) =>{
     const [fullUserData, setFullUserData] = useState({});
     const [food, setFood] = useState({});
     const isFocused = useIsFocused();
-   
 
     useEffect(() =>{
         const getStoredUser = async() =>{
@@ -127,23 +126,6 @@ const Nutrition = ({navigation}) =>{
                     Nutrition
                 </Text>
             </View>
-            <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center', paddingHorizontal:30, justifyContent:'space-between'}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('Nutrition')}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
-                       Daily
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('NutritionPlans')} style={{paddingLeft: 70}} >
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                       Plans
-                    </Text>
-                </TouchableOpacity> 
-                <TouchableOpacity onPress={()=> navigation.navigate('Nutriton_Explore')}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                        Explore
-                    </Text>
-                </TouchableOpacity> 
-            </View>
 
             <View style={[{marginBottom:20},{textAlign: 'center'}, {alignItems: 'center'}]}>
                 <Text style={{fontFamily: 'Inter-Medium', fontWeight: '600', fontSize: 20}}> Calorie Goal: {calorieGoal}</Text>
@@ -163,6 +145,8 @@ const Nutrition = ({navigation}) =>{
                     </Text>
                 </TouchableOpacity> 
             </View>
+
+            <NutritionNav navigation={navigation}/>
 
             <View style={{paddingLeft: 5}}>
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:black, marginBottom:20}}>

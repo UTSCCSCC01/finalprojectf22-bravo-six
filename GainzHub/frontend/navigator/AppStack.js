@@ -27,7 +27,6 @@ const AppStack = ()=>{
                 <Stack.Screen name = "Register" component={Register}/>
                 <Stack.Screen name = "TempLanding" component={TempLanding}/>
                 <Stack.Screen name = "NavBar" component={NavBar}/>
-                <Stack.Screen name = "Nutrition" component={Nutrition}/>
                 <Stack.Screen name = "CalorieCalculator" component={CalorieCalculator}/>
                 <Stack.Screen name = "NutritionAddFood" component={NutritionAddFood}/>
                 <Stack.Screen name = "NutritionFoodViewer" component={NutritionFoodViewer}/>
