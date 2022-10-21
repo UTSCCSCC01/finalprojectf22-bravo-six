@@ -9,6 +9,6 @@
 * System Design - 
   * CRC Cards -
   * Software Architecture Diagram - 
-* Documentation - 
+* Documentation - Completed
 * Sprint Demo - Eventually Completed
 * PB - Needs Update
