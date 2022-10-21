@@ -5,10 +5,12 @@
 * Daily Stand-ups - 2/3 Completed
 * User Stories - ?
 * Tracking on trello - ?
+* burndown.pdf - ?
+* schedule.pdf - ?
 * Sprint Completion - Completed
-* System Design - ?
-  * CRC Cards - ?
-  * Software Architecture Diagram - ?
+* System Design - Needs Update
+  * CRC Cards - Needs Update
+  * Software Architecture Diagram - Needs Update
 * Documentation - Completed
 * Sprint Demo - Eventually Completed
 * PB - Needs Update
