@@ -50,12 +50,12 @@ const Workout = ({navigation}) =>{
                        Plans
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Workout_logs')}>
+                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutLogs')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                        Logs
                     </Text>
                 </TouchableOpacity> 
-                <TouchableOpacity onPress={()=> navigation.navigate('Workout_explore')}>
+                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutExplore')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                         Explore
                     </Text>

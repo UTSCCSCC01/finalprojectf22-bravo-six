@@ -14,9 +14,18 @@ const WorkoutAddPlan = ({navigation: {goBack}}) => {
     
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
-            <View style={[{alignItems: 'center'}]}>
-                <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 18, color: "white"}}>
-                    Add
+            <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
+                <View style = {{paddingRight: 50}}>
+                    <TouchableOpacity onPress={() => goBack()}>
+                        <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
+                            Back
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 30, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:10}}>
+                    add plan page
                 </Text>
             </View>
         </View>
