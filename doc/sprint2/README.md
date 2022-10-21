@@ -1,5 +1,5 @@
 # TODO
-* Planning Meetings - ?
+* Planning Meetings:
   * SR(N-1).md - Completed 
   * sprintN.md - Nearly Completed
 * Daily Stand-ups - Completed
@@ -8,7 +8,7 @@
 * burndown.pdf - ?
 * schedule.pdf - ?
 * Sprint Completion - Completed
-* System Design - Needs Update
+* System Design:
   * CRC Cards - Needs Update
   * Software Architecture Diagram - Needs Update
 * Documentation - Completed
