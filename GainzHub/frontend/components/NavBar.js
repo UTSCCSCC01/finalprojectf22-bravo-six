@@ -8,6 +8,8 @@ import TempLanding from '../screens/TempLanding';
 import { Ionicons } from '@expo/vector-icons';
 import Nutrition from '../screens/Nutrition';
 import Workout from '../screens/Workout';
+import WorkoutLogs from '../screens/WorkoutLogs';
+import WorkoutExplore from '../screens/WorkoutExplore';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 
@@ -43,6 +45,20 @@ export default function Landing({ navigation }) {
                 <MaterialCommunityIcons name="weight-lifter" color={color} size={size} />
                 ),
             }} 
+        />
+        <Tab.Screen name="WorkoutLogs" component={WorkoutLogs}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="WorkoutExplore" component={WorkoutExplore}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
         />
         <Tab.Screen name="Profile" component={Profile}
             options={{
