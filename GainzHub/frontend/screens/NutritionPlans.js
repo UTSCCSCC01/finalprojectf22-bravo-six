@@ -27,24 +27,28 @@ const getUser = async() =>{
 
 // NEED to have the goBack but also need to navigate through pages *FIGURE THAT OUT LATER*
 const NutritionPlans = ({navigation}) => {
-    const test = [{
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First Test Meal Plan',
-      },
-      {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second Meal Plan',
-      },
-      {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third Meal Plan',
-      }
-    ];
+    const [mealPlans, setMealPlans] = useState({});
+    const isFocused = useIsFocused();
 
-    const Item = ({ title }) => (
+    useEffect(() => {
+        const getStoredMealPlans = async() => {
+            const token = await AsyncStorage.getItem("userData");
+    
+            const response  = await axios.get('http://localhost:5001/nutrition/getPersonalMealPlans', {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            console.log(response);
+            setMealPlans(response.data.personalMealPlans);
+        }
+        getStoredMealPlans();
+    }, [isFocused])
+    
+    const Item = ({ name }) => (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
             <View style={[styles.inputView, {width: '75%'}]}>
-                <Text style={styles.inputText}>{title}</Text>
+                <Text style={styles.inputText}>{name}</Text>
             </View>
            
             <TouchableOpacity onPress={()=> navigation.navigate('Placeholder')} style={[styles.TouchableOpacityList]} >
@@ -58,7 +62,7 @@ const NutritionPlans = ({navigation}) => {
       
     
     const renderItem = ({ item }) => (
-        <Item title={item.title} />
+        <Item name={item.planName} />
     );
     
     return(
@@ -79,13 +83,13 @@ const NutritionPlans = ({navigation}) => {
             </View>
             <NutritionNav navigation={navigation}/>
             <View>
-                <Text style = {{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:26}}>
+                <Text style = {{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:26, paddingBottom:10}}>
                     Meal Plan Library
                 </Text>
             </View>
             <SafeAreaView>
                 <FlatList
-                    data={test}
+                    data={mealPlans}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                     scrollEnabled={true}
@@ -99,7 +103,6 @@ const NutritionPlans = ({navigation}) => {
                 </TouchableOpacity> 
             </View>
         </View>
-
        );
 }
 
@@ -131,7 +134,6 @@ const styles = StyleSheet.create({
         height:25,
         width:'100%',
         borderRadius: 30,
-        marginTop: 20,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
