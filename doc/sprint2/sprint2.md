@@ -20,6 +20,7 @@ We plan to finish the following stories
 - BRAV-62 (Dominik)
 - BRAV-3 
 - BRAV-4
+- BRAV-69 (Porom)
 
 
 # Task Breakdown
@@ -65,10 +66,22 @@ We plan to finish the following stories
 ## BRAV-62
 - Create UI and logic to display meal plan information depending on which item is clicked in the list.
 
+## BRAV-3
+- Complete stories/tasks BRAV-45, BRAV-46
+
+## BRAV-4
+- Complete stories/tasks BRAV-47, BRAV-48, BRAV-62
+
+## BRAV-69
+- Change the data architecture of database, clustering meal plans and attaching a user_id to each one
+
+
 # Spikes/Blockers
 - Using JS Native is still fairly new to many of us so it takes alot of research before implementing something
+- Certain stories/tasks need other stories/tasks to be completed first.
 - Alot of members have midterms and assignments for whole week
 - Work capacity will fluxuate based off our personal schedules (ie. exam season, times of increased workload)
+- Certain UI issues, for example sliders not working properly on web (reported issue online)
 
 # Team Capacity
 ___
