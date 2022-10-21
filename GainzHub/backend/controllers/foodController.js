@@ -68,4 +68,48 @@ const getCaloriesAte = async(req, res) =>{
     });
 }
 
-module.exports = {getFoodLog, logFood, getCalorieGoal, getCaloriesAte}
+const addMealPlan = async(req, res) =>{
+    const userId = req.user;
+    const {newMealPlan} = req.body;
+
+    User.updateOne({_id: userId}, {$push:{personalMealPlans: newMealPlan}}, (err)=>{
+        if(err){
+            return res.status(400).json({error: "Cant update"});
+        }
+        else{
+            return res.status(200).json({message: "Success", personalMealPlans: newMealPlan});
+        }
+    });
+}
+
+const changeCalorieGoal = async(req, res) =>{
+    const userId = req.user;
+    const {newCalorieGoal} = req.body;
+
+    User.updateOne({_id: userId}, {calorieGoal: newCalorieGoal}, (err)=>{
+        if(err){
+            return res.status(400).json({error: "Cant update"});
+        }
+        else{
+            return res.status(200).json({message: "Success", calorieGoal: newCalorieGoal});
+        }
+    });
+}
+
+const getPersonalMealPlans = async(req, res) =>{
+    const userId = req.user;
+
+    User.findOne({_id: userId},  (err, data)=>{
+        if(err){
+            return res.status(400).json({error: "Cant get value"});
+        }
+        else{
+            if(data.personalMealPlans != null){
+                return res.status(200).json({personalMealPlans: data.personalMealPlans});
+            }
+        }
+    });
+}
+
+
+module.exports = {getFoodLog, logFood, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, getPersonalMealPlans}

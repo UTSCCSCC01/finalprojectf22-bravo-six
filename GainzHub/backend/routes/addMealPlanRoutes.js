@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const {changeCalorieGoal} = require("../controllers/changeCGController");
+const {addMealPlan} = require("../controllers/addMealPlanController");
 const { JWTAuth } = require('../middleware/JWTAuth');
 
-router.post("/changeCalorieGoal", JWTAuth, changeCalorieGoal);
+router.post("/addPersonalMealPlan", JWTAuth, addMealPlan);
 
 
 module.exports = (router);

@@ -14,8 +14,10 @@ app.use(cors());
 //tell express to use these routes
 
 app.use("/auth", require('./routes/authRoutes'));
-app.use("/change", require("./routes/changeRoutes"));
 app.use("/nutrition", require("./routes/foodRoutes"));
+app.use("/development", require('./routes/developmentRoutes'));
+app.use("/addMealPlan", require("./routes/addMealPlanRoutes"));
+app.use("/getPMP", require("./routes/getPersonalMealPlansRoutes"));
 
 const PORT = process.env.PORT || 5001;
 
