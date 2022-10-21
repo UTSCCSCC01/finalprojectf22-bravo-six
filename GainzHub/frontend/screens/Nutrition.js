@@ -66,7 +66,6 @@ const Nutrition = ({navigation}) =>{
                     'x-auth-token': token,
                 }
             })
-            console.log(response);
             setCalorieGoal(response.data.calorieGoal);
         }
         getStoredGoal();
