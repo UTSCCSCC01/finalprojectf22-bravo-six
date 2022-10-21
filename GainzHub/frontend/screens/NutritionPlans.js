@@ -98,20 +98,7 @@ const NutritionPlans = ({navigation}) => {
                     </Text>
                 </TouchableOpacity> 
             </View>
-            <View>
-                <Text style = {{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:26}}>
-                    Meal Plan Library
-                </Text>
-            </View>
-            <View>
-                <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealAdder')} style={[styles.TouchableOpacity]} >
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color: "white"}}>
-                        Meal Adder
-                    </Text>
-                </TouchableOpacity> 
-            </View>
         </View>
-
        );
 }
 
