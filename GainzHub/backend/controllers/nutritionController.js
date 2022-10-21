@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const {check, validationResult} = require('express-validator');
 const asyncHandler = require('express-async-handler');
 const User = require("../models/User");
+const MealPlan = require("../models/MealPlan");
 const { json } = require('express');
 
 const getFoodLog = async(req, res) =>{
@@ -53,7 +54,7 @@ const getCalorieGoal = async(req, res) =>{
     });
 }
 
-const getCaloriesAte = async(req, res) =>{
+const getCaloriesAte = async(req, res) => {
     const userId = req.user;
 
     User.findOne({_id: userId},  (err, data)=>{
@@ -71,15 +72,16 @@ const getCaloriesAte = async(req, res) =>{
 const addMealPlan = async(req, res) =>{
     const userId = req.user;
     const {newMealPlan} = req.body;
-
-    User.updateOne({_id: userId}, {$push:{personalMealPlans: newMealPlan}}, (err)=>{
-        if(err){
-            return res.status(400).json({error: "Cant update"});
-        }
-        else{
-            return res.status(200).json({message: "Success", personalMealPlans: newMealPlan});
-        }
-    });
+    
+    try{
+        const mealPlanObj = new MealPlan(newMealPlan);
+        mealPlanObj.userId = userId;
+        console.log(mealPlanObj);
+        mealPlanObj.save();
+        return res.status(200).send("Added meal");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
 }
 
 const changeCalorieGoal = async(req, res) =>{
@@ -99,16 +101,10 @@ const changeCalorieGoal = async(req, res) =>{
 const getPersonalMealPlans = async(req, res) =>{
     const userId = req.user;
 
-    User.findOne({_id: userId},  (err, data)=>{
-        if(err){
-            return res.status(400).json({error: "Cant get value"});
-        }
-        else{
-            if(data.personalMealPlans != null){
-                return res.status(200).json({personalMealPlans: data.personalMealPlans});
-            }
-        }
-    });
+    const foundPlans = await MealPlan.find({userId: userId});
+    console.log(foundPlans);
+    return res.status(200).json(foundPlans);
+
 }
 
 

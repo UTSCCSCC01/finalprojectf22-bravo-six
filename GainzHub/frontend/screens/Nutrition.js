@@ -80,7 +80,6 @@ const Nutrition = ({navigation}) =>{
                     'x-auth-token': token,
                 }
             })
-            console.log(response);
             setCaloriesAte(response.data.caloriesAte);
         }
         getStoredAte();
@@ -95,7 +94,6 @@ const Nutrition = ({navigation}) =>{
                     'x-auth-token': token,
                 }
             })
-            console.log(response);
             setFood(response.data.food);
         }
         getStoredFood();
