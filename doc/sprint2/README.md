@@ -6,7 +6,7 @@
 * User Stories - **Completed**
 * Tracking on trello - Double Check 
 * burndown.pdf - **Completed**
-* schedule.pdf - Waiting until 9 [Everyone Finished] Avi
+* schedule.pdf - **Completed**
 * Sprint Completion - *Completed**
 * System Design:
   * CRC Cards - **Completed**
