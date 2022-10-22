@@ -12,9 +12,7 @@ const NutritionNav = ({navigation}) =>{
 
     useEffect(()=>{
         let newColors = {daily: black, plans: black, explore: black};
-        const currentState = navigation.getState()
-        const currentRouteIndex = currentState.index;
-        const currentRouteName = currentState.routeNames[currentRouteIndex];
+        const currentRouteName = route.name;
         switch(currentRouteName){
             case "Daily":
                 newColors.daily=maroon;
@@ -29,14 +27,19 @@ const NutritionNav = ({navigation}) =>{
                 break;
         }
         setBtnColors(newColors);
-    }, [isFocused])
+    }, []);
 
     const handleDailyClick = () =>{
         navigation.navigate('Daily');
     }
 
     const handlePlanClick = () =>{
+
         navigation.navigate('Plan');
+    }
+
+    const handleExploreClick = () =>{
+        navigation.navigate('Explore');
     }
 
     return (
@@ -46,12 +49,12 @@ const NutritionNav = ({navigation}) =>{
                 Daily
             </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=> { handlePlanClick()}} style={{paddingLeft: 70}} >
+        <TouchableOpacity onPress={()=> handlePlanClick()} style={{paddingLeft: 70}} >
             <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:btnColors.plans}}>
                 Plans
             </Text>
         </TouchableOpacity> 
-        <TouchableOpacity onPress={()=> navigation.navigate('Nutriton_Explore')} style={{paddingLeft: 60}} >
+        <TouchableOpacity onPress={()=> handleExploreClick()} style={{paddingLeft: 60}} >
             <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:btnColors.explore}}>
                 Explore
             </Text>

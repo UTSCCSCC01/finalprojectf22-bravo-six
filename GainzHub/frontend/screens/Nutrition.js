@@ -32,7 +32,6 @@ const Nutrition = ({navigation}) =>{
     const [fullUserData, setFullUserData] = useState({});
     const [food, setFood] = useState({});
     const isFocused = useIsFocused();
-
     useEffect(() =>{
         const getStoredUser = async() =>{
             const userDataStored = await AsyncStorage.getItem('userData');

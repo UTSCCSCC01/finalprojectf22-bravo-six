@@ -32,7 +32,7 @@ const NutritionPlans = ({navigation}) => {
     const [mealPlans, setMealPlans] = useState({});
     const [user, setUser] = useState("");
     const isFocused = useIsFocused();
-
+    
     useEffect(() => {
         const getStoredMealPlans = async() => {
             const token = await AsyncStorage.getItem("userData");
@@ -42,7 +42,6 @@ const NutritionPlans = ({navigation}) => {
                     'x-auth-token': token,
                 }
             })
-            console.log(response.data);
             setMealPlans(response.data);
         }
         getStoredMealPlans();
