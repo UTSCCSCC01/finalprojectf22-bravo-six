@@ -4,7 +4,7 @@
   * sprintN.md - **Completed**
 * Daily Stand-ups - **Completed**
 * User Stories - **Completed**
-* Tracking on trello - Double Check 
+* Tracking on trello - **Completed**
 * burndown.pdf - **Completed**
 * schedule.pdf - **Completed**
 * Sprint Completion - *Completed**
@@ -13,4 +13,4 @@
   * Software Architecture Diagram - **Completed**
 * Documentation - **Completed**
 * Sprint Demo - **Eventually Completed**
-* PB - Needs Update
+* PB - **Completed**
