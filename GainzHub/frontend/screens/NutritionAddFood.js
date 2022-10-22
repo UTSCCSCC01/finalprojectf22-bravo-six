@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, FlatList, SafeAreaView} from 'react-native'
-//import Slider from '@react-native-community/slider';
+import {AppRegistry, Text, View, StyleSheet, TextInput, TouchableOpacity, Button, FlatList, SafeAreaView} from 'react-native'
+import Slider from '@react-native-community/slider';
 import {Colors} from '../components/colors'
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
@@ -14,6 +14,7 @@ import { useIsFocused } from '@react-navigation/native';
 // import CircularProgress from 'react-native-circular-progress-indicator';
 //import * as Progress from 'react-native-progress'
 //import Slider from '@react-native-community/slider';
+import { AntDesign } from '@expo/vector-icons'; 
 
 const {maroon, black} = Colors;
 
@@ -38,7 +39,7 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
         "foodProtein": "",
         "foodCalories": ""
     })
-
+    const [range,setRange] = useState(0)
     const logFood = async() => {
         //check that all fields have values
         let currFormErrors = {
@@ -102,9 +103,10 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
             })
         }
     };
-    
     return(
+        
         <View style={[styles.root, {paddingLeft: 20}]}>
+            
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
                 <View style = {{paddingRight: 50}}>
                     <TouchableOpacity onPress={() => goBack()}>
@@ -127,43 +129,26 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
                     /Add Food
                 </Text>
             </View>
-            <View style={[styles.inputView, {width: '100%'}, formErrors['foodName'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}, {alignItems: 'center'}]}>
+            <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}, formErrors['foodName'].length == 0 ]}>
                 <TextInput
-                style={[styles.inputText]}
-                placeholder="Food Name"
-                placeholderTextColor="black"
-                onChangeText={(foodName) => setFoodName(foodName)}
+                    style={[styles.inputText, {outlineStyle: 'none'}]}
+                    placeholder="Food Name"
+                    placeholderTextColor="black"
+                    onChangeText={(foodName) => setFoodName(foodName)}
                 />
             </View>
-            <View style={[styles.inputView, {width: '100%'}, formErrors['foodCalories'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}, {alignItems: 'center'}]}>
+            <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}, formErrors['foodName'].length == 0 ]}>
                 <TextInput
-                style={[styles.inputText]}
-                keyboardType='numeric'
-                placeholder="Calories"
-                placeholderTextColor="black"
-                onChangeText={(foodCalories) => setfoodCalories(foodCalories)}
-                />
-            </View>
-            
-            <View style={[styles.inputView, {width: '100%'}, formErrors['foodProtein'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}, {alignItems: 'center'}]}>
-                <TextInput
-                style={[styles.inputText]}
-                placeholder="Protein"
-                placeholderTextColor="black"
-                onChangeText={(foodProtein) => setFoodProtein(foodProtein)}
+                    style={[styles.inputText, {outlineStyle: 'none'}]}
+                    keyboardType='numeric'
+                    placeholder="Calories"
+                    placeholderTextColor="black"
+                    onChangeText={(foodCalories) => setfoodCalories(foodCalories)}
                 />
             </View>
             <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}]}>
                 <TextInput
-                style={[styles.inputText]}
-                placeholder="Fat (Optional)"
-                placeholderTextColor="black"
-                onChangeText={(foodFat) => setFoodFat(foodFat)}
-                />
-            </View>
-            <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}]}>
-                <TextInput
-                    style={[styles.inputText]}
+                    style={[styles.inputText, {outlineStyle: 'none'}]}
                     placeholder="Carbohydrates (Optional)"
                     placeholderTextColor="black"
                     onChangeText={(foodCarbs) => setFoodCarbs(foodCarbs)}
@@ -171,25 +156,32 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
             </View>
             <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}]}>
                 <TextInput
-                style={[styles.inputText]}
-                placeholder="Sodium (Optional)"
-                placeholderTextColor="black"
-                onChangeText={(foodSodium) => setFoodSodium(foodSodium)}
+                    style={[styles.inputText, {outlineStyle: 'none'}]}
+                    placeholder="Protein"
+                    placeholderTextColor="black"
+                    onChangeText={(foodProtein) => setFoodProtein(foodProtein)}
                 />
             </View>
             <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}]}>
                 <TextInput
-                    style={[styles.inputText]}
-                    placeholder="Sugar (Optional)"
+                    style={[styles.inputText, {outlineStyle: 'none'}]}
+                    placeholder="Sodium (Optional)"
                     placeholderTextColor="black"
-                    onChangeText={(foodSugar) => setFoodSugar(foodSugar)}
+                    onChangeText={(foodSodium) => setFoodSodium(foodSodium)}
+                />
+            </View>
+
+            <View style={[styles.inputView, {width: '100%'}, {alignItems: 'center'}]}>
+                <TextInput
+                    style={[styles.inputText, {outlineStyle: 'none'}]}
+                    placeholder="Fat (Optional)"
+                    placeholderTextColor="black"
+                    onChangeText={(foodFat) => setFoodFat(foodFat)}
                 />
             </View>
             <View style={[{alignItems: 'center'}]}>
                 <TouchableOpacity onPress={logFood} style={[styles.TouchableOpacity]}>
-                    <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 18, color: "white"}}>
-                        Add
-                    </Text>
+                    <AntDesign name="plus" size={30} color="white" />
                 </TouchableOpacity>
             </View>
         </View>
@@ -203,9 +195,10 @@ const styles = StyleSheet.create({
     inputView:{
         height: 45,
         backgroundColor: "#FFFFFF",
-        borderColor: "black",
+        borderColor: "white",
+        borderBottomColor: '#000000',
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 0,
         marginBottom: 20,
         alignContent: 'center'
     },
@@ -219,19 +212,16 @@ const styles = StyleSheet.create({
         fontSize: 14,
         alignContent: 'center',
         textAlign: 'left',
-        borderRadius: 8,
+        borderRadius: 0,
         width: '100%',
         marginLeft: 30
 
     },
     inputViewRow:{
         height: 45,
-        backgroundColor: "#FFFFFF",
-        borderColor: "black",
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 0,
         marginBottom: 20,
-        alignContent: 'center'
     },
     inputTextRow:{
         height: 30,
@@ -249,7 +239,8 @@ const styles = StyleSheet.create({
     },
     TouchableOpacity:{
         height:40,
-        width:'40%',
+        width:'20%',
+        
         borderRadius: 30,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
