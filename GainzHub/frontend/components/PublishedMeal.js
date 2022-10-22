@@ -1,48 +1,53 @@
 import React, {useState, useEffect} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
-const MealPlanItem = ({mealPlanId, navigation, handlePublish}) => {
+const PublishedMeal = ({mealPlanId, navigation}) => {
     const [obj, setObj] = useState({planName: "", published: false});
-    const [published, setPublished] = useState(obj.published);
+    const [user, setUser] = useState({username: ""})
     const isFocused = useIsFocused();
     
     useEffect(()=>{
         async function getMealFromDb(){
+            console.log(mealPlanId);
             const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: mealPlanId}});
             setObj(mealPlanObj.data);
         }
 
         getMealFromDb();
     }, [isFocused])
-
-    useEffect(() =>{
-        setPublished(obj.published);
-    }, [obj])
     
-    const handlePublishWrapper = async() => {
-        if(published){
-            await axios.patch("http://localhost:5001/nutrition/unPublishMealPlan", {mealPlanId: mealPlanId});
-            setPublished(false);
+    useEffect(()=>{
+        async function getUser(){
+            const token = await AsyncStorage.getItem("userData");
+            console.log(token);
+            const userInfo = await axios.get("http://localhost:5001/user/getUser", {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            console.log(userInfo);
+            setUser(userInfo.data);
         }
-        else{
-            await axios.patch("http://localhost:5001/nutrition/publishMealPlan", {mealPlanId: mealPlanId});
-            setPublished(true);
-        }
-        handlePublish(obj);
-    }
+        getUser();
+    }, [])
 
     return (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
             
             <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {obj})} style={[styles.inputView, {width: '75%'}]}>
                 <Text style={styles.inputText}>{obj.planName}</Text>
+                <Text style={styles.inputText}>
+                    Creator: {user.username}
+                </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={()=> handlePublishWrapper()} style={[styles.TouchableOpacityList]} >
+
+            <TouchableOpacity onPress={()=> console.log("Pressed")} style={[styles.TouchableOpacityList]} >
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
-                    {published ? "Published" : "Publish"}
+                    Add to List
                 </Text>
             </TouchableOpacity>
 
@@ -52,7 +57,6 @@ const MealPlanItem = ({mealPlanId, navigation, handlePublish}) => {
 
 const styles = StyleSheet.create({
     inputView:{
-        height: 45,
         borderColor: "black",
         borderWidth: 1,
         borderRadius: 8,
@@ -81,4 +85,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 })
-export default MealPlanItem;
+export default PublishedMeal;

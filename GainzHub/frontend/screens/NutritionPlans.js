@@ -30,38 +30,29 @@ const getUser = async() =>{
 // NEED to have the goBack but also need to navigate through pages *FIGURE THAT OUT LATER*
 const NutritionPlans = ({navigation}) => {
     const [mealPlans, setMealPlans] = useState({});
+    const [user, setUser] = useState("");
     const isFocused = useIsFocused();
-
+    
     useEffect(() => {
         const getStoredMealPlans = async() => {
             const token = await AsyncStorage.getItem("userData");
-    
+            setUser(token);
             const response  = await axios.get('http://localhost:5001/nutrition/getPersonalMealPlans', {
                 headers: {
                     'x-auth-token': token,
                 }
             })
-            console.log(response.data);
             setMealPlans(response.data);
         }
         getStoredMealPlans();
     }, [isFocused]);
 
     const renderItem = ({ item }) => (
-        <MealPlanItem obj={item} navigation={navigation} handlePublish={handlePublish}/>
+        <MealPlanItem mealPlanId={item._id} navigation={navigation} handlePublish={handlePublish}/>
       );
     
     const handlePublish = (obj) =>{
-        const isPublished = obj.published;
 
-        //If it is published, request to remove it from publish cluster
-        if(isPublished){
-            //Delete request to publish cluster
-        }
-        //else, request to add to publish cluster
-        else{
-            //Post request to publish cluster
-        }
     }
     
     return(

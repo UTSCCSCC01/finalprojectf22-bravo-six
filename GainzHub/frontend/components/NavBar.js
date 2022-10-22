@@ -15,6 +15,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import NutritionPlans from '../screens/NutritionPlans';
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {createStackNavigator} from '@react-navigation/stack'
+import NutritionExplore from '../screens/NutritionExplore';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,8 +27,9 @@ function NutritionStackScreen(){
             initialRouteName='Daily'
             screenOptions={{headerShown: false}}
         >
-            <NutritionStack.Screen name= "Daily" component={Nutrition}/>
+            <NutritionStack.Screen name= "Daily" component={Nutrition} initialParams={{routeName: "Daily"}}/>
             <NutritionStack.Screen name="Plan" component={NutritionPlans}/>
+            <NutritionStack.Screen name= "Explore" component={NutritionExplore}/>
         </NutritionStack.Navigator>
     )
 }
