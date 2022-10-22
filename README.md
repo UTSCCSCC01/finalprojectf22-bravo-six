@@ -11,11 +11,16 @@ keep track of personal gains and socialize with others who are also setting pers
 We will be using MongoDB. Install [Here](https://www.mongodb.com/docs/manual/administration/install-community/).
 
 ### Build and Run Procedure 
-Requires installation of Node.js and a modern browser. Download and build all files from the main repository. \
+Requires installation of Node.js and expo client along with a modern browser. Download and build all files from the main repository. \
 Type the command when in the directory: `finalprojectf22-bravo-six\GainzHub\frontend`
 ```
-$ npm install
-$ npm start
+$ npm install -g expo-cli
+$ npm install --force
+$ expo start
+```
+Type the following command to start the server when in the directory: `finalprojectf22-bravo-six\GainzHub\backend`
+```
+$ node index.js
 ```
 ## Contribution
 Gainzhub utilizes Git flow to promote agile development and frequent deployment. \
