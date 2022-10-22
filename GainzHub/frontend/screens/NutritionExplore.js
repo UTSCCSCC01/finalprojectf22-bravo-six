@@ -11,13 +11,25 @@ import { useRoute } from '@react-navigation/native';
 import NutritionNav from '../components/NutritionNav';
 import { ScrollView } from 'react-native-gesture-handler';
 import MealPlanItem from '../components/MealPlanItem';
+import PublishedMeal from '../components/PublishedMeal';
 
 const {maroon, black} = Colors;
 
 const NutritionExplore = ({navigation}) => {
-    console.log("Er")
+    const [mealPlans, setMealPlans] = useState([]);
+
+    useEffect(()=>{
+        async function getPublishedMeals(){
+            const publishedMeals = await axios.get("http://localhost:5001/nutrition/getPublishedMeals");
+            setMealPlans(publishedMeals.data);
+        }
+        getPublishedMeals();
+    }, [])
+
+    const renderItem = ({item}) => (<PublishedMeal mealPlanId={item._id} navigation={navigation}/>)
+
     return(
-        <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
+        <View style={[styles.root, {paddingLeft: 20, display:'flex', flexDirection: 'column'}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
                 <View style = {{paddingRight: 50}}>
                     <TouchableOpacity onPress={()=> navigation.pop()}>
@@ -29,10 +41,20 @@ const NutritionExplore = ({navigation}) => {
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 30, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:10}}>
-                    Test
+                    Explore
                 </Text>
             </View>
             <NutritionNav navigation={navigation}/>
+            <View style={{flex:1, maxHeight:'800px'}}>
+                <ScrollView>
+                    <FlatList
+                        data={mealPlans}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        scrollEnabled={true}
+                    />
+                </ScrollView>
+            </View>
         </View>
     )
 }
