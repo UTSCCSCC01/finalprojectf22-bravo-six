@@ -106,6 +106,15 @@ const getMealPlan = async(req, res) => {
     }
 }
 
+const getPublishedMealPlans = async(req, res) =>{
+    try{
+        const publishedMealPlans = await MealPlan.find({published: true});
+        return res.status(200).json(publishedMealPlans);
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
 const publishMealPlan = async(req, res) => {
     const {mealPlanId} = req.body
     try{
@@ -137,4 +146,4 @@ const getPersonalMealPlans = async(req, res) =>{
 }
 
 
-module.exports = {getFoodLog, logFood, getMealPlan, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans}
+module.exports = {getFoodLog, logFood, getMealPlan, getPublishedMealPlans, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans}
