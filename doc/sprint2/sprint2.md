@@ -94,7 +94,7 @@ We plan to finish the following stories
 
 
 # Spikes/Blockers
-- Using JS Native is still fairly new to many of us so it takes alot of research before implementing something
+- Using React Native is still fairly new to many of us so it takes alot of research before implementing something
 - Certain stories/tasks need other stories/tasks to be completed first.
 - Alot of members have midterms and assignments for the whole week
 - Work capacity will fluctuate based off our personal schedules (ie. exam season, times of increased workload)
