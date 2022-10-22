@@ -78,6 +78,20 @@ We plan to finish the following stories
 ## BRAV-69
 - Change the data architecture of database, clustering meal plans and attaching a user_id to each one
 
+## BRAV-5
+- As a nutrition content creator, I want to publish my meals on the app so that other users can use my meal plans, and I can gain credibility as a nutrition content creator.
+- Clicking publish on a meal card within a user’s collection should publish the meal to the explore page within the nutrition tab.
+
+## BRAV-49
+- As a user I want a button on my meal plans so I can publish them
+
+## BRAV-50
+- As a user, I want to publish my meal plan so others can see it
+- Send a request to the backend to change the meal plan to published, as well as have it displayed on the explore page
+
+## BRAV-38
+- As a user interested in working out, I want to be able to effectively view and use the Workout page UI.
+
 
 # Spikes/Blockers
 - Using JS Native is still fairly new to many of us so it takes alot of research before implementing something
