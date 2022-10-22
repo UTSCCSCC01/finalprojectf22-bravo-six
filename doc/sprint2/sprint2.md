@@ -5,20 +5,24 @@ Due to reading week, we decided to have an extra meeting on Sunday to enure at l
 
 # Sprint Goal (Stories)
 We plan to finish the following stories
-- BRAV-65 (Kevin)
+- BRAV-65 (Ryan)
 - BRAV-66 (Bryan)
 - BRAV-67 (Jason)
 - BRAV-68 (Avi)
-- BRAV-45 (Dominik)
-- BRAV-46 (Dominik)
-- BRAV-47 (Dominik)
-- BRAV-48 (Dominik)
-- BRAV-62 (Dominik)
-- BRAV-3 
-- BRAV-4
+- BRAV-38 (Kevin)
+
+- BRAV-3 (Dominik)
+  - BRAV-45 (Dominik)
+  - BRAV-46 (Dominik)
+
+- BRAV-4 (Dominik)
+  - BRAV-47 (Dominik)
+  - BRAV-48 (Dominik)
+  - BRAV-62 (Dominik)
+ 
 - BRAV-5 (Porom)
-- BRAV-49 (Porom)
-- BRAV-50 (Porom)
+  - BRAV-49 (Porom)
+  - BRAV-50 (Porom)
 - BRAV-69 (Porom)
 
 
