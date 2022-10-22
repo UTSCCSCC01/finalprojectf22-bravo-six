@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const {check, validationResult} = require('express-validator');
 const asyncHandler = require('express-async-handler');
 const User = require("../models/User");
+const MealPlan = require("../models/MealPlan");
 const { json } = require('express');
 
 const getFoodLog = async(req, res) =>{
@@ -22,7 +23,6 @@ const getFoodLog = async(req, res) =>{
 const logFood = async(req, res) =>{
     const userId = req.user;
     const {newFood} = req.body;
-    console.log(userId)
     let test = await User.findById(userId);
     User.findOneAndUpdate({_id: userId}, {
                                         $inc:{caloriesAte: newFood.foodCalories},
@@ -53,7 +53,7 @@ const getCalorieGoal = async(req, res) =>{
     });
 }
 
-const getCaloriesAte = async(req, res) =>{
+const getCaloriesAte = async(req, res) => {
     const userId = req.user;
 
     User.findOne({_id: userId},  (err, data)=>{
@@ -71,15 +71,15 @@ const getCaloriesAte = async(req, res) =>{
 const addMealPlan = async(req, res) =>{
     const userId = req.user;
     const {newMealPlan} = req.body;
-
-    User.updateOne({_id: userId}, {$push:{personalMealPlans: newMealPlan}}, (err)=>{
-        if(err){
-            return res.status(400).json({error: "Cant update"});
-        }
-        else{
-            return res.status(200).json({message: "Success", personalMealPlans: newMealPlan});
-        }
-    });
+    
+    try{
+        const mealPlanObj = new MealPlan(newMealPlan);
+        mealPlanObj.userId = userId;
+        mealPlanObj.save();
+        return res.status(200).send("Added meal");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
 }
 
 const changeCalorieGoal = async(req, res) =>{
@@ -96,20 +96,45 @@ const changeCalorieGoal = async(req, res) =>{
     });
 }
 
+const getMealPlan = async(req, res) => {
+    const mealPlanId = req.query['mealPlanId'];
+    try{
+        const foundMealPlan = await MealPlan.findOne({_id:mealPlanId});
+        return res.status(200).json(foundMealPlan);
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+const publishMealPlan = async(req, res) => {
+    const {mealPlanId} = req.body
+    try{
+        //Flip the published boolean currently in the object
+        await MealPlan.findOneAndUpdate({_id: mealPlanId}, {$set:{published: true}});
+        return res.status(200).send("Updated Meal Plan");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+const unPublishMealPlan = async(req, res) => {
+    const {mealPlanId} = req.body
+    try{
+        //Flip the published boolean currently in the object
+        await MealPlan.findOneAndUpdate({_id: mealPlanId}, {$set:{published: false}});
+        return res.status(200).send("Updated Meal Plan");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
 const getPersonalMealPlans = async(req, res) =>{
     const userId = req.user;
 
-    User.findOne({_id: userId},  (err, data)=>{
-        if(err){
-            return res.status(400).json({error: "Cant get value"});
-        }
-        else{
-            if(data.personalMealPlans != null){
-                return res.status(200).json({personalMealPlans: data.personalMealPlans});
-            }
-        }
-    });
+    const foundPlan = await MealPlan.find({userId: userId});
+    return res.status(200).json(foundPlan);
+
 }
 
 
-module.exports = {getFoodLog, logFood, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, getPersonalMealPlans}
+module.exports = {getFoodLog, logFood, getMealPlan, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans}

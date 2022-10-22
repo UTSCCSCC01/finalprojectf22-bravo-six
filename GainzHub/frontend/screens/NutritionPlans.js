@@ -11,6 +11,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import { useRoute } from '@react-navigation/native';
 import NutritionNav from '../components/NutritionNav';
+import { ScrollView } from 'react-native-gesture-handler';
+import MealPlanItem from '../components/MealPlanItem';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
@@ -28,38 +30,31 @@ const getUser = async() =>{
 // NEED to have the goBack but also need to navigate through pages *FIGURE THAT OUT LATER*
 const NutritionPlans = ({navigation}) => {
     const [mealPlans, setMealPlans] = useState({});
+    const [user, setUser] = useState("");
     const isFocused = useIsFocused();
 
     useEffect(() => {
         const getStoredMealPlans = async() => {
             const token = await AsyncStorage.getItem("userData");
-    
+            setUser(token);
             const response  = await axios.get('http://localhost:5001/nutrition/getPersonalMealPlans', {
                 headers: {
                     'x-auth-token': token,
                 }
             })
-            console.log(response);
-            setMealPlans(response.data.personalMealPlans);
+            console.log(response.data);
+            setMealPlans(response.data);
         }
         getStoredMealPlans();
-    }, [isFocused])
-    //onPress={()=> navigation.navigate('NutritonMealPlanInfo')}
+    }, [isFocused]);
 
     const renderItem = ({ item }) => (
-        <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
-            <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {item})} style={[styles.inputView, {width: '75%'}]}>
-                <Text style={styles.inputText}>{item.planName}</Text>
-            </TouchableOpacity>
-           
-            <TouchableOpacity onPress={()=> navigation.navigate('Placeholder')} style={[styles.TouchableOpacityList]} >
-                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
-                    Publish
-                </Text>
-            </TouchableOpacity> 
-            
-        </View>
+        <MealPlanItem mealPlanId={item._id} navigation={navigation} handlePublish={handlePublish}/>
       );
+    
+    const handlePublish = (obj) =>{
+
+    }
     
     return(
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -83,13 +78,15 @@ const NutritionPlans = ({navigation}) => {
                     Meal Plan Library
                 </Text>
             </View>
-            <View style={{flex:1}}>
-                <FlatList
-                    data={mealPlans}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                    scrollEnabled={true}
-                />
+            <View style={{flex:1, maxHeight:'600px'}}>
+                <ScrollView>
+                    <FlatList
+                        data={mealPlans}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        scrollEnabled={true}
+                    />
+                </ScrollView>
             </View>
             <View>
                 <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealAdder')} style={[styles.TouchableOpacity]} >
