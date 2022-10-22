@@ -80,7 +80,6 @@ const Nutrition = ({navigation}) =>{
                     'x-auth-token': token,
                 }
             })
-            console.log(response);
             setCaloriesAte(response.data.caloriesAte);
         }
         getStoredAte();
@@ -95,7 +94,6 @@ const Nutrition = ({navigation}) =>{
                     'x-auth-token': token,
                 }
             })
-            console.log(response);
             setFood(response.data.food);
         }
         getStoredFood();
@@ -104,7 +102,9 @@ const Nutrition = ({navigation}) =>{
 
     const renderItem = ({ item }) => (
         <TouchableOpacity onPress={()=> navigation.navigate('NutritionFoodViewer', {item})} style={[styles.inputView, {width: '100%'}]}>
-            <Text style={styles.inputText}>Food: {item.foodName}, Calories {item.foodCalories}, Protein {item.foodProtein}</Text>
+            <Text style={styles.inputText}>{item.foodName} {"\n"} 
+            Calories: {item.foodCalories} {"\n"}
+            Protein: {item.foodProtein + ' g'} </Text>
         </TouchableOpacity>
     );
 
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         padding: 30,
     },
     inputView:{
-        height: 60,
+        height: 90,
         backgroundColor: "#F6F6F6",
         borderColor: "#e8e8e8",
         borderWidth: 1,

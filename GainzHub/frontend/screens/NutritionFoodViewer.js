@@ -31,8 +31,8 @@ const NutritionFoodViewer = ({route, navigation: { goBack }}) => {
                 </View>
             </View>
             <View>
-                <Text style={{fontFamily: "Inter-Medium", fontSize: 36, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:30}}>
-                    Food: {food.foodName ? food.foodName : '[No Name Given]'}
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 36, fontWeight:"800",color:black, textAlign:'center', marginBottom:30}}>
+                    {food.foodName ? food.foodName : '[No Name Given]'}
                 </Text>
             </View>
 
@@ -44,7 +44,7 @@ const NutritionFoodViewer = ({route, navigation: { goBack }}) => {
 
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 24, fontWeight:"800",color:black, textAlign: 'center', marginBottom:10}}>
-                    Protein: {food.foodProtein ? food.foodProtein : '[No Protein Given]'} g
+                    Protein: {food.foodProtein ? food.foodProtein + ' g' : '[No Protein Given]'}
                 </Text>
             </View>  
 

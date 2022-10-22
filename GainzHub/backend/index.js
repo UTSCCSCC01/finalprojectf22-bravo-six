@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require('cors');
 const app = express();
 const connectDB = require('./config/db');
-const foodRoutes = require("./routes/foodRoutes");
+const foodRoutes = require("./routes/nutritionRoutes");
 require("dotenv").config();
 
 //connect database
@@ -14,10 +14,8 @@ app.use(cors());
 //tell express to use these routes
 
 app.use("/auth", require('./routes/authRoutes'));
-app.use("/nutrition", require("./routes/foodRoutes"));
+app.use("/nutrition", require("./routes/nutritionRoutes"));
 app.use("/development", require('./routes/developmentRoutes'));
-app.use("/addMealPlan", require("./routes/addMealPlanRoutes"));
-app.use("/getPMP", require("./routes/getPersonalMealPlansRoutes"));
 
 const PORT = process.env.PORT || 5001;
 
