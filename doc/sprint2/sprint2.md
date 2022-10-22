@@ -16,6 +16,7 @@ We plan to finish the following stories
 - BRAV-62 (Dominik)
 - BRAV-3 
 - BRAV-4
+- BRAV-5 (Porom)
 - BRAV-69 (Porom)
 
 
