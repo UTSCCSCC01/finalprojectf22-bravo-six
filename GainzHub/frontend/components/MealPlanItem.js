@@ -1,12 +1,35 @@
 import React, {useState, useEffect} from 'react'
 import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
+import { useIsFocused } from '@react-navigation/native';
+import axios from 'axios';
 
-const MealPlanItem = ({obj, navigation, handlePublish}) => {
+const MealPlanItem = ({mealPlanId, navigation, handlePublish}) => {
+    const [obj, setObj] = useState({planName: "", published: false});
     const [published, setPublished] = useState(obj.published);
+    const isFocused = useIsFocused();
+    
+    useEffect(()=>{
+        async function getMealFromDb(){
+            const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: mealPlanId}});
+            setObj(mealPlanObj.data);
+        }
 
-    const handlePublishWrapper = () => {
-        setPublished(!published);
-        
+        getMealFromDb();
+    }, [isFocused])
+
+    useEffect(() =>{
+        setPublished(obj.published);
+    }, [obj])
+    
+    const handlePublishWrapper = async() => {
+        if(published){
+            await axios.patch("http://localhost:5001/nutrition/unPublishMealPlan", {mealPlanId: mealPlanId});
+            setPublished(false);
+        }
+        else{
+            await axios.patch("http://localhost:5001/nutrition/publishMealPlan", {mealPlanId: mealPlanId});
+            setPublished(true);
+        }
         handlePublish(obj);
     }
 
