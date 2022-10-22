@@ -1,16 +1,16 @@
 # TODO
 * Planning Meetings:
   * SR(N-1).md - **Completed**
-  * sprintN.md - Nearly Completed - POROM NEEDS TO ADD HIS TASKS
+  * sprintN.md - **Completed**
 * Daily Stand-ups - **Completed**
-* User Stories - ?
+* User Stories - **Completed**
 * Tracking on trello - Double Check 
 * burndown.pdf - Done Waiting until 9 to finish questions [Everyone Finished] Porom
 * schedule.pdf - Waiting until 9 [Everyone Finished] Avi
 * Sprint Completion - Completed
 * System Design:
-  * CRC Cards - Should be completed
-  * Software Architecture Diagram - Should be completed
+  * CRC Cards - **Completed**
+  * Software Architecture Diagram - **Completed**
 * Documentation - **Completed**
 * Sprint Demo - **Eventually Completed**
 * PB - Needs Update
