@@ -49,6 +49,13 @@ const NutritionMealPlanInfo = ({route, navigation}) => {
                         </Text>
                     </TouchableOpacity>
                 </View>
+                <View style = {{flex:1}}>
+                    <TouchableOpacity onPress={()=> navigation.navigate("NutritionMealPlanEditor", {...route.params})}>
+                        <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
+                            Manage
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 36, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:10}}>

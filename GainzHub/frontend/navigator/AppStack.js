@@ -28,6 +28,7 @@ import Social from '../screens/Social';
 import SocialHome from '../screens/SocialHome';
 import SocialExplore from '../screens/SocialExplore';
 import SocialCreate from '../screens/SocialCreate';
+import NutritionMealPlanEditor from '../screens/NutritionMealPlanEditor';
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,7 @@ const AppStack = ()=>{
                 <Stack.Screen name = "BMICalculator" component={BMICalculator}/>
                 <Stack.Screen name = "NutritionMealPlanEditor" component={NutritionMealPlanEditor}/>
                 <Stack.Screen name = "ReviewMealPlan" component={ReviewMealPlan}/>
+                <Stack.Screen name = "NutritionMealPlanEditor" component={NutritionMealPlanEditor}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
