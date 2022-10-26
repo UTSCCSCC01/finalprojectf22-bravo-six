@@ -16,29 +16,16 @@ import { useIsFocused } from '@react-navigation/native';
 
 const {maroon, black} = Colors;
 
-const NutritionMealPlanInfo = ({route, navigation}) => {
-    const [mealPlan, setMealPlan] = useState({});
-    //const mealPlan = route.params.obj;
-    //console.log(mealPlan);
-
-    useEffect(() =>{
-        setMealPlan(route.params.obj);
-    });
-    console.log(mealPlan)
+const NutritionMealPlanEditor = ({route, navigation}) => {
+    const mealPlan = route.params.obj;
+    console.log(mealPlan);
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
             <View style={{flexDirection:'row', textAlign:'center', paddingBottom: 10, flex:1}}>
-                <View style = {{flex:1}}>
+                <View style = {{paddingRight:50}}>
                     <TouchableOpacity onPress={()=> navigation.pop()}>
                         <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                             Back
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                <View style = {{flex:1}}>
-                    <TouchableOpacity onPress={()=> navigation.navigate("NutritionMealPlanEditor", {...route.params})}>
-                        <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                            Manage
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -217,4 +204,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default NutritionMealPlanInfo;
+export default NutritionMealPlanEditor;
