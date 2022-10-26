@@ -124,6 +124,7 @@ const Nutrition = ({navigation}) =>{
                     Nutrition
                 </Text>
             </View>
+            <NutritionNav navigation={navigation}/>
 
             <View style={[{marginBottom:20},{textAlign: 'center'}, {alignItems: 'center'}]}>
                 <Text style={{fontFamily: 'Inter-Medium', fontWeight: '600', fontSize: 20}}> Calorie Goal: {calorieGoal}</Text>
@@ -144,7 +145,6 @@ const Nutrition = ({navigation}) =>{
                 </TouchableOpacity> 
             </View>
 
-            <NutritionNav navigation={navigation}/>
 
             <View style={{paddingLeft: 5}}>
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:black, marginBottom:20}}>
