@@ -27,18 +27,11 @@ const NutritionMealPlanInfo = ({route, navigation}) => {
     console.log(mealPlan)
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
-            <View style={{flexDirection:'row', textAlign:'center', paddingBottom: 10, flex:1}}>
-                <View style = {{flex:1}}>
+            <View style={{flexDirection:'row', textAlign:'left', paddingBottom: 10}}>
+                <View>
                     <TouchableOpacity onPress={()=> navigation.pop()}>
                         <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                             Back
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                <View style = {{flex:1}}>
-                    <TouchableOpacity onPress={()=> navigation.navigate("NutritionMealPlanEditor", {...route.params})}>
-                        <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                            Manage
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -136,7 +129,14 @@ const NutritionMealPlanInfo = ({route, navigation}) => {
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
                     Protein: {mealPlan.snackProtein ? mealPlan.snackProtein + ' g' : 'No protein included'}
                 </Text>
-            </View>          
+            </View>      
+            <View style = {{flex:1}}>
+                <TouchableOpacity onPress={()=> navigation.navigate("NutritionMealPlanEditor", {...route.params})} style={[styles.TouchableOpacity, {width: '100%'}]}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:20, color: 'white'}}>
+                        Manage
+                    </Text>
+                </TouchableOpacity>
+            </View>    
 
         </View>
     );
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
 
     },
     TouchableOpacity:{
-        height:25,
+        height:40,
         width:'100%',
         borderRadius: 30,
         marginTop: 20,
