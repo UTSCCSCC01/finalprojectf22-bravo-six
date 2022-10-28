@@ -75,7 +75,6 @@ const NutritionAddFood = ({navigation: {goBack}}) => {
 
         // add calories to user.calorieGoal in the database
         const token = await AsyncStorage.getItem("userData");
-
         const response = await axios.post('http://localhost:5001/nutrition/logFood',
                                         {newFood:
                                         {

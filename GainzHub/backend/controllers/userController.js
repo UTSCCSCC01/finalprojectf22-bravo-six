@@ -6,9 +6,9 @@ const MealPlan = require("../models/MealPlan");
 const { json } = require('express');
 
 const getUserData = asyncHandler(async(req, res) => {
-    const user = req.user;
+    const userId = req.headers['x-auth-token'];
     try{
-        const foundUser = await User.findOne({_id: user});
+        const foundUser = await User.findOne({_id: userId});
         return res.status(200).json(foundUser);
     }catch(err){
         return res.status(400).send(err.message);

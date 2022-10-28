@@ -13,12 +13,6 @@ export default function Social({ navigation }) {
             <Text
                 onPress={() => alert('This is the "Social" screen.')}
                 style={{ fontSize: 26, fontWeight: 'bold' }}>Social</Text>
-        <TextInput 
-        style={styles.textInputLine}
-        activeUnderlineColor={Colors.maroon} 
-        mode = "flat" label = "Height" 
-        placeholder = "Enter Height"
-        />
 
         </View>
     );

@@ -14,25 +14,17 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
             console.log(mealPlanId);
             const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: mealPlanId}});
             setObj(mealPlanObj.data);
-        }
-
-        getMealFromDb();
-    }, [isFocused])
-    
-    useEffect(()=>{
-        async function getUser(){
-            const token = await AsyncStorage.getItem("userData");
-            console.log(token);
+            const token = mealPlanObj.data.userId;
             const userInfo = await axios.get("http://localhost:5001/user/getUser", {
                 headers: {
                     'x-auth-token': token,
                 }
             })
-            console.log(userInfo);
             setUser(userInfo.data);
         }
-        getUser();
-    }, [])
+
+        getMealFromDb();
+    }, [isFocused])
 
     return (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
