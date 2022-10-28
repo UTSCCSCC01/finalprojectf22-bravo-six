@@ -10,8 +10,10 @@ import Nutrition from '../screens/Nutrition';
 import Workout from '../screens/Workout';
 import WorkoutLogs from '../screens/WorkoutLogs';
 import WorkoutExplore from '../screens/WorkoutExplore';
+import Progress from '../screens/Progress';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons'; 
 import NutritionPlans from '../screens/NutritionPlans';
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {createStackNavigator} from '@react-navigation/stack'
@@ -62,6 +64,13 @@ export default function NavBar({ navigation }) {
                 tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="weight-lifter" color={color} size={size} />
                 ),
+            }} 
+        />
+        <Tab.Screen name="Progress" component={Progress}
+            options={{
+                tabBarLabel: 'Progress',
+                tabBarIcon: ({ color, size }) => (
+                <Entypo name="bar-graph" size={size} color={color}/>                ),
             }} 
         />
         <Tab.Screen name="WorkoutLogs" component={WorkoutLogs}
