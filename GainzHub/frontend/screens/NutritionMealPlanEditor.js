@@ -19,24 +19,26 @@ const {maroon, black} = Colors;
 
 
 const NutritionMealPlanEditor = ({route, navigation}) => {
-    const mealPlan = route.params.obj;
-    console.log(mealPlan);
-    const [planName, setPlanName] = useState(mealPlan.planName);
-    const [breakfastMeal, setBreakfastMeal] = useState(mealPlan.breakfastMeal ? mealPlan.breakfastMeal : 'No food included');
-    const [breakfastIngredients, setBreakfastIngredients] = useState(mealPlan.breakfastIngredients ? mealPlan.breakfastIngredients : 'No ingredients included');
-    const [breakfastCalories, setBreakfastCalories] = useState(mealPlan.breakfastCalories);
-    const [breakfastProtein, setBreakfastProtein] = useState(mealPlan.breakfastProtein);
-    const [lunchMeal, setLunchMeal] = useState(mealPlan.lunchMeal);
-    const [lunchIngredients, setLunchIngredients] = useState(mealPlan.lunchIngredients);
-    const [lunchCalories, setLunchCalories] = useState(mealPlan.lunchCalories);
-    const [lunchProtein, setLunchProtein] = useState(mealPlan.lunchProtein);
-    const [dinnerMeal, setDinnerMeal] = useState(mealPlan.dinnerMeal);
-    const [dinnerIngredients, setDinnerIngredients] = useState(mealPlan.dinnerIngredients);
-    const [dinnerCalories, setDinnerCalories] = useState(mealPlan.dinnerCalories);
-    const [dinnerProtein, setDinnerProtein] = useState(mealPlan.dinnerProtein);
-    const [snacks, setSnacks] = useState(mealPlan.snacks);
-    const [snackCalories, setSnackCalories] = useState(mealPlan.snackCalories);
-    const [snackProtein, setSnackProtein] = useState(mealPlan.snackProtein);
+    const [mealPlan, setMealPlan] = useState({});
+    //console.log(mealPlan);
+
+    useEffect(() => {
+        const getMealPlan = async() => {
+            //console.log(route.params.obj);
+            const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: route.params.obj._id}});
+            //console.log(mealPlanObj.data);
+            setMealPlan(mealPlanObj.data);
+        }
+        getMealPlan();
+    }, [isFocused]);
+
+
+
+    const isFocused = useIsFocused();
+
+    console.log(planName);
+
+    
     
 
     const editMealPlan = async() => {
@@ -134,27 +136,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
         const token = await AsyncStorage.getItem("userData");
 
         const response = await axios.put('http://localhost:5001/nutrition/editMealPlan',
-                                        {updatedMealPlan:
-                                        {
-                                            _id: mealPlan._id,
-                                            planName: planName,
-                                            breakfastMeal: breakfastMeal,
-                                            breakfastIngredients: breakfastIngredients,
-                                            breakfastCalories: breakfastCalories,
-                                            breakfastProtein: breakfastProtein,
-                                            lunchMeal: lunchMeal,
-                                            lunchIngredients: lunchIngredients,
-                                            lunchCalories: lunchCalories,
-                                            lunchProtein: lunchProtein,
-                                            dinnerMeal: dinnerMeal,
-                                            dinnerIngredients: dinnerIngredients,
-                                            dinnerCalories: dinnerCalories,
-                                            dinnerProtein: dinnerProtein,
-                                            snacks: snacks,
-                                            snackCalories: snackCalories,
-                                            snackProtein: snackProtein,
-                                            userId: mealPlan.userId
-                                        }}, {
+                                        {updatedMealPlan: mealPlan}, {
             headers:{
                 "x-auth-token": token,
             }
@@ -197,7 +179,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                     style={[styles.inputText]}
                     placeholder={mealPlan.planName}
                     placeholderTextColor="black"
-                    onChangeText={(planName) => setPlanName(planName)}
+                    onChangeText={(planName) => setMealPlan(previousState => { return {...previousState, planName: planName}})}
                 />
             </View>  
             <View style={{paddingBottom:10}}>
@@ -214,7 +196,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.breakfastMeal ? mealPlan.breakfastMeal : 'No food included'}
                         placeholderTextColor="black"
-                        onChangeText={(breakfastMeal) => setBreakfastMeal(breakfastMeal)}
+                        onChangeText={(breakfastMeal) => setMealPlan(previousState => { return {...previousState, breakfastMeal: breakfastMeal}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -225,7 +207,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.breakfastIngredients ? mealPlan.breakfastIngredients : 'No ingredients included'}
                         placeholderTextColor="black"
-                        onChangeText={(breakfastIngredients) => setBreakfastIngredients(breakfastIngredients)}
+                        onChangeText={(breakfastIngredients) => setMealPlan(previousState => { return {...previousState, breakfastIngredients: breakfastIngredients}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -236,7 +218,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.breakfastCalories ? mealPlan.breakfastCalories : 'No calories included'}
                         placeholderTextColor="black"
-                        onChangeText={(breakfastCalories) => setBreakfastCalories(breakfastCalories)}
+                        onChangeText={(breakfastCalories) => setMealPlan(previousState => { return {...previousState, breakfastCalories: breakfastCalories}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -247,7 +229,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.breakfastProtein ? mealPlan.breakfastProtein: 'No protein included'}
                         placeholderTextColor="black"
-                        onChangeText={(breakfastProtein) => setBreakfastProtein(breakfastProtein)}
+                        onChangeText={(breakfastProtein) => setMealPlan(previousState => { return {...previousState, breakfastProtein: breakfastProtein}})}
                     />
                 </View>
             </View>
@@ -266,7 +248,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.lunchMeal ? mealPlan.lunchMeal : 'No food included'}
                         placeholderTextColor="black"
-                        onChangeText={(lunchMeal) => setLunchMeal(lunchMeal)}
+                        onChangeText={(lunchMeal) => setMealPlan(previousState => { return {...previousState, lunchMeal: lunchMeal}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -277,7 +259,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.lunchIngredients ? mealPlan.lunchIngredients : 'No ingredients included'}
                         placeholderTextColor="black"
-                        onChangeText={(lunchIngredients) => setLunchIngredients(lunchIngredients)}
+                        onChangeText={(lunchIngredients) => setMealPlan(previousState => { return {...previousState, lunchIngredients: lunchIngredients}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -288,7 +270,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.lunchCalories ? mealPlan.lunchCalories : 'No calories included'}
                         placeholderTextColor="black"
-                        onChangeText={(lunchCalories) => setLunchCalories(lunchCalories)}
+                        onChangeText={(lunchCalories) => setMealPlan(previousState => { return {...previousState, lunchCalories: lunchCalories}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -299,7 +281,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.lunchProtein ? mealPlan.lunchProtein: 'No protein included'}
                         placeholderTextColor="black"
-                        onChangeText={(lunchProtein) => setLunchProtein(lunchProtein)}
+                        onChangeText={(lunchProtein) => setMealPlan(previousState => { return {...previousState, lunchProtein: lunchProtein}})}
                     />
                 </View>
             </View>
@@ -318,7 +300,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.dinnerMeal ? mealPlan.dinnerMeal : 'No food included'}
                         placeholderTextColor="black"
-                        onChangeText={(dinnerMeal) => setDinnerMeal(dinnerMeal)}
+                        onChangeText={(dinnerMeal) => setMealPlan(previousState => { return {...previousState, dinnerMeal: dinnerMeal}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -329,7 +311,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.dinnerIngredients ? mealPlan.dinnerIngredients : 'No ingredients included'}
                         placeholderTextColor="black"
-                        onChangeText={(dinnerIngredients) => setDinnerIngredients(dinnerIngredients)}
+                        onChangeText={(dinnerIngredients) => setMealPlan(previousState => { return {...previousState, dinnerIngredients: dinnerIngredients}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -340,7 +322,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.dinnerCalories ? mealPlan.dinnerCalories : 'No calories included'}
                         placeholderTextColor="black"
-                        onChangeText={(dinnerCalories) => setDinnerCalories(dinnerCalories)}
+                        onChangeText={(dinnerCalories) => setMealPlan(previousState => { return {...previousState, dinnerCalories: dinnerCalories}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -351,7 +333,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.dinnerProtein ? mealPlan.dinnerProtein: 'No protein included'}
                         placeholderTextColor="black"
-                        onChangeText={(dinnerProtein) => setDinnerProtein(dinnerProtein)}
+                        onChangeText={(dinnerProtein) => setMealPlan(previousState => { return {...previousState, dinnerProtein: dinnerProtein}})}
                     />
                 </View>
             </View>
@@ -370,7 +352,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.snacks ? mealPlan.snacks : 'No food included'}
                         placeholderTextColor="black"
-                        onChangeText={(snacks) => setSnacks(snacks)}
+                        onChangeText={(snacks) => setMealPlan(previousState => { return {...previousState, snacks: snacks}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -381,7 +363,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.snackCalories ? mealPlan.snackCalories : 'No calories included'}
                         placeholderTextColor="black"
-                        onChangeText={(snackCalories) => setSnackCalories(snackCalories)}
+                        onChangeText={(snackCalories) => setMealPlan(previousState => { return {...previousState, snackCalories: snackCalories}})}
                     />
                 </View> 
                 <View style={[styles.inputText, {flexDirection:'row'}, {paddingBottom:3}]}>
@@ -392,7 +374,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                         style={[styles.inputText]}
                         placeholder={mealPlan.snackProtein ? mealPlan.snackProtein: 'No protein included'}
                         placeholderTextColor="black"
-                        onChangeText={(snackProtein) => setSnackProtein(snackProtein)}
+                        onChangeText={(snackProtein) => setMealPlan(previousState => { return {...previousState, snackProtein: snackProtein}})}
                     />
                 </View>
                 <View style={{paddingBottom:10}}>
