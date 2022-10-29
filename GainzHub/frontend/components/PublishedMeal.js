@@ -13,6 +13,7 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
     const [added, setAdded] = useState(false);
     const [owner, setOwner] = useState(false); //Is this current meal plan owned by the current user?
     const isFocused = useIsFocused();
+    //console.log(mealPlanId);
     
     useEffect(()=>{
         async function intializeUseStates(){

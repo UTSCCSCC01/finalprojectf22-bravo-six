@@ -18,13 +18,27 @@ const {maroon, black} = Colors;
 
 const NutritionMealPlanInfo = ({route, navigation}) => {
     const [mealPlan, setMealPlan] = useState({});
+    const [mealPlanId, setMealPlanId] = useState();
+    const isFocused = useIsFocused();
+    
     //const mealPlan = route.params.obj;
     //console.log(mealPlan);
-
+    /*
     useEffect(() =>{
         setMealPlan(route.params.obj);
     });
-    console.log(mealPlan)
+    */
+
+    useEffect(() => {
+        const getMealPlan = async() => {
+            console.log(route.params.obj);
+            const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: route.params.obj._id}});
+            console.log(mealPlanObj.data);
+            setMealPlan(mealPlanObj.data);
+        }
+        getMealPlan();
+    }, [isFocused]);
+    //console.log(mealPlan)
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
             <View style={{flexDirection:'row', textAlign:'left', paddingBottom: 10}}>
