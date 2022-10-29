@@ -16,25 +16,163 @@ import { useIsFocused } from '@react-navigation/native';
 
 const {maroon, black} = Colors;
 
+
+
 const NutritionMealPlanEditor = ({route, navigation}) => {
     const mealPlan = route.params.obj;
     console.log(mealPlan);
-    const [planName, setPlanName] = useState("");
-    const [breakfastMeal, setBreakfastMeal] = useState("");
-    const [breakfastIngredients, setBreakfastIngredients] = useState("");
-    const [breakfastCalories, setBreakfastCalories] = useState("");
-    const [breakfastProtein, setBreakfastProtein] = useState("");
-    const [lunchMeal, setLunchMeal] = useState("");
-    const [lunchIngredients, setLunchIngredients] = useState("");
-    const [lunchCalories, setLunchCalories] = useState("");
-    const [lunchProtein, setLunchProtein] = useState("");
-    const [dinnerMeal, setDinnerMeal] = useState("");
-    const [dinnerIngredients, setDinnerIngredients] = useState("");
-    const [dinnerCalories, setDinnerCalories] = useState("");
-    const [dinnerProtein, setDinnerProtein] = useState("");
-    const [snacks, setSnacks] = useState("");
-    const [snackCalories, setSnackCalories] = useState("");
-    const [snackProtein, setSnackProtein] = useState("");
+    const [planName, setPlanName] = useState(mealPlan.planName);
+    const [breakfastMeal, setBreakfastMeal] = useState(mealPlan.breakfastMeal ? mealPlan.breakfastMeal : 'No food included');
+    const [breakfastIngredients, setBreakfastIngredients] = useState(mealPlan.breakfastIngredients ? mealPlan.breakfastIngredients : 'No ingredients included');
+    const [breakfastCalories, setBreakfastCalories] = useState(mealPlan.breakfastCalories);
+    const [breakfastProtein, setBreakfastProtein] = useState(mealPlan.breakfastProtein);
+    const [lunchMeal, setLunchMeal] = useState(mealPlan.lunchMeal);
+    const [lunchIngredients, setLunchIngredients] = useState(mealPlan.lunchIngredients);
+    const [lunchCalories, setLunchCalories] = useState(mealPlan.lunchCalories);
+    const [lunchProtein, setLunchProtein] = useState(mealPlan.lunchProtein);
+    const [dinnerMeal, setDinnerMeal] = useState(mealPlan.dinnerMeal);
+    const [dinnerIngredients, setDinnerIngredients] = useState(mealPlan.dinnerIngredients);
+    const [dinnerCalories, setDinnerCalories] = useState(mealPlan.dinnerCalories);
+    const [dinnerProtein, setDinnerProtein] = useState(mealPlan.dinnerProtein);
+    const [snacks, setSnacks] = useState(mealPlan.snacks);
+    const [snackCalories, setSnackCalories] = useState(mealPlan.snackCalories);
+    const [snackProtein, setSnackProtein] = useState(mealPlan.snackProtein);
+    
+
+    const editMealPlan = async() => {
+        //check that all fields have values
+
+        //errors could be checked later, right now i want functionality done
+        /*
+        let currFormErrors = {"planName": "",
+            "breakfastMeal": "",
+            "breakfastIngredients": "",
+            "breakfastCalories": "",
+            "breakfastProtein": "",
+            "lunchMeal": "",
+            "lunchIngredients": "",
+            "lunchCalories": "",
+            "lunchProtein": "",
+            "dinnerMeal": "",
+            "dinnerIngredients": "",
+            "dinnerCalories": "",
+            "dinnerProtein": "",
+            "snacks": "",
+            "snackCalories": "",
+            "snackProtein": ""
+        };
+
+        if(planName.length == 0){
+            currFormErrors['planName'] = 'Please enter a Name';
+        }
+        
+        if(breakfastMeal.length == 0){
+            currFormErrors['breakfastMeal'] = 'Please enter a Breakfast Meal';
+        }
+
+        if(breakfastCalories.length == 0){
+            currFormErrors['breakfastCalories'] = 'Please enter Breakfast Calories';
+        }
+
+        if(breakfastProtein.length == 0){
+            currFormErrors['breakfastProtein'] = 'Please enter Breakfast Protein';
+        }
+
+        if(lunchMeal.length == 0){
+            currFormErrors['lunchMeal'] = 'Please enter a Lunch Meal';
+        }
+
+        if(lunchCalories.length == 0){
+            currFormErrors['lunchCalories'] = 'Please enter Lunch Calories';
+        }
+
+        if(lunchProtein.length == 0){
+            currFormErrors['lunchProtein'] = 'Please enter Lunch Protein';
+        }
+
+        if(dinnerMeal.length == 0){
+            currFormErrors['dinnerMeal'] = 'Please enter a Dinner Meal';
+        }
+
+        if(dinnerCalories.length == 0){
+            currFormErrors['dinnerCalories'] = 'Please enter Dinner Calories';
+        }
+
+        if(dinnerProtein.length == 0){
+            currFormErrors['dinnerProtein'] = 'Please enter Dinner Protein';
+        }
+
+        if(snacks.length == 0){
+            currFormErrors['snacks'] = 'Please enter some snacks';
+        }
+
+        if(snackCalories.length == 0){
+            currFormErrors['snackCalories'] = 'Please enter Snack Calories';
+        }
+
+        if(snackProtein.length == 0){
+            currFormErrors['snackProtein'] = 'Please enter Snack Protein';
+        }
+
+        setFormErrors(currFormErrors);
+
+        const checkAllEmpty = Object.entries(currFormErrors).reduce((a,b) => a[1].length > b[1].length ? a : b)[1];
+        
+        //Check if its empty (if not it means there are errors) 
+        if(checkAllEmpty.length != 0){
+            let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
+            allErrorMessages = allErrorMessages.trim();
+            Toast.show(allErrorMessages, {
+                duration: Toast.durations.SHORT,
+            });
+            return;
+        }
+        */
+
+        console.log("help");
+        // add calories to user.calorieGoal in the database
+        const token = await AsyncStorage.getItem("userData");
+
+        const response = await axios.put('http://localhost:5001/nutrition/editMealPlan',
+                                        {updatedMealPlan:
+                                        {
+                                            _id: mealPlan._id,
+                                            planName: planName,
+                                            breakfastMeal: breakfastMeal,
+                                            breakfastIngredients: breakfastIngredients,
+                                            breakfastCalories: breakfastCalories,
+                                            breakfastProtein: breakfastProtein,
+                                            lunchMeal: lunchMeal,
+                                            lunchIngredients: lunchIngredients,
+                                            lunchCalories: lunchCalories,
+                                            lunchProtein: lunchProtein,
+                                            dinnerMeal: dinnerMeal,
+                                            dinnerIngredients: dinnerIngredients,
+                                            dinnerCalories: dinnerCalories,
+                                            dinnerProtein: dinnerProtein,
+                                            snacks: snacks,
+                                            snackCalories: snackCalories,
+                                            snackProtein: snackProtein,
+                                            userId: mealPlan.userId
+                                        }}, {
+            headers:{
+                "x-auth-token": token,
+            }
+        });
+        console.log("hep");
+
+        if(response.status == 200){
+            Toast.show("Success!", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+        else{
+            Toast.show("Could not update meal plan", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+    };
+
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
             <View style={{flexDirection:'row', textAlign:'center', paddingBottom: 10, flex:1}}>
@@ -258,7 +396,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                     />
                 </View>
                 <View style={{paddingBottom:10}}>
-                    <TouchableOpacity style={[styles.TouchableOpacity]}>
+                    <TouchableOpacity onPress={editMealPlan} style={[styles.TouchableOpacity]}>
                         <Text style={{fontFamily:"Inter-Medium", fontWeight:"600", fontSize: 18, color: "white"}}>
                             Save
                         </Text>
