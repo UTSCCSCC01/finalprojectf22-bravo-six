@@ -8,10 +8,12 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
     const [obj, setObj] = useState({planName: "", published: false});
     const [user, setUser] = useState({username: ""})
     const isFocused = useIsFocused();
+    //console.log(mealPlanId);
     
     useEffect(()=>{
         async function getMealFromDb(){
             console.log(mealPlanId);
+            //console.log("help");
             const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: mealPlanId}});
             setObj(mealPlanObj.data);
         }

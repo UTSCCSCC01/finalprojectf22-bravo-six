@@ -145,5 +145,17 @@ const getPersonalMealPlans = async(req, res) =>{
 
 }
 
+const editMealPlan = async(req, res) => {
+    const {updatedMealPlan} = req.body;
+    try{
+        //console.log(updatedMealPlan);
+        await MealPlan.findOneAndReplace({_id: updatedMealPlan._id}, updatedMealPlan);
+        return res.status(200).send("Updated Meal");
+    } catch(err){
+        return res.status(400).send(err.message);
+    }
 
-module.exports = {getFoodLog, logFood, getMealPlan, getPublishedMealPlans, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans}
+}
+
+
+module.exports = {getFoodLog, logFood, getMealPlan, getPublishedMealPlans, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans, editMealPlan}
