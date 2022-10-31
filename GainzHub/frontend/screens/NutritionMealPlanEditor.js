@@ -36,8 +36,6 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
 
     const isFocused = useIsFocused();
 
-    console.log(planName);
-
     
     
 
