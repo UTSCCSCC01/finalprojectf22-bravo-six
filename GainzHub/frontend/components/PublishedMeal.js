@@ -3,28 +3,112 @@ import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
+import Toast from 'react-native-root-toast';
 
 const PublishedMeal = ({mealPlanId, navigation}) => {
     const [obj, setObj] = useState({planName: "", published: false});
-    const [user, setUser] = useState({username: ""})
+    const [creator, setCreator] = useState({username: ""}) //Creator of the meal plan
+    const [user, setUser] = useState({}); //Current user
+    const [addedText, setAddedText] = useState("Get");
+    const [added, setAdded] = useState(false);
+    const [owner, setOwner] = useState(false); //Is this current meal plan owned by the current user?
     const isFocused = useIsFocused();
     
     useEffect(()=>{
-        async function getMealFromDb(){
-            console.log(mealPlanId);
+        async function intializeUseStates(){
             const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: mealPlanId}});
+            console.log(mealPlanId);
             setObj(mealPlanObj.data);
+
             const token = mealPlanObj.data.userId;
             const userInfo = await axios.get("http://localhost:5001/user/getUser", {
                 headers: {
                     'x-auth-token': token,
                 }
             })
-            setUser(userInfo.data);
-        }
+            setCreator(userInfo.data);
 
-        getMealFromDb();
+            const jwtToken = await AsyncStorage.getItem("userData");
+            
+            const currentUser = await axios.get("http://localhost:5001/user/getUserSecure", {
+                headers: {
+                    'x-auth-token': jwtToken,
+                }
+            })
+            console.log(currentUser.data);
+            setUser(currentUser);
+
+            //Check if the meal plan was already added or if it was created by them
+            if(mealPlanObj.data.userId == currentUser.data._id){
+                setOwner(true);
+            }
+            else if(currentUser.data.exploreMealPlans.includes(mealPlanId)){
+                console.log("sdff");
+                setAdded(true);
+            }
+        }
+        intializeUseStates();
     }, [isFocused])
+
+    useEffect(() => {
+        if(added){
+            setAddedText("Added");
+        }
+        else{
+            setAddedText("Get");
+        }
+    }, [added])
+
+    useEffect(() =>{
+        if(owner){
+            setAddedText("Owner");
+        }
+    }, [owner]);
+
+    const handleAddClick = async () =>{
+        const jwtToken = await AsyncStorage.getItem("userData");
+        console.log(jwtToken);
+        if(added && !owner){
+            //Remove meal plan from collection
+            const result = await axios.patch("http://localhost:5001/user/removeAddedPlan", {mealPlanId: mealPlanId}, {
+                headers: {
+                    'x-auth-token': jwtToken,
+                }
+            })
+
+            if(result.status == 200){
+                Toast.show("Unadded Plan", {
+                    duration: Toast.durations.SHORT,
+                });
+                setAdded(false);
+            }
+            else{
+                Toast.show("Error unadding", {
+                    duration: Toast.durations.SHORT,
+                });
+            }
+        }
+        else if(!owner){
+            //Add meal plan
+            const result = await axios.patch("http://localhost:5001/user/addExplorePlan", {mealPlanId: mealPlanId}, {
+                headers: {
+                    'x-auth-token': jwtToken,
+                }
+            })
+
+            if(result.status == 200){
+                Toast.show("Added Plan", {
+                    duration: Toast.durations.SHORT,
+                });
+                setAdded(true);
+            }
+            else{
+                Toast.show("Error adding", {
+                    duration: Toast.durations.SHORT,
+                });
+            }
+        }
+    }
 
     return (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
@@ -32,14 +116,14 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
             <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {obj})} style={[styles.inputView, {width: '75%'}]}>
                 <Text style={styles.inputText}>{obj.planName}</Text>
                 <Text style={styles.inputText}>
-                    Creator: {user.username}
+                    Creator: {creator.username}
                 </Text>
             </TouchableOpacity>
 
 
-            <TouchableOpacity onPress={()=> console.log("Pressed")} style={[styles.TouchableOpacityList]} >
+            <TouchableOpacity onPress={()=> handleAddClick()} style={[styles.TouchableOpacityList]} >
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
-                    Add to List
+                    {addedText}
                 </Text>
             </TouchableOpacity>
 
