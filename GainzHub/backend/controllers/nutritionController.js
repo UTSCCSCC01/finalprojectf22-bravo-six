@@ -159,9 +159,9 @@ const editMealPlan = async(req, res) => {
 
 const deleteMealPlan = async(req, res) => {
     const {deletedMealPlan} = req.body;
-    console.log("hehehe");
+    //console.log("hehehe");
     try{
-        console.log(deletedMealPlan);
+        //console.log(deletedMealPlan);
         await MealPlan.findOneAndDelete({_id: deletedMealPlan._id});
         return res.status(200).send("Deleted Meal Plan");
     } catch(err){
