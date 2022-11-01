@@ -129,7 +129,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
         }
         */
 
-        console.log("help");
+        //console.log("help");
         // add calories to user.calorieGoal in the database
         const token = await AsyncStorage.getItem("userData");
 
@@ -139,7 +139,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                 "x-auth-token": token,
             }
         });
-        console.log("hep");
+        //console.log("hep");
 
         if(response.status == 200){
             Toast.show("Success!", {
@@ -152,6 +152,31 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
             })
         }
     };
+
+    const deleteMealPlan = async() => {
+        const token = await AsyncStorage.getItem("userData");
+        // delete cant use request bodies so ill just use post for now.
+        const response = await axios.post('http://localhost:5001/nutrition/deleteMealPlan',
+                                        {deletedMealPlan: mealPlan}, {
+            headers:{
+                "x-auth-token": token,
+            }
+        });
+        //console.log("hep");
+
+        if(response.status == 200){
+            Toast.show("Success!", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+        else{
+            Toast.show("Could not update meal plan", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+
+        //navigation.navigate("Nutrition");
+    }
 
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
@@ -383,7 +408,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <TouchableOpacity style={[styles.TouchableOpacity]}>
+                    <TouchableOpacity onPress={deleteMealPlan} style={[styles.TouchableOpacity]}>
                         <Text style={{fontFamily:"Inter-Medium", fontWeight:"600", fontSize: 18, color: "white"}}>
                             Delete
                         </Text>
