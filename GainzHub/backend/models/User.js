@@ -51,6 +51,10 @@ const UserSchema = new mongoose.Schema({
         foodSodium:{
             type: Number
         }}],
+    exploreMealPlans:[{
+            type: String,
+            required: true,
+        }],
 });
 
 module.exports = User = mongoose.model('user', UserSchema);
