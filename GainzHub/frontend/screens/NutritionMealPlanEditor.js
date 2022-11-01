@@ -176,6 +176,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
         }
 
         navigation.navigate("Nutrition");
+        //goBack();
     }
 
     return(

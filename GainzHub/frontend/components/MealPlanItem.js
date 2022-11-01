@@ -19,7 +19,7 @@ const MealPlanItem = ({mealPlanId, navigation, handlePublish}) => {
 
     useEffect(() =>{
         setPublished(obj ? obj.published ? obj.published : false : false);
-    }, [obj])
+    }, [obj], [isFocused])
     
     const handlePublishWrapper = async() => {
         
@@ -38,7 +38,7 @@ const MealPlanItem = ({mealPlanId, navigation, handlePublish}) => {
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
             
             <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {obj})} style={[styles.inputView, {width: '75%'}]}>
-                <Text style={styles.inputText}>{obj ? obj.planName ? obj.planName : "" : ""}</Text>
+                <Text style={styles.inputText}>{obj ? obj.planName : ""}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={()=> handlePublishWrapper()} style={[styles.TouchableOpacityList]} >
