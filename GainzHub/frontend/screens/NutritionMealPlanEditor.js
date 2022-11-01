@@ -175,7 +175,7 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
             })
         }
 
-        //navigation.navigate("Nutrition");
+        navigation.navigate("Nutrition");
     }
 
     return(

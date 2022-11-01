@@ -43,6 +43,7 @@ const NutritionPlans = ({navigation}) => {
                 }
             })
             setMealPlans(response.data);
+            console.log(response.data);
         }
         getStoredMealPlans();
     }, [isFocused]);

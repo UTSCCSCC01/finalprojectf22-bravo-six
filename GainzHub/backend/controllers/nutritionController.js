@@ -162,7 +162,7 @@ const deleteMealPlan = async(req, res) => {
     console.log("hehehe");
     try{
         console.log(deletedMealPlan);
-        await MealPlan.findOneAndDelete({_id: mealPlan._id});
+        await MealPlan.findOneAndDelete({_id: deletedMealPlan._id});
         return res.status(200).send("Deleted Meal Plan");
     } catch(err){
         return res.status(400).send(err.message);
