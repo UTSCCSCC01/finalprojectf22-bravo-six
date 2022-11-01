@@ -174,8 +174,8 @@ const NutritionMealPlanEditor = ({route, navigation}) => {
                 duration: Toast.durations.SHORT,
             })
         }
-
-        navigation.navigate("Nutrition");
+        // WHEN YOU NAV TO PLAN (NUTRITIONNAV) THE OBJECTS AFTER THE DELETED PLANS ARE EMPTY
+        navigation.navigate("NutritionPlans");
         //goBack();
     }
 
