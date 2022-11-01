@@ -172,5 +172,19 @@ const editReview = async(req, res) =>{
     }
 }
 
+const deleteMealPlan = async(req, res) => {
+    const {deletedMealPlan} = req.body;
+    console.log("hehehe");
+    try{
+        console.log(deletedMealPlan);
+        await MealPlan.findOneAndDelete({_id: mealPlan._id});
+        return res.status(200).send("Deleted Meal Plan");
+    } catch(err){
+        return res.status(400).send(err.message);
+    }
+}
 
-module.exports = {getFoodLog, logFood, getMealPlan, getPublishedMealPlans, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans, editMealPlan, editReview}
+
+module.exports = {getFoodLog, logFood, getMealPlan, getPublishedMealPlans, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans, editMealPlan, editReview, deleteMealPlan}
+
+
