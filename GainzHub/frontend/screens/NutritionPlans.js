@@ -13,6 +13,7 @@ import { useRoute } from '@react-navigation/native';
 import NutritionNav from '../components/NutritionNav';
 import { ScrollView } from 'react-native-gesture-handler';
 import MealPlanItem from '../components/MealPlanItem';
+import PublishedMeal from '../components/PublishedMeal';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
@@ -30,26 +31,42 @@ const getUser = async() =>{
 // NEED to have the goBack but also need to navigate through pages *FIGURE THAT OUT LATER*
 const NutritionPlans = ({navigation}) => {
     const [mealPlans, setMealPlans] = useState({});
+    const [addedPlans, setAddedPlans] = useState({}); //Added meal plans from explore page
     const [user, setUser] = useState("");
     const isFocused = useIsFocused();
     
     useEffect(() => {
         const getStoredMealPlans = async() => {
             const token = await AsyncStorage.getItem("userData");
-            setUser(token);
             const response  = await axios.get('http://localhost:5001/nutrition/getPersonalMealPlans', {
                 headers: {
                     'x-auth-token': token,
                 }
             })
             setMealPlans(response.data);
+
+            //Get added meal plans
+            const userObj = await axios.get("http://localhost:5001/user/getUserSecure", {
+                headers: {
+                    "x-auth-token": token,
+                },
+            })
+
+            if(userObj.status == 200){
+                setUser(userObj.data);
+            }
+            setAddedPlans(userObj.data.exploreMealPlans);
         }
         getStoredMealPlans();
     }, [isFocused]);
 
-    const renderItem = ({ item }) => (
+    const renderMeals = ({ item }) => (
         <MealPlanItem mealPlanId={item._id} navigation={navigation} handlePublish={handlePublish}/>
-      );
+    );
+
+    const renderAddedMeals = ({item}) => (
+        <PublishedMeal mealPlanId={item} navigation={navigation} />
+    );
     
     const handlePublish = (obj) =>{
 
@@ -78,11 +95,26 @@ const NutritionPlans = ({navigation}) => {
                 </Text>
             </View>
             <View style={{flex:1, maxHeight:'600px'}}>
-                <ScrollView>
+                <ScrollView style={{flexGrow: 0, height: 280}}>
                     <FlatList
                         data={mealPlans}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id}
+                        renderItem={renderMeals}
+                        keyExtractor={item => item._id}
+                        scrollEnabled={true}
+                    />
+                </ScrollView>
+            </View>
+            <View style={{paddingTop: 30}}>
+                <Text style = {{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:26, paddingBottom:10}}>
+                    Added Meal Plans
+                </Text>
+            </View>
+            <View style={{flex:1, maxHeight:'600px'}}>
+                <ScrollView style={{flexGrow: 0, height: 280}}>
+                    <FlatList
+                        data={addedPlans}
+                        renderItem={renderAddedMeals}
+                        keyExtractor={item => item._id}
                         scrollEnabled={true}
                     />
                 </ScrollView>

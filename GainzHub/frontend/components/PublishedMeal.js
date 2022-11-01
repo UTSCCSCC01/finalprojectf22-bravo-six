@@ -17,6 +17,7 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
     useEffect(()=>{
         async function intializeUseStates(){
             const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: mealPlanId}});
+            console.log(mealPlanId);
             setObj(mealPlanObj.data);
 
             const token = mealPlanObj.data.userId;
