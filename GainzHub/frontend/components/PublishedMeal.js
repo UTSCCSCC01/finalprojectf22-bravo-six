@@ -114,7 +114,7 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
     return (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
             
-            <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {obj})} style={[styles.inputView, {width: '75%'}]}>
+            <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {obj})} style={[styles.inputView, {width: '60%'}]}>
                 <Text style={styles.inputText}>{obj.planName}</Text>
                 <Text style={styles.inputText}>
                     Creator: {creator.username}
@@ -125,6 +125,12 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
             <TouchableOpacity onPress={()=> handleAddClick()} style={[styles.TouchableOpacityList]} >
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
                     {addedText}
+                </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=> navigation.navigate('ReviewMealPlan', {obj})} style={[styles.TouchableOpacityList, {flex:1}]} >
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
+                    Review 
                 </Text>
             </TouchableOpacity>
 

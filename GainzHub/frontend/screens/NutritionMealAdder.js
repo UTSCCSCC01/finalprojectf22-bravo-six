@@ -164,7 +164,8 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                                             dinnerProtein: dinnerProtein,
                                             snacks: snacks,
                                             snackCalories: snackCalories,
-                                            snackProtein: snackProtein
+                                            snackProtein: snackProtein,
+                                            review: 0
                                         }}, {
             headers:{
                 "x-auth-token": token,
