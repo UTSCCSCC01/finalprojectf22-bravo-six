@@ -42,6 +42,7 @@ const NutritionPlans = ({navigation}) => {
                     'x-auth-token': token,
                 }
             })
+            console.log(response.data);
             setMealPlans(response.data);
         }
         getStoredMealPlans();

@@ -17,4 +17,6 @@ router.get("/getMealPlan", getMealPlan);
 router.get("/getPublishedMeals", getPublishedMealPlans);
 router.put("/editMealPlan", JWTAuth, editMealPlan);
 router.post("/editReview", JWTAuth, editReview);
+
+
 module.exports = (router);

@@ -71,7 +71,6 @@ const getCaloriesAte = async(req, res) => {
 const addMealPlan = async(req, res) =>{
     const userId = req.user;
     const {newMealPlan} = req.body;
-    
     try{
         const mealPlanObj = new MealPlan(newMealPlan);
         mealPlanObj.userId = userId;
@@ -158,9 +157,20 @@ const editMealPlan = async(req, res) => {
 }
 
 const editReview = async(req, res) =>{
-    
-    console.log("123");
+    const {mealPlanId} = req.body
 
+    try{
+        await MealPlan.findOneAndUpdate({_id: mealPlanId}, 
+            {$set:
+                {review: req.body.review, reviewNumber: req.body.reviewNumber
+                },
+
+            });
+        return res.status(200).send("Updated Meal Plan");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
 }
+
 
 module.exports = {getFoodLog, logFood, getMealPlan, getPublishedMealPlans, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans, editMealPlan, editReview}

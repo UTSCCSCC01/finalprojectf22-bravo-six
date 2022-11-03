@@ -44,6 +44,9 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
                 <Text style={styles.inputText}>
                     Creator: {user.username}
                 </Text>
+                <Text style={styles.inputText}>
+                    Review: {Number(obj.review).toFixed(2)}
+                </Text>
             </TouchableOpacity>
 
             
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
         height: 30,
         flex: 1,
         marginRight: 30,
-        padding: 10,
+        padding: 4,
         fontFamily: "Inter-Medium",
         fontWeight: "500",
         fontSize: 18,
