@@ -157,5 +157,10 @@ const editMealPlan = async(req, res) => {
 
 }
 
+const editReview = async(req, res) =>{
+    
+    console.log("123");
 
-module.exports = {getFoodLog, logFood, getMealPlan, getPublishedMealPlans, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans, editMealPlan}
+}
+
+module.exports = {getFoodLog, logFood, getMealPlan, getPublishedMealPlans, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans, editMealPlan, editReview}
