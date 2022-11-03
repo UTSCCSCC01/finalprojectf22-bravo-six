@@ -122,6 +122,9 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
                 <Text style={styles.inputText}>
                     Review: {Number(obj.review).toFixed(2)}
                 </Text>
+                <Text style={styles.inputText}>
+                    Review: {Number(obj.review).toFixed(2)}
+                </Text>
             </TouchableOpacity>
 
 
