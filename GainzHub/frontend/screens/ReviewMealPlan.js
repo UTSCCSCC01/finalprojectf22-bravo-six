@@ -23,8 +23,10 @@ const ReviewMealPlan = ({route, navigation}) => {
     const isFocused = useIsFocused();
     const starImgFilled = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png';
     const starImgCorner = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png';
-    const [defaultRating, setdefaultRating] = useState(2);
+    const [defaultRating, setdefaultRating] = useState(0);
     const [maxRating, setMaxRating] = useState([1,2,3,4,5]);
+    const [numRatings, setnumRatings] = useState('');
+    const [currentRating, setcurrentRating] = useState('');
     const CustomerRatingBar = () => {
         return(
             <View style = {styles.customRatingBarStyle}>
@@ -52,21 +54,40 @@ const ReviewMealPlan = ({route, navigation}) => {
         )
     };
 
+    useEffect(()=>{
+        const getnumRatings = async() => {
+            const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: route.params.obj._id}});
+            setnumRatings(mealPlanObj.data.reviewNumber);
+            setcurrentRating(mealPlanObj.data.review)
+        }
+        getnumRatings();
+    })
 
     const editReview = async() => {
         // add calories to user.calorieGoal in the database
 
-
+        const newRating = (numRatings*currentRating + defaultRating)/(numRatings + 1);
         const token = await AsyncStorage.getItem("userData");
-        console.log("HI");
+        
         const response = await axios.post('http://localhost:5001/nutrition/editReview',
-                                        {review: 1}, {
+                {mealPlanId: route.params.obj._id, review: newRating, reviewNumber: numRatings + 1}, {
             headers:{
                 "x-auth-token": token,
             }
         });
-
         
+        if(response.status == 200){
+            Toast.show("Review Added!", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+        else{
+            Toast.show("Could not update calorie goal", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+
+        navigation.pop();
 
     };
 

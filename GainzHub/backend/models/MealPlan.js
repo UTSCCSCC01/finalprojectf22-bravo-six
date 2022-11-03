@@ -62,7 +62,11 @@ const MealPlanSchema = new mongoose.Schema({
         },
         review:{
             type: Number,
-            required: false,
+            required: false
+        },
+        reviewNumber:{
+            type: Number,
+            required: false
         }
     });
 
