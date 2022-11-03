@@ -29,7 +29,7 @@ import SocialHome from '../screens/SocialHome';
 import SocialExplore from '../screens/SocialExplore';
 import SocialCreate from '../screens/SocialCreate';
 import NutritionMealPlanEditor from '../screens/NutritionMealPlanEditor';
-
+import ReviewMealPlan from '../screens/ReviewMealPlan';
 const Stack = createStackNavigator();
 
 const AppStack = ()=>{
@@ -60,6 +60,8 @@ const AppStack = ()=>{
                 <Stack.Screen name = "NutritionMealPlanEditor" component={NutritionMealPlanEditor}/>
                 <Stack.Screen name = "ReviewMealPlan" component={ReviewMealPlan}/>
                 <Stack.Screen name = "NutritionMealPlanEditor" component={NutritionMealPlanEditor}/>
+                <Stack.Screen name = "ReviewMealPlan" component={ReviewMealPlan}/>
+                
             </Stack.Navigator>
         </NavigationContainer>
     );

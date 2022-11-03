@@ -137,6 +137,12 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
                 </Text>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={()=> navigation.navigate('ReviewMealPlan', {obj})} style={[styles.TouchableOpacityList, {flex:1}]} >
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
+                    Review 
+                </Text>
+            </TouchableOpacity>
+
         </View>
     );
 }
