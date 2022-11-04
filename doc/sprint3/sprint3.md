@@ -10,6 +10,8 @@ We plan to finish the following stories
 - BRAV-82(Porom)
 - BRAV-7(Bryan)
 - BRAV-63(Dominik)
+- BRAV-78(Dominik)
+- BRAV-79(Dominik)
 - BRAV-80(Ryan)
 - BRAV-81(Jason)
 - BRAV-70(Porom)
@@ -43,6 +45,14 @@ We plan to finish the following stories
 ## BRAV-63
 - As a user interested in nutrition, I should be able to delete and edit my existing meal plans
 - This provides the user an option to abandon one of their current meal plans if they do not find it effective
+
+## BRAV-78 (child of BRAV-63)
+- As a user interested in nutrition, I should be able to edit my existing meal plans, so that I can fix or change any mistakes
+- Create UI components and endpoint to edit an existing meal plan
+
+## BRAV-79 (child of BRAV-63)
+- As a user I should be able to delete my existing meal plans, so that I can replace one with a better plan
+- Create UI components and endpoint to delete a meal plan
 
 ## BRAV-80
 - Form validation for the calorie calculator
