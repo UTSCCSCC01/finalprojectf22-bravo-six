@@ -72,7 +72,7 @@ const ProgressBMI = ({navigation}) =>{
                         Add Entry
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutAddPlan')} style={[styles.TouchableOpacity]}>
+                <TouchableOpacity onPress={()=> navigation.navigate('BMICalculator')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                         Calculate BMI
                     </Text>

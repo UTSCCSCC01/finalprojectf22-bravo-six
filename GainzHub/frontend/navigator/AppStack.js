@@ -21,6 +21,7 @@ import WorkoutLogs from '../screens/WorkoutLogs';
 import Progresss from '../screens/Progress';
 import ProgressBMI from '../screens/ProgressBMI';
 import ProgressBF from '../screens/ProgressBF';
+import BMICalculator from '../screens/BMICalculator';
 
 const Stack = createStackNavigator();
 
@@ -48,6 +49,7 @@ const AppStack = ()=>{
                 <Stack.Screen name = "Progresss" component={Progresss}/>
                 <Stack.Screen name = "ProgressBMI" component={ProgressBMI}/>
                 <Stack.Screen name = "ProgressBF" component={ProgressBF}/>
+                <Stack.Screen name = "BMICalculator" component={BMICalculator}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
