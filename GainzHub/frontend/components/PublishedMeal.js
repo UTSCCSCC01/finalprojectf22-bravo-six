@@ -114,7 +114,7 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
     return (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
             
-            <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {obj})} style={[styles.inputView, {width: '60%'}]}>
+            <TouchableOpacity onPress={()=> navigation.navigate('ReviewMealPlan', {obj})} style={[styles.inputView, {width: '60%'}]}>
                 <Text style={styles.inputText}>{obj.planName}</Text>
                 <Text style={styles.inputText}>
                     Creator: {creator.username}

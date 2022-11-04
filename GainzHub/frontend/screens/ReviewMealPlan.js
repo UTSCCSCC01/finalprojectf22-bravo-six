@@ -130,6 +130,83 @@ const ReviewMealPlan = ({route, navigation}) => {
                     Total Protein: {mealPlan.breakfastProtein + mealPlan.lunchProtein + mealPlan.dinnerProtein + mealPlan.snackProtein} g
                 </Text>
             </View>  
+
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10}}>
+                    Breakfast
+                </Text>
+            </View>
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Meal: {mealPlan.breakfastMeal ? mealPlan.breakfastMeal : 'No food included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Ingredients: {mealPlan.breakfastIngredients ? mealPlan.breakfastIngredients : 'No ingredients included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Calories: {mealPlan.breakfastCalories ? mealPlan.breakfastCalories : 'No calories included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Protein: {mealPlan.breakfastProtein ? mealPlan.breakfastProtein + ' g' : 'No protein included'}
+                </Text>
+            </View>
+
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10}}>
+                    Lunch
+                </Text>
+            </View>
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Meal: {mealPlan.lunchMeal ? mealPlan.lunchMeal : 'No food included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Ingredients: {mealPlan.lunchIngredients ? mealPlan.lunchIngredients : 'No ingredients included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Calories: {mealPlan.lunchCalories ? mealPlan.lunchCalories : 'No calories included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Protein: {mealPlan.lunchProtein ? mealPlan.lunchProtein + ' g' : 'No protein included'}
+                </Text>
+            </View>
+
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10}}>
+                    Dinner
+                </Text>
+            </View>
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Meal: {mealPlan.dinnerMeal ? mealPlan.dinnerMeal : 'No food included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Ingredients: {mealPlan.dinnerIngredients ? mealPlan.dinnerIngredients : 'No ingredients included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Calories: {mealPlan.dinnerCalories ? mealPlan.dinnerCalories : 'No calories included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Protein: {mealPlan.dinnerProtein ? mealPlan.dinnerProtein + ' g' : 'No protein included'}
+                </Text>
+            </View>
+
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10}}>
+                    Snacks
+                </Text>
+            </View>
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Meal: {mealPlan.snacks ? mealPlan.snacks : 'No snacks included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Calories: {mealPlan.snackCalories ? mealPlan.snackCalories : 'No calories included'}
+                </Text>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
+                    Protein: {mealPlan.snackProtein ? mealPlan.snackProtein + ' g' : 'No protein included'}
+                </Text>
+            </View> 
             <CustomerRatingBar/>
             <Text style={styles.textStyle}>
                 {defaultRating + ' / ' + maxRating.length}
