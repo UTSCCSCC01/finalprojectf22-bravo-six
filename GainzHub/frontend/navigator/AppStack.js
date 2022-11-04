@@ -18,6 +18,9 @@ import Workout from '../screens/Workout';
 import WorkoutAddPlan from '../screens/WorkoutAddPlan';
 import WorkoutExplore from '../screens/WorkoutExplore';
 import WorkoutLogs from '../screens/WorkoutLogs';
+import Progresss from '../screens/Progress';
+import ProgressBMI from '../screens/ProgressBMI';
+import ProgressBF from '../screens/ProgressBF';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +45,9 @@ const AppStack = ()=>{
                 <Stack.Screen name = "WorkoutAddPlan" component={WorkoutAddPlan}/>
                 <Stack.Screen name = "WorkoutExplore" component={WorkoutExplore}/>
                 <Stack.Screen name = "WorkoutLogs" component={WorkoutLogs}/>
+                <Stack.Screen name = "Progresss" component={Progresss}/>
+                <Stack.Screen name = "ProgressBMI" component={ProgressBMI}/>
+                <Stack.Screen name = "ProgressBF" component={ProgressBF}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

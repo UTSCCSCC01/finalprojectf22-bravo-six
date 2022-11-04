@@ -13,7 +13,7 @@ const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
 
-const Progresss = ({navigation}) =>{
+const ProgressBMI = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
 
     useEffect(()=>{
@@ -45,13 +45,13 @@ const Progresss = ({navigation}) =>{
                 </Text>
             </View>
             <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center', paddingHorizontal:30, justifyContent:'space-between'}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('Progress')}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
+                <TouchableOpacity onPress={()=> navigation.navigate('Progresss')}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                        Body Weight
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=> navigation.navigate('ProgressBMI')}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
                        BMI
                     </Text>
                 </TouchableOpacity> 
@@ -70,6 +70,11 @@ const Progresss = ({navigation}) =>{
                 <TouchableOpacity onPress={()=> navigation.navigate('WorkoutAddPlan')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                         Add Entry
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutAddPlan')} style={[styles.TouchableOpacity]}>
+                    <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
+                        Calculate BMI
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -111,4 +116,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Progresss;
+export default ProgressBMI;
