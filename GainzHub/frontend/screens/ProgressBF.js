@@ -13,7 +13,7 @@ const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
 
-const Progresss = ({navigation}) =>{
+const ProgressBF = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
 
     useEffect(()=>{
@@ -45,8 +45,8 @@ const Progresss = ({navigation}) =>{
                 </Text>
             </View>
             <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center', paddingHorizontal:30, justifyContent:'space-between'}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('Progress')}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
+                <TouchableOpacity onPress={()=> navigation.navigate('Progresss')}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                        Body Weight
                     </Text>
                 </TouchableOpacity>
@@ -56,7 +56,7 @@ const Progresss = ({navigation}) =>{
                     </Text>
                 </TouchableOpacity> 
                 <TouchableOpacity onPress={()=> navigation.navigate('ProgressBF')}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
                         BF%
                     </Text>
                 </TouchableOpacity> 
@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Progresss;
+export default ProgressBF;

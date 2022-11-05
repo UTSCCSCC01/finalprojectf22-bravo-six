@@ -18,6 +18,9 @@ import NutritionPlans from '../screens/NutritionPlans';
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {createStackNavigator} from '@react-navigation/stack'
 import NutritionExplore from '../screens/NutritionExplore';
+import Progresss from '../screens/Progress';
+import ProgressBMI from '../screens/ProgressBMI';
+import ProgressBF from '../screens/ProgressBF';
 import Social from '../screens/Social';
 import SocialHome from '../screens/SocialHome';
 import SocialExplore from '../screens/SocialExplore';
@@ -76,6 +79,27 @@ export default function NavBar({ navigation }) {
                 tabBarIcon: ({ color, size }) => (
                 <Entypo name="bar-graph" size={size} color={color}/>                ),
             }} 
+        />
+        <Tab.Screen name="Progresss" component={Progresss}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="ProgressBMI" component={ProgressBMI}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="ProgressBF" component={ProgressBF}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
         />
         <Tab.Screen name="WorkoutLogs" component={WorkoutLogs}
             options={{

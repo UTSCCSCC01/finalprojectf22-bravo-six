@@ -18,12 +18,17 @@ import WorkoutLanding from '../screens/WorkoutLanding';
 import WorkoutAddPlan from '../screens/WorkoutAddPlan';
 import WorkoutExplore from '../screens/WorkoutExplore';
 import WorkoutLogs from '../screens/WorkoutLogs';
+import Progresss from '../screens/Progress';
+import ProgressBMI from '../screens/ProgressBMI';
+import ProgressBF from '../screens/ProgressBF';
+import BMICalculator from '../screens/BMICalculator';
 import NutritionMealPlanEditor from '../screens/NutritionMealPlanEditor';
 import ReviewMealPlan from '../screens/ReviewMealPlan';
 import Social from '../screens/Social';
 import SocialHome from '../screens/SocialHome';
 import SocialExplore from '../screens/SocialExplore';
 import SocialCreate from '../screens/SocialCreate';
+
 const Stack = createStackNavigator();
 
 const AppStack = ()=>{
@@ -47,6 +52,10 @@ const AppStack = ()=>{
                 <Stack.Screen name = "WorkoutAddPlan" component={WorkoutAddPlan}/>
                 <Stack.Screen name = "WorkoutExplore" component={WorkoutExplore}/>
                 <Stack.Screen name = "WorkoutLogs" component={WorkoutLogs}/>
+                <Stack.Screen name = "Progresss" component={Progresss}/>
+                <Stack.Screen name = "ProgressBMI" component={ProgressBMI}/>
+                <Stack.Screen name = "ProgressBF" component={ProgressBF}/>
+                <Stack.Screen name = "BMICalculator" component={BMICalculator}/>
                 <Stack.Screen name = "NutritionMealPlanEditor" component={NutritionMealPlanEditor}/>
                 <Stack.Screen name = "ReviewMealPlan" component={ReviewMealPlan}/>
                 <Stack.Screen name = "Social" component={Social}/>
