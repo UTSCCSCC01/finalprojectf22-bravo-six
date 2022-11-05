@@ -70,7 +70,7 @@ const NutritionPlans = ({navigation}) => {
     );
     
     const handlePublish = (obj) =>{
-
+        
     }
     
     return(

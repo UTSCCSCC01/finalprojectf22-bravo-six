@@ -7,7 +7,7 @@ import Profile from '../screens/Profile';
 import TempLanding from '../screens/TempLanding';
 import { Ionicons } from '@expo/vector-icons';
 import Nutrition from '../screens/Nutrition';
-import Workout from '../screens/Workout';
+import WorkoutLanding from '../screens/WorkoutLanding';
 import WorkoutLogs from '../screens/WorkoutLogs';
 import WorkoutExplore from '../screens/WorkoutExplore';
 import Progress from '../screens/Progress';
@@ -62,7 +62,7 @@ export default function NavBar({ navigation }) {
                 ),
             }}
         />
-        <Tab.Screen name="Workout" component={Workout}
+        <Tab.Screen name="Workout" component={WorkoutLanding}
             options={{
                 tabBarLabel: 'Workout',
                 tabBarIcon: ({ color, size }) => (

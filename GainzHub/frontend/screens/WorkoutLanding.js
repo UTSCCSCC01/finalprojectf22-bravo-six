@@ -13,7 +13,7 @@ const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
 
-const Workout = ({navigation}) =>{
+const WorkoutLanding = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
 
     useEffect(()=>{
@@ -62,8 +62,8 @@ const Workout = ({navigation}) =>{
                 </TouchableOpacity> 
             </View>
             <View style={{paddingLeft: 5}}>
-                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:black, marginBottom:20}}>
-                        Workout Plans
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:24, color:black, marginBottom:20}}>
+                        Your Workout Plans
                 </Text>
             </View>
             <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Workout;
+export default WorkoutLanding;
