@@ -1,6 +1,6 @@
 # Product Backlog
 
-BRAV-14: As a progress tracking user, I want to input my body weight, and keep a record of my inputted body weight in chronological order so that I can keep a record of my weight changes throughout my fitness journey.
+1. BRAV-14: As a progress tracking user, I want to input my body weight, and keep a record of my inputted body weight in chronological order so that I can keep a record of my weight changes throughout my fitness journey.
     CoS: On the progress tracking tab, a user can input their body weight, and have it saved in a body weight log in chronological order.
 BRAV-72: Login Register button slider is in wrong position after registering
     Cos: The login register button slider is in the wrong position after registering an account.
