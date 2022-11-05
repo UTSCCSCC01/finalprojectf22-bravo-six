@@ -13,7 +13,7 @@ const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
 
-const Workout = ({navigation}) =>{
+const ProgressBF = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
 
     useEffect(()=>{
@@ -41,35 +41,35 @@ const Workout = ({navigation}) =>{
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 30, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:10}}>
-                    Workout
+                    Progress
                 </Text>
             </View>
             <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center', paddingHorizontal:30, justifyContent:'space-between'}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('Workout')}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
-                       Plans
+                <TouchableOpacity onPress={()=> navigation.navigate('Progresss')}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
+                       Body Weight
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutLogs')}>
+                <TouchableOpacity onPress={()=> navigation.navigate('ProgressBMI')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                       Logs
+                       BMI
                     </Text>
                 </TouchableOpacity> 
-                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutExplore')}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                        Explore
+                <TouchableOpacity onPress={()=> navigation.navigate('ProgressBF')}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
+                        BF%
                     </Text>
                 </TouchableOpacity> 
             </View>
             <View style={{paddingLeft: 5}}>
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:black, marginBottom:20}}>
-                        Workout Plans
+                        logs appear here
                 </Text>
             </View>
             <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
                 <TouchableOpacity onPress={()=> navigation.navigate('WorkoutAddPlan')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
-                        Add Plan
+                        Add Entry
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Workout;
+export default ProgressBF;

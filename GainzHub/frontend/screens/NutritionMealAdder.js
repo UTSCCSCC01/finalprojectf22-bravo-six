@@ -80,6 +80,16 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
         if(planName.length == 0){
             currFormErrors['planName'] = 'Please enter a Name';
         }
+
+        if(isNaN(breakfastCalories) || breakfastCalories <= 0){
+            currFormErrors['breakfastCalories'] = 'Please enter a positive numerical value for your Breakfast Calories';
+        }
+
+        
+        if(isNaN(breakfastProtein) || breakfastProtein <= 0){
+            currFormErrors['breakfastProtein'] = 'Please enter a positive numerical value for your Breakfast Protein';
+        }
+
         
         if(breakfastMeal.length == 0){
             currFormErrors['breakfastMeal'] = 'Please enter a Breakfast Meal';
@@ -91,6 +101,16 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
 
         if(breakfastProtein.length == 0){
             currFormErrors['breakfastProtein'] = 'Please enter Breakfast Protein';
+        }
+
+        
+        if(isNaN(lunchCalories) || lunchCalories <= 0){
+            currFormErrors['lunchCalories'] = 'Please enter a positive numerical value for your Lunch Calories';
+        }
+
+        
+        if(isNaN(lunchProtein) || lunchProtein <= 0){
+            currFormErrors['lunchProtein'] = 'Please enter a positive numerical value for your Lunch Protein';
         }
 
         if(lunchMeal.length == 0){
@@ -105,6 +125,16 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
             currFormErrors['lunchProtein'] = 'Please enter Lunch Protein';
         }
 
+        
+        if(isNaN(dinnerCalories) || dinnerCalories <= 0){
+            currFormErrors['dinnerCalories'] = 'Please enter a positive numerical value for your Dinner Calories';
+        }
+
+        
+        if(isNaN(dinnerProtein) || dinnerProtein <= 0){
+            currFormErrors['dinnerProtein'] = 'Please enter a positive numerical value for your Dinner Protein';
+        }
+
         if(dinnerMeal.length == 0){
             currFormErrors['dinnerMeal'] = 'Please enter a Dinner Meal';
         }
@@ -115,6 +145,16 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
 
         if(dinnerProtein.length == 0){
             currFormErrors['dinnerProtein'] = 'Please enter Dinner Protein';
+        }
+
+        
+        if(isNaN(snackCalories) || snackCalories <= 0){
+            currFormErrors['snackCalories'] = 'Please enter a positive numerical value for your Snacks Calories';
+        }
+
+        
+        if(isNaN(snackProtein) || snackProtein <= 0){
+            currFormErrors['snackProtein'] = 'Please enter a positive numerical value for your Snack Protein';
         }
 
         if(snacks.length == 0){
@@ -164,7 +204,9 @@ const NutritionMealAdder = ({navigation: { goBack }}) => {
                                             dinnerProtein: dinnerProtein,
                                             snacks: snacks,
                                             snackCalories: snackCalories,
-                                            snackProtein: snackProtein
+                                            snackProtein: snackProtein,
+                                            review: 0,
+                                            reviewNumber: 0
                                         }}, {
             headers:{
                 "x-auth-token": token,

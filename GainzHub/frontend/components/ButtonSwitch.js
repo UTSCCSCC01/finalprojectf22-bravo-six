@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         border: '2px solid ',
         height: 50,
         width: 200,
-        borderWidth: '25px',
+        borderWidth: 25,
         borderRadius: 30,
         color: Colors.lightGray,
     },
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     },
     opacity:{
         flex:1,
-        margin:'20px',
+        margin:20,
         color: Colors.gray,
         justifyContent: 'center',
         alignItems: 'center',

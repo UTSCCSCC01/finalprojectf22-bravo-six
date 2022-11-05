@@ -17,7 +17,7 @@ const getUser = async() =>{
 }
 
 
-const CalorieCalculator = ({navigation: { goBack }}) => {
+const BMICalculator = ({navigation: { goBack }}) => {
     const [sex, setSex] = useState("");
     const [diet, setDiet] = useState("");
     const [activity, setActivity] = useState("");
@@ -81,66 +81,13 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
     const calculateCalories = () => {
         let currFormErrors = {"height": "", "weight": "", 
         "age": "", "diet": "", "sex": "", "activity": ""};
-        var dietNum = 0;
-        var activity_level = 0;
-        if (activity === "bmr"){
-            activity_level = 1
-        } else if (activity === "sedentary"){
-            activity_level = 1.2
-        } else if (activity === "lightly"){
-            activity_level = 1.3
-        }else if (activity === "moderate"){
-            activity_level = 1.45
-        }else if (activity === "active"){
-            activity_level = 1.65
-        }else if (activity === "very"){
-            activity_level = 1.8
-        }else {
-            activity_level = 1.95
-        }
-
-        if(diet === "bulk"){
-            dietNum = 300;
-        } else if(diet === "maintain"){
-            dietNum = 0;
-        } else{
-            dietNum = -300;
-        }
 
         if(height.length == 0){
             currFormErrors['height'] = 'Please enter an height';
         }
-
-        if(isNaN(height) || height <= 0){
-            currFormErrors['height'] = 'Please enter positive numerical values for height';
-        }
-
+        
         if(weight.length == 0){
             currFormErrors['weight'] = 'Please enter a weight';
-        }
-
-        if(isNaN(weight) || weight <= 0){
-            currFormErrors['weight'] = 'Please enter positive numerical values for weight';
-        }
-
-        if(age.length == 0){
-            currFormErrors['age'] = 'Please enter an age';
-        }
-
-        if(isNaN(age) || age <= 0){
-            currFormErrors['age'] = 'Please enter positive numerical values for age';
-        }
-
-        if(activity.length == 0){
-            currFormErrors['activity'] = 'Please select an activity level';
-        }
-
-        if(diet.length == 0){
-            currFormErrors['diet'] = 'Please select a diet goal';
-        }
-
-        if(sex.length == 0){
-            currFormErrors['sex'] = 'Please select a sex';
         }
 
         setFormErrors(currFormErrors);
@@ -157,17 +104,12 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
             return;
         }
 
-        if(sex === "female"){
-            setCalories(Number(((activity_level * (10 * weight + 6.25 * height - 5 * age -161)) + dietNum)).toFixed(0));
-            //updateCalorieGoal();
-        } else {
-            setCalories(Number(((activity_level * (10 * weight + 6.25 * height - 5 * age + 5)) + dietNum)).toFixed(0));
-            //updateCalorieGoal();
-        }
+        setCalories(Number(weight/((height/100)*(height/100))).toFixed(0));    
         
 
     }
 
+  
     return(
         <View style={[styles.root, {paddingLeft: 15}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 30}}>
@@ -181,7 +123,7 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center', marginBottom:10}}>
-                    Calculate Your Calories!
+                    Calculate Your BMI!
                 </Text>
             </View>
                 <View style={[{alignContent:'center'}]}>
@@ -189,7 +131,7 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
                         <TextInput 
                             style={styles.textInputLine}
                             activeUnderlineColor={Colors.maroon} 
-                            mode = "flat" label = "Height" 
+                            mode = "flat" label = "Height (cm)" 
                             placeholder = "Enter Height (cm)"
                             onChangeText={(height) => setHeight(height)}
                         />
@@ -198,76 +140,18 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
                         <TextInput 
                             style={styles.textInputLine}
                             activeUnderlineColor={Colors.maroon} 
-                            mode = "flat" label = "Weight" 
+                            mode = "flat" label = "Weight (kg)" 
                             placeholder = "Enter Weight (kg)"
                             onChangeText={(weight) => setWeight(weight)}
                         />
                     </View>
-                    <View style={[styles.inputView, {width: 350}, formErrors['age'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
-                        <TextInput 
-                            style={styles.textInputLine}
-                            activeUnderlineColor={Colors.maroon} 
-                            mode = "flat" label = "Age" 
-                            placeholder = "Enter Age"
-                            onChangeText={(age) => setAge(age)}
-                        />
-                    </View>
-                    <View style={[styles.inputView, {width: 350}, formErrors['activity'].length == 0 ? {} : {borderColor: "red"}]}>
-                        <DropDownPicker
-                            zIndex={3000}
-                            zIndexInverse={1000}
-                            dropDownDirection="TOP"  
-                            open={activityOpen}
-                            value={activity}
-                            items={activityOptions}
-                            setOpen={setActivityOpen}
-                            setValue={setActivity}
-                            setItems={setActivityOptions}
-                            placeholder="Activity Level"
-                        />
-                    </View>
-                    <View style={[styles.inputView, {width: 350}, formErrors['sex'].length == 0 ? {} : {borderColor: "red"}]}>
-                        <DropDownPicker
-                            zIndex={3000}
-                            zIndexInverse={1000}
-                            dropDownDirection="TOP"
-                            open={sexOpen}
-                            value={sex}
-                            items={sexOptions}
-                            setOpen={setSexOpen}
-                            setValue={setSex}
-                            setItems={setSexOptions}
-                            placeholder="Sex"
-                        />
-                    </View>
-                    <View style={[styles.inputView, {width: 350}, formErrors['diet'].length == 0 ? {} : {borderColor: "red"}]}>
-                        <DropDownPicker
-                            zIndex={3000}
-                            zIndexInverse={1000}
-                            dropDownDirection="TOP"
-                            open={dietOpen}
-                            value={diet}
-                            items={dietOptions}
-                            setOpen={setDietOpen}
-                            setValue={setDiet}
-                            setItems={setDietOptions}
-                            placeholder="Diet Goal"
-                            disableBorderRadius={true}
-                        />
-                    </View>
-                    
                     <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center'}}>
-                        {"Calories Needed: "}{calories}
+                        {"Your BMI: "}{calories}
                     </Text>
                     <View style={{paddingBottom:15}}>
                         <TouchableOpacity onPress={calculateCalories} style={[styles.TouchableOpacity]}>
                             <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                                 Calculate
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={updateCalorieGoal} style={[styles.TouchableOpacity]}>
-                            <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
-                                Save
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -326,4 +210,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CalorieCalculator;
+export default BMICalculator;

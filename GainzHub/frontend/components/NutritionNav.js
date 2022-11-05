@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, BackHandler} from 'react-native'
 import {Colors} from '../components/colors'
 import { useRoute, useIsFocused } from '@react-navigation/native';
 
@@ -27,7 +27,7 @@ const NutritionNav = ({navigation}) =>{
                 break;
         }
         setBtnColors(newColors);
-    }, []);
+    }, [isFocused]);
 
     const handleDailyClick = () =>{
         navigation.navigate('Daily');
@@ -44,17 +44,17 @@ const NutritionNav = ({navigation}) =>{
 
     return (
     <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center'}}>
-        <TouchableOpacity onPress={()=> handleDailyClick()} style={{paddingLeft: 40}} >
+        <TouchableOpacity onPress={()=> handleDailyClick()} style={{flex: 1}} >
             <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:btnColors.daily}}>
                 Daily
             </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=> handlePlanClick()} style={{paddingLeft: 70}} >
+        <TouchableOpacity onPress={()=> handlePlanClick()} style={{flex: 1}} >
             <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:btnColors.plans}}>
                 Plans
             </Text>
         </TouchableOpacity> 
-        <TouchableOpacity onPress={()=> handleExploreClick()} style={{paddingLeft: 60}} >
+        <TouchableOpacity onPress={()=> handleExploreClick()} style={{flex: 1}} >
             <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:btnColors.explore}}>
                 Explore
             </Text>

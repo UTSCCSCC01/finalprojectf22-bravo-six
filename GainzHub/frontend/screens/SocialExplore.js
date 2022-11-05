@@ -12,7 +12,7 @@ import { useIsFocused } from '@react-navigation/native';
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
-const Social = ({navigation}) =>{
+const SocialExplore = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
 
     useEffect(()=>{
@@ -44,12 +44,12 @@ const Social = ({navigation}) =>{
             </View>
             <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center', paddingHorizontal:30, justifyContent:'space-between'}}>
                 <TouchableOpacity onPress={()=> navigation.navigate('SocialHome')}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
                        Home
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=> navigation.navigate('SocialExplore')}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
                        Explore
                     </Text>
                 </TouchableOpacity> 
@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Social;
+export default SocialExplore;

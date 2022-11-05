@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, FlatList, SafeAreaView} from 'react-native'
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, FlatList, SafeAreaView, Image} from 'react-native'
 //import Slider from '@react-native-community/slider';
 import {Colors} from '../components/colors'
 import axios from 'axios';
@@ -16,18 +16,80 @@ import { useIsFocused } from '@react-navigation/native';
 
 const {maroon, black} = Colors;
 
-const NutritionMealPlanInfo = ({route, navigation}) => {
+
+const ReviewMealPlan = ({route, navigation}) => {
     const [mealPlan, setMealPlan] = useState({});
     const [mealPlanId, setMealPlanId] = useState();
     const isFocused = useIsFocused();
-    
-    //const mealPlan = route.params.obj;
-    //console.log(mealPlan);
-    /*
-    useEffect(() =>{
-        setMealPlan(route.params.obj);
-    });
-    */
+    const starImgFilled = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png';
+    const starImgCorner = 'https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png';
+    const [defaultRating, setdefaultRating] = useState(0);
+    const [maxRating, setMaxRating] = useState([1,2,3,4,5]);
+    const [numRatings, setnumRatings] = useState('');
+    const [currentRating, setcurrentRating] = useState('');
+    const CustomerRatingBar = () => {
+        return(
+            <View style = {styles.customRatingBarStyle}>
+                {
+                    maxRating.map((item, key) =>{
+                        return (
+                            <TouchableOpacity
+                                activeOpacity = {0.7}
+                                key = {item}
+                                onPress={() => setdefaultRating(item)}
+                            >
+                                <Image 
+                                    style={styles.starImgStyle}
+                                    source={
+                                        item <= defaultRating
+                                            ? {uri: starImgFilled}
+                                            : {uri: starImgCorner}
+                                    }
+                                />
+                            </TouchableOpacity>
+                        )
+                    }) 
+                }
+            </View>
+        )
+    };
+
+    useEffect(()=>{
+        const getnumRatings = async() => {
+            const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: route.params.obj._id}});
+            setnumRatings(mealPlanObj.data.reviewNumber);
+            setcurrentRating(mealPlanObj.data.review)
+        }
+        getnumRatings();
+    })
+
+    const editReview = async() => {
+        // add calories to user.calorieGoal in the database
+
+        const newRating = (numRatings*currentRating + defaultRating)/(numRatings + 1);
+        const token = await AsyncStorage.getItem("userData");
+        
+        const response = await axios.post('http://localhost:5001/nutrition/editReview',
+                {mealPlanId: route.params.obj._id, review: newRating, reviewNumber: numRatings + 1}, {
+            headers:{
+                "x-auth-token": token,
+            }
+        });
+        
+        if(response.status == 200){
+            Toast.show("Review Added!", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+        else{
+            Toast.show("Could not update calorie goal", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+
+        navigation.pop();
+
+    };
 
     useEffect(() => {
         const getMealPlan = async() => {
@@ -38,7 +100,8 @@ const NutritionMealPlanInfo = ({route, navigation}) => {
         }
         getMealPlan();
     }, [isFocused]);
-    //console.log(mealPlan)
+
+
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
             <View style={{flexDirection:'row', textAlign:'left', paddingBottom: 10}}>
@@ -143,16 +206,21 @@ const NutritionMealPlanInfo = ({route, navigation}) => {
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:black, textAlign: 'left', marginBottom:10, paddingLeft: 20}}>
                     Protein: {mealPlan.snackProtein ? mealPlan.snackProtein + ' g' : 'No protein included'}
                 </Text>
-            </View>      
-            <View style = {{flex:1}}>
-                <TouchableOpacity onPress={()=> navigation.navigate("NutritionMealPlanEditor", {...route.params})} style={[styles.TouchableOpacity, {width: '100%'}]}>
-                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:20, color: 'white'}}>
-                        Manage
-                    </Text>
-                </TouchableOpacity>
-            </View>    
+            </View> 
+            <CustomerRatingBar/>
+            <Text style={styles.textStyle}>
+                {defaultRating + ' / ' + maxRating.length}
+            </Text>
+
+            <TouchableOpacity style={styles.buttonStyle} onPress={editReview}>
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
+                Review
+                </Text>
+            </TouchableOpacity>
 
         </View>
+
+
     );
 
 }
@@ -228,7 +296,23 @@ const styles = StyleSheet.create({
         backgroundColor: "#F6F6F6",
         borderColor: "#e8e8e8"
 
+    },
+    customRatingBarStyle:{
+        justifyContent: 'center',
+        flexDirection: 'row',
+        marginTop: 30
+    },
+    starImgStyle:{
+        width: 40,
+        height: 40,
+        resizeMode: 'cover'
+    },
+    buttonStyle:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'green'
     }
+
 });
 
-export default NutritionMealPlanInfo;
+export default ReviewMealPlan;

@@ -59,6 +59,14 @@ const MealPlanSchema = new mongoose.Schema({
         userId:{
             type: String,
             required: true,
+        },
+        review:{
+            type: Number,
+            required: false
+        },
+        reviewNumber:{
+            type: Number,
+            required: false
         }
     });
 

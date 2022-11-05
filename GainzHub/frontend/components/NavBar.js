@@ -7,15 +7,24 @@ import Profile from '../screens/Profile';
 import TempLanding from '../screens/TempLanding';
 import { Ionicons } from '@expo/vector-icons';
 import Nutrition from '../screens/Nutrition';
-import Workout from '../screens/Workout';
+import WorkoutLanding from '../screens/WorkoutLanding';
 import WorkoutLogs from '../screens/WorkoutLogs';
 import WorkoutExplore from '../screens/WorkoutExplore';
+import Progress from '../screens/Progress';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons'; 
 import NutritionPlans from '../screens/NutritionPlans';
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {createStackNavigator} from '@react-navigation/stack'
 import NutritionExplore from '../screens/NutritionExplore';
+import Progresss from '../screens/Progress';
+import ProgressBMI from '../screens/ProgressBMI';
+import ProgressBF from '../screens/ProgressBF';
+import Social from '../screens/Social';
+import SocialHome from '../screens/SocialHome';
+import SocialExplore from '../screens/SocialExplore';
+import SocialCreate from '../screens/SocialCreate';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,7 +49,7 @@ export default function NavBar({ navigation }) {
             screenOptions={{ headerShown: false }}   
             tabBarOptions={{activeTintColor: '#FF0000', inactiveTintColor: '#000000'}
         }>
-        <Tab.Screen name="Social" component={Home}
+        <Tab.Screen name="Social" component={Social}
             options={{
                 tabBarLabel: 'Social',
                 tabBarIcon: ({ color, size }) => (
@@ -56,13 +65,41 @@ export default function NavBar({ navigation }) {
                 ),
             }}
         />
-        <Tab.Screen name="Workout" component={Workout}
+        <Tab.Screen name="Workout" component={WorkoutLanding}
             options={{
                 tabBarLabel: 'Workout',
                 tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="weight-lifter" color={color} size={size} />
                 ),
             }} 
+        />
+        <Tab.Screen name="Progress" component={Progress}
+            options={{
+                tabBarLabel: 'Progress',
+                tabBarIcon: ({ color, size }) => (
+                <Entypo name="bar-graph" size={size} color={color}/>                ),
+            }} 
+        />
+        <Tab.Screen name="Progresss" component={Progresss}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="ProgressBMI" component={ProgressBMI}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="ProgressBF" component={ProgressBF}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
         />
         <Tab.Screen name="WorkoutLogs" component={WorkoutLogs}
             options={{
@@ -72,6 +109,27 @@ export default function NavBar({ navigation }) {
             }}
         />
         <Tab.Screen name="WorkoutExplore" component={WorkoutExplore}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="SocialHome" component={SocialHome}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="SocialExplore" component={SocialExplore}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="SocialCreate" component={SocialCreate}
             options={{
                 tabBarButton: () => (
                     <View style={{width:0, height:0}}></View>
