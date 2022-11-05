@@ -5,5 +5,5 @@ const MuscleGroupSchema = new mongoose.Schema({
     Workout: {type: String}
 
 });
-
+MuscleGroupSchema.index({MuscleGroup: "text", Workout: "text"});
 module.exports = Workouts = mongoose.model('workouts', MuscleGroupSchema);
