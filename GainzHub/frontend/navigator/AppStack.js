@@ -18,11 +18,12 @@ import Workout from '../screens/Workout';
 import WorkoutAddPlan from '../screens/WorkoutAddPlan';
 import WorkoutExplore from '../screens/WorkoutExplore';
 import WorkoutLogs from '../screens/WorkoutLogs';
+import NutritionMealPlanEditor from '../screens/NutritionMealPlanEditor';
+import ReviewMealPlan from '../screens/ReviewMealPlan';
 import Social from '../screens/Social';
 import SocialHome from '../screens/SocialHome';
 import SocialExplore from '../screens/SocialExplore';
 import SocialCreate from '../screens/SocialCreate';
-
 const Stack = createStackNavigator();
 
 const AppStack = ()=>{
@@ -45,6 +46,9 @@ const AppStack = ()=>{
                 <Stack.Screen name = "Workout" component={Workout}/>
                 <Stack.Screen name = "WorkoutAddPlan" component={WorkoutAddPlan}/>
                 <Stack.Screen name = "WorkoutExplore" component={WorkoutExplore}/>
+                <Stack.Screen name = "WorkoutLogs" component={WorkoutLogs}/>
+                <Stack.Screen name = "NutritionMealPlanEditor" component={NutritionMealPlanEditor}/>
+                <Stack.Screen name = "ReviewMealPlan" component={ReviewMealPlan}/>
                 <Stack.Screen name = "Social" component={Social}/>
                 <Stack.Screen name = "SocialHome" component={SocialHome}/>
                 <Stack.Screen name = "SocialExplore" component={SocialExplore}/>

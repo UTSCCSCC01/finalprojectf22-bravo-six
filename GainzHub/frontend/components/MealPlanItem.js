@@ -22,6 +22,7 @@ const MealPlanItem = ({mealPlanId, navigation, handlePublish}) => {
     }, [obj])
     
     const handlePublishWrapper = async() => {
+        
         if(published){
             await axios.patch("http://localhost:5001/nutrition/unPublishMealPlan", {mealPlanId: mealPlanId});
             setPublished(false);
