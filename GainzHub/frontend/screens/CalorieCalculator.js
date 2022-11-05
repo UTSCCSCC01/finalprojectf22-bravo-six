@@ -110,13 +110,25 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
         if(height.length == 0){
             currFormErrors['height'] = 'Please enter an height';
         }
-        
+
+        if(isNaN(height) || height <= 0){
+            currFormErrors['height'] = 'Please enter positive numerical values for height';
+        }
+
         if(weight.length == 0){
             currFormErrors['weight'] = 'Please enter a weight';
         }
 
+        if(isNaN(weight) || weight <= 0){
+            currFormErrors['weight'] = 'Please enter positive numerical values for weight';
+        }
+
         if(age.length == 0){
             currFormErrors['age'] = 'Please enter an age';
+        }
+
+        if(isNaN(age) || age <= 0){
+            currFormErrors['age'] = 'Please enter positive numerical values for age';
         }
 
         if(activity.length == 0){
@@ -156,7 +168,6 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
 
     }
 
-  
     return(
         <View style={[styles.root, {paddingLeft: 15}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 30}}>
