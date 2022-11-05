@@ -27,7 +27,7 @@ const NutritionNav = ({navigation}) =>{
                 break;
         }
         setBtnColors(newColors);
-    }, []);
+    }, [isFocused]);
 
     const handleDailyClick = () =>{
         navigation.navigate('Daily');

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {getCalorieGoal, getCaloriesAte, getFoodLog, getMealPlan, publishMealPlan, unPublishMealPlan, logFood, addMealPlan, getPersonalMealPlans, changeCalorieGoal, getPublishedMealPlans, editMealPlan, editReview} = require("../controllers/nutritionController");
+const {getCalorieGoal, getCaloriesAte, getFoodLog, getMealPlan, publishMealPlan, unPublishMealPlan, logFood, addMealPlan, getPersonalMealPlans, changeCalorieGoal, getPublishedMealPlans, editMealPlan, editReview, deleteMealPlan} = require("../controllers/nutritionController");
 const { JWTAuth } = require('../middleware/JWTAuth');
 
 router.get("/getCalorieGoal", JWTAuth, getCalorieGoal);
@@ -17,6 +17,6 @@ router.get("/getMealPlan", getMealPlan);
 router.get("/getPublishedMeals", getPublishedMealPlans);
 router.put("/editMealPlan", JWTAuth, editMealPlan);
 router.post("/editReview", JWTAuth, editReview);
-
+router.post("/deleteMealPlan", JWTAuth, deleteMealPlan);
 
 module.exports = (router);
