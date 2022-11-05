@@ -8,13 +8,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
+import { SocialCard } from '../components/socialcard';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Divider , Card, Title, Paragraph } from 'react-native-paper';
+
+
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
-const Social = ({navigation}) =>{
+const SocialHome = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
+    const [AllPost, setAllPost] = useState([]);
 
+    useEffect(()=>{
+        async function getAllPost(){
+            const Posts = await axios.get("http://localhost:5001/social/getpost");
+            setAllPost(Posts.data);
+        }
+        getAllPost();
+        }, [])
+    console.log(AllPost);
     useEffect(()=>{
         const handleLogout = async() =>{
             await AsyncStorage.removeItem('userData');
@@ -43,7 +57,7 @@ const Social = ({navigation}) =>{
                 </Text>
             </View>
             <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center', paddingHorizontal:30, justifyContent:'space-between'}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('SocialHome')}>
+                <TouchableOpacity onPress={()=> {navigation.navigate('SocialHome'),window.location.reload()}}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
                        Home
                     </Text>
@@ -58,6 +72,27 @@ const Social = ({navigation}) =>{
                         Create
                     </Text>
                 </TouchableOpacity> 
+            </View>
+            <View>
+                <ScrollView>
+                    {AllPost.map(Post => (
+                        <ScrollView>
+                            <View style={{padding: 5}} >
+                            <ScrollView>
+                                <Card>
+                                <ScrollView>
+                                    <Card.Content key={Post._id}>
+                                        <Title>{Post.PostMessage}</Title>
+                                        <Paragraph>{ Post.userId }</Paragraph>
+                                    </Card.Content>
+                                    </ScrollView>
+                                </Card>
+                                <Divider/>
+                                </ScrollView>
+                            </View>
+                        </ScrollView>
+                    ))}
+                </ScrollView>
             </View>
     </View>
     );
@@ -97,4 +132,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Social;
+export default SocialHome;

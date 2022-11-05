@@ -43,6 +43,7 @@ const NutritionPlans = ({navigation}) => {
                     'x-auth-token': token,
                 }
             })
+            console.log(response.data);
             setMealPlans(response.data);
 
             //Get added meal plans
@@ -69,7 +70,7 @@ const NutritionPlans = ({navigation}) => {
     );
     
     const handlePublish = (obj) =>{
-
+        
     }
     
     return(

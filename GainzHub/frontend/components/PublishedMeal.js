@@ -13,6 +13,7 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
     const [added, setAdded] = useState(false);
     const [owner, setOwner] = useState(false); //Is this current meal plan owned by the current user?
     const isFocused = useIsFocused();
+    //console.log(mealPlanId);
     
     useEffect(()=>{
         async function intializeUseStates(){
@@ -113,10 +114,13 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
     return (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
             
-            <TouchableOpacity onPress={()=> navigation.navigate('NutritionMealPlanInfo', {obj})} style={[styles.inputView, {width: '75%'}]}>
+            <TouchableOpacity onPress={()=> navigation.navigate('ReviewMealPlan', {obj})} style={[styles.inputView, {width: '60%'}]}>
                 <Text style={styles.inputText}>{obj.planName}</Text>
                 <Text style={styles.inputText}>
                     Creator: {creator.username}
+                </Text>
+                <Text style={styles.inputText}>
+                    Review: {Number(obj.review).toFixed(2)}
                 </Text>
             </TouchableOpacity>
 
@@ -124,6 +128,12 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
             <TouchableOpacity onPress={()=> handleAddClick()} style={[styles.TouchableOpacityList]} >
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
                     {addedText}
+                </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={()=> navigation.navigate('ReviewMealPlan', {obj})} style={[styles.TouchableOpacityList, {flex:1}]} >
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
+                    Review 
                 </Text>
             </TouchableOpacity>
 
@@ -142,7 +152,7 @@ const styles = StyleSheet.create({
         height: 30,
         flex: 1,
         marginRight: 30,
-        padding: 10,
+        padding: 4,
         fontFamily: "Inter-Medium",
         fontWeight: "500",
         fontSize: 18,

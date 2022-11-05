@@ -7,7 +7,7 @@ import Profile from '../screens/Profile';
 import TempLanding from '../screens/TempLanding';
 import { Ionicons } from '@expo/vector-icons';
 import Nutrition from '../screens/Nutrition';
-import Workout from '../screens/Workout';
+import WorkoutLanding from '../screens/WorkoutLanding';
 import WorkoutLogs from '../screens/WorkoutLogs';
 import WorkoutExplore from '../screens/WorkoutExplore';
 import Progress from '../screens/Progress';
@@ -21,6 +21,10 @@ import NutritionExplore from '../screens/NutritionExplore';
 import Progresss from '../screens/Progress';
 import ProgressBMI from '../screens/ProgressBMI';
 import ProgressBF from '../screens/ProgressBF';
+import Social from '../screens/Social';
+import SocialHome from '../screens/SocialHome';
+import SocialExplore from '../screens/SocialExplore';
+import SocialCreate from '../screens/SocialCreate';
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +49,7 @@ export default function NavBar({ navigation }) {
             screenOptions={{ headerShown: false }}   
             tabBarOptions={{activeTintColor: '#FF0000', inactiveTintColor: '#000000'}
         }>
-        <Tab.Screen name="Social" component={Home}
+        <Tab.Screen name="Social" component={Social}
             options={{
                 tabBarLabel: 'Social',
                 tabBarIcon: ({ color, size }) => (
@@ -61,7 +65,7 @@ export default function NavBar({ navigation }) {
                 ),
             }}
         />
-        <Tab.Screen name="Workout" component={Workout}
+        <Tab.Screen name="Workout" component={WorkoutLanding}
             options={{
                 tabBarLabel: 'Workout',
                 tabBarIcon: ({ color, size }) => (
@@ -105,6 +109,27 @@ export default function NavBar({ navigation }) {
             }}
         />
         <Tab.Screen name="WorkoutExplore" component={WorkoutExplore}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="SocialHome" component={SocialHome}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="SocialExplore" component={SocialExplore}
+            options={{
+                tabBarButton: () => (
+                    <View style={{width:0, height:0}}></View>
+                ),
+            }}
+        />
+        <Tab.Screen name="SocialCreate" component={SocialCreate}
             options={{
                 tabBarButton: () => (
                     <View style={{width:0, height:0}}></View>

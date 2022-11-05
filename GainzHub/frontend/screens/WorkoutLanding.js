@@ -12,7 +12,8 @@ import { useIsFocused } from '@react-navigation/native';
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
-const Social = ({navigation}) =>{
+
+const WorkoutLanding = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
 
     useEffect(()=>{
@@ -25,6 +26,7 @@ const Social = ({navigation}) =>{
             handleLogout();
         }
     }, [loggedIn]);
+
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -39,27 +41,39 @@ const Social = ({navigation}) =>{
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 30, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:10}}>
-                    Social
+                    Workout
                 </Text>
             </View>
             <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center', paddingHorizontal:30, justifyContent:'space-between'}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('SocialHome')}>
+                <TouchableOpacity onPress={()=> navigation.navigate('Workout')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
-                       Home
+                       Plans
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('SocialExplore')}>
+                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutLogs')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                       Explore
+                       Logs
                     </Text>
                 </TouchableOpacity> 
-                <TouchableOpacity onPress={()=> navigation.navigate('SocialCreate')}>
+                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutExplore')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                        Create
+                        Explore
                     </Text>
                 </TouchableOpacity> 
             </View>
-    </View>
+            <View style={{paddingLeft: 5}}>
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:24, color:black, marginBottom:20}}>
+                        Your Workout Plans
+                </Text>
+            </View>
+            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
+                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutAddPlan')} style={[styles.TouchableOpacity]}>
+                    <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
+                        Add Plan
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </View>
     );
 }
 
@@ -97,4 +111,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Social;
+export default WorkoutLanding;
