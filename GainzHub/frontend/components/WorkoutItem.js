@@ -6,18 +6,53 @@ import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
 
-const WorkoutItem = ({navigation, name, group, id})=>{
+const WorkoutItem = ({navigation, name, group, id, workoutIdx, workoutSets, handleUpdateSet})=>{
     const [workoutId, setWorkoutId] = useState(id ? id : -1);
     const [workoutName, setWorkoutName] = useState(name ? name : "");
     const [muscleGroup, setMuscleGroup] = useState(group ? group : "");
-    const [workoutSet, setWorkoutSet] = useState([{setNum:1, lbs: null, reps:null}]); //One set by default
+    const [workoutSet, setWorkoutSet] = useState(workoutSets ? workoutSets : [{setNum:1, lbs: null, reps:null}]); //One set by default
+
+    useEffect(()=>{
+        handleUpdateSet(workoutIdx, workoutSet);
+    }, [workoutSet])
+
+    useEffect(()=>{
+        console.log(workoutIdx);
+    }, [])
 
     const handleAddSet = () => {
         //Get the last set
         let newArr = workoutSet;
+        //Remove all letters from input
         const newIdx = workoutSet.length+1;
         newArr = [...newArr, {setNum: newIdx, lbs:null, reps:null}];
         setWorkoutSet(newArr);
+    }
+
+    const handleChangeLbs = (newNum, idx) => {
+        const newSet = workoutSet;
+        //Remove all letters from input
+        newNum = newNum.replace(/[^0-9]/g, '');
+        newSet[idx-1].lbs = newNum;
+        setWorkoutSet([...newSet]);
+    }
+
+    const handleChangeReps = (newNum, idx) => {
+        const newSet = workoutSet;
+        newSet[idx-1].reps = newNum;
+        setWorkoutSet([...newSet]);
+    }
+
+    const handleRemoveSet = (idx) => {
+        //Remove the index from the array
+        const newSets = workoutSet;
+        newSets.splice(idx-1, 1);
+        
+        //Reindex sets
+        for(let i = 0; i < newSets.length; i++){
+            newSets[i].setNum = i+1;
+        }
+        setWorkoutSet([...newSets]);
     }
 
     const renderSets = ({item})=>(
@@ -29,16 +64,25 @@ const WorkoutItem = ({navigation, name, group, id})=>{
                 </View>
                 <View style={[styles.textInputView, {display:"flex", justifyContent:"center"}]}>
                     <TextInput style={[styles.setInput ,{fontFamily:"Inter-Medium", fontWeight:800, textAlign: 'center'}]}
-                        defaultValue={item.lbs == null ? "" : item.lbs}
+                        value={item.lbs == null ? "" : item.lbs}
+                        onChangeText={(text)=>{handleChangeLbs(text, item.setNum)}}
                         maxLength={5}/>
                 </View>
 
                 <View style={[styles.textInputView, {display:"flex", justifyContent:"center"}]}>
                     <TextInput style={[styles.setInput ,{fontFamily:"Inter-Medium", fontWeight:800, textAlign: 'center'}]}
-                    defaultValue={item.reps == null ? " " : item.reps}
+                    value={item.reps == null ? " " : item.reps}
+                    onChangeText={(text)=>{handleChangeReps(text, item.setNum)}}
                     maxLength={5}/>
                 </View>
+
+                <View style={[styles.textInputView ,{display:"flex", justifyContent:'center', alignItems:"center"}]}>
+                    <TouchableOpacity style={styles.setInput} onPress={()=>{handleRemoveSet(item.setNum)}}>
+                            <View style={{width:23, height:6, backgroundColor: "#7a7979", borderRadius:20, borderWidth:1, borderColor:"#a8a8a8"}}/>
+                    </TouchableOpacity>
+                </View>
             </View>);
+
 
     return(
         <View style={[styles.workoutContainer]}>
@@ -55,6 +99,7 @@ const WorkoutItem = ({navigation, name, group, id})=>{
                             <Text style={{fontFamily:"Inter-Medium", fontWeight:800}}>Set</Text>
                             <Text style={{fontFamily:"Inter-Medium", fontWeight:800}}>lbs</Text>
                             <Text style={{fontFamily:"Inter-Medium", fontWeight:800}}>Reps</Text>
+                            <Text style={{fontFamily:"Inter-Medium", fontWeight:800}}>{"    "}</Text>
                         </View>}
                     data={workoutSet}
                     renderItem={renderSets}
@@ -62,10 +107,12 @@ const WorkoutItem = ({navigation, name, group, id})=>{
                     keyExtractor={item=>item.setNum}
                     scrollEnabled={true}
                 />
-                <TouchableOpacity style={[styles.setInput, {display:"flex", justifyContent:"center", marginTop:10, marginBottom:10}]}
-                    onPress={()=>{handleAddSet()}}>
-                        <Text style={{fontFamily:"Inter-Medium", fontWeight:800, textAlign:'center'}}>+ Add Set</Text>
-                </TouchableOpacity>
+                <View style={{marginTop: 10, marginBottom:10}}>
+                    <TouchableOpacity style={[styles.setInput, {display:"flex", justifyContent:"center" }]}
+                        onPress={()=>{handleAddSet()}}>
+                            <Text style={{fontFamily:"Inter-Medium", fontWeight:800, textAlign:'center'}}>+ Add Set</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );

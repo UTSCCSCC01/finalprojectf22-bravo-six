@@ -30,7 +30,10 @@ const WorkoutAddPlan = ({navigation: {goBack}}) => {
     const bottomSheetRef = useRef(null);
 
     const renderWorkouts = ({item}) => (<View>
-        <WorkoutItem navigation={navigation} name={item.Workout} group ={item.MuscleGroups} id={item._id}/>
+        <WorkoutItem navigation={navigation} name={item.workoutData.Workout} group ={item.MuscleGroups} id={item._id}
+            workoutIdx = {item.workoutIdx}
+            workoutSets={item.sets}
+            handleUpdateSet={handleUpdateSet}/>
     </View>);
 
     const handleSelectWorkout = (id, method)=>{
@@ -47,18 +50,24 @@ const WorkoutAddPlan = ({navigation: {goBack}}) => {
         }
     }
 
+    const handleUpdateSet = (workoutIdx, newSets) =>{
+        const newWorkouts = workouts;
+        newWorkouts[workoutIdx].sets = newSets;
+        console.log(newWorkouts);
+        setWorkouts(newWorkouts);
+    }
+
     const handleAddSelectedWorkouts = async() => {
         //populate workout array with workout ids from selected workouts
         tempArr = workouts;
         for(const id of selectedWorkouts){
-            console.log(selectedWorkouts);
             const workoutData = await axios.get("http://localhost:5001/workout/getWorkout", {
                 params:{
                     workoutId: id,
                 }
             });
             if(workoutData.status == 200){
-                tempArr = [...tempArr, workoutData.data];
+                tempArr = [...tempArr, {workoutData: workoutData.data, workoutId: id, workoutIdx: selectedWorkouts.indexOf(id), sets:null}];
             }
         }
         setWorkouts(tempArr);
