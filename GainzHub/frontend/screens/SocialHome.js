@@ -20,6 +20,8 @@ const Tab = createBottomTabNavigator();
 const SocialHome = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
     const [AllPost, setAllPost] = useState([]);
+    const isFocused = useIsFocused();;
+
 
     useEffect(()=>{
         async function getAllPost(){
@@ -27,8 +29,8 @@ const SocialHome = ({navigation}) =>{
             setAllPost(Posts.data);
         }
         getAllPost();
-        }, [])
-    console.log(AllPost);
+        }, [isFocused])
+
     useEffect(()=>{
         const handleLogout = async() =>{
             await AsyncStorage.removeItem('userData');
@@ -39,6 +41,18 @@ const SocialHome = ({navigation}) =>{
             handleLogout();
         }
     }, [loggedIn]);
+
+    const renderPosts = ({item}) => (
+            <View style={{padding: 5}} >
+                <Card>
+                    <Card.Content key={item._id}>
+                        <Title>{item.PostMessage}</Title>
+                        <Paragraph>{ item.userId }</Paragraph>
+                    </Card.Content>
+                </Card>
+                <Divider/>
+            </View>
+    )
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -73,9 +87,23 @@ const SocialHome = ({navigation}) =>{
                     </Text>
                 </TouchableOpacity> 
             </View>
-            <View>
-                <ScrollView>
-                    {AllPost.map(Post => (
+            <View style={{height:"100%"}}>
+                <ScrollView style={{height:"50%"}}>
+                    <FlatList
+                        data = {AllPost}
+                        renderItem={renderPosts}
+                        scrollEnabled={true}
+                    />
+                </ScrollView>
+            </View>
+    </View>
+    );
+}
+
+
+
+/**
+ *                     {AllPost.map(Post => (
                         <ScrollView>
                             <View style={{padding: 5}} >
                             <ScrollView>
@@ -92,12 +120,7 @@ const SocialHome = ({navigation}) =>{
                             </View>
                         </ScrollView>
                     ))}
-                </ScrollView>
-            </View>
-    </View>
-    );
-}
-
+ */
 const styles = StyleSheet.create({
     root:{
         padding: 30,

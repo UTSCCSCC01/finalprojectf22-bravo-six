@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './Social';
+import Home from './Social/SocialHome';
 import Profile from '../screens/Profile';
 import TempLanding from '../screens/TempLanding';
 import { Ionicons } from '@expo/vector-icons';

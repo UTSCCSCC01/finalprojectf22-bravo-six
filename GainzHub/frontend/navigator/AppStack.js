@@ -58,10 +58,6 @@ const AppStack = ()=>{
                 <Stack.Screen name = "BMICalculator" component={BMICalculator}/>
                 <Stack.Screen name = "NutritionMealPlanEditor" component={NutritionMealPlanEditor}/>
                 <Stack.Screen name = "ReviewMealPlan" component={ReviewMealPlan}/>
-                <Stack.Screen name = "Social" component={Social}/>
-                <Stack.Screen name = "SocialHome" component={SocialHome}/>
-                <Stack.Screen name = "SocialExplore" component={SocialExplore}/>
-                <Stack.Screen name = "SocialCreate" component={SocialCreate}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

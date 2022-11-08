@@ -28,7 +28,10 @@ const SocialCreate = ({navigation}) =>{
 
     const [formErrors, setFormErrors] = useState({"PostMessage": ""})
 
-    
+    useEffect(() => {
+        CheckName();
+    }, [])
+
     const CheckName = async() => {
         const jwtToken = await AsyncStorage.getItem("userData");
         const currentUser = await axios.get("http://localhost:5001/user/getUserSecure", {
@@ -54,7 +57,7 @@ const SocialCreate = ({navigation}) =>{
             });
             return;
         }
-        await CheckName();
+        //await CheckName();
         
         console.log(PostMessage);
         const userData = {
