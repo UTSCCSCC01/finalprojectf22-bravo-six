@@ -29,9 +29,7 @@ const getUser = async() =>{
 const Profile = ({navigation}) =>{
     const [userData, setUserData] = useState("No user data");
     const [loggedIn, setLoggedIn] = useState(true);
-    const [bio, setBio] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [user, setUser] = useState({});
     const isFocused = useIsFocused();
     useEffect(() =>{
         const getStoredUser = async() =>{
@@ -43,50 +41,23 @@ const Profile = ({navigation}) =>{
         }
         getStoredUser();
     }, [])
+
+    useEffect(() => {
+        const getUser = async() => {
+            const jwtToken = await AsyncStorage.getItem("userData");
+            
+            const currentUser = await axios.get("http://localhost:5001/user/getUserSecure", {
+                headers: {
+                    'x-auth-token': jwtToken,
+                }
+            })
+            console.log(currentUser.data);
+            setUser(currentUser.data);
+        }
+        getUser();
+    }, [isFocused])
     //console.log(userData);
 
-    useEffect(() => {
-        const getUserBio = async() =>{
-            token = await AsyncStorage.getItem("userData");
-    
-            const response  = await axios.get('http://localhost:5001/user/getUserBio', {
-                headers: {
-                    'x-auth-token': token,
-                }
-            })
-            setBio(response.data.bio);
-        }
-        getUserBio();
-    }, [isFocused]);
-    useEffect(() => {
-        const getUserFirstName = async() =>{
-            token = await AsyncStorage.getItem("userData");
-    
-            const response  = await axios.get('http://localhost:5001/user/getUserFirstName', {
-                headers: {
-                    'x-auth-token': token,
-                }
-            })
-            setFirstName(response.data.firstName);
-        }
-        getUserFirstName();
-    }, [isFocused]);
-    useEffect(() => {
-        const getUserLastName = async() =>{
-            token = await AsyncStorage.getItem("userData");
-    
-            const response  = await axios.get('http://localhost:5001/user/getUserLastName', {
-                headers: {
-                    'x-auth-token': token,
-                }
-            })
-            setLastName(response.data.lastName);
-        }
-        getUserLastName();
-    }, [isFocused]);
-
-
-    
     useEffect(()=>{
         const handleLogout = async() =>{
             await AsyncStorage.removeItem('userData');
@@ -97,6 +68,8 @@ const Profile = ({navigation}) =>{
             handleLogout();
         }
     }, [loggedIn]);
+
+   
     
     return(
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -118,13 +91,13 @@ const Profile = ({navigation}) =>{
                 <Image style={styles.image} source={{ uri: IMAGE }} />
             </View>
             <View>
-                <Text style={{fontFamily: "Inter-Medium", fontSize: 24, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:5}}>
-                    FirstName LastName
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 28, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
+                    {user.firstName} {user.lastName}
                 </Text>
             </View>
             <View>
-                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:5}}>
-                    Add A Bio!
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
+                    {user.bio ? user.bio : 'No Bio'}
                 </Text>
             </View>
             <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
