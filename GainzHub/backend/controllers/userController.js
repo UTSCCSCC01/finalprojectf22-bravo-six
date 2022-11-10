@@ -50,4 +50,17 @@ const addPublishedMealPlan = asyncHandler( async(req, res)=>{
     }
 });
 
-module.exports = {getUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure};
+
+const editProfile = async(req, res) => {
+    const {updatedUser} = req.body;
+    try{
+        //console.log(updatedMealPlan);
+        await User.findOneAndReplace({_id: updatedUser._id}, updatedUser);
+        return res.status(200).send("Updated Profile");
+    } catch(err){
+        return res.status(400).send(err.message);
+    }
+
+}
+
+module.exports = {getUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile};

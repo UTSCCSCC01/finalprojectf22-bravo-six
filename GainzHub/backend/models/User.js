@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
     },
     bio:{
         type: String,
-        requried: false,
+        requried: false
     },
     food:[{
         foodName:{
