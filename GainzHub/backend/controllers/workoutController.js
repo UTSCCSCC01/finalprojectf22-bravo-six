@@ -24,4 +24,9 @@ const getWorkout = asyncHandler(async(req, res)=>{
     }
 })
 
+const addWorkoutPlanToCollection = asyncHandler(async(req, res)=>{
+    const user = req.user;
+
+})
+
 module.exports = {searchWorkouts, getWorkout};

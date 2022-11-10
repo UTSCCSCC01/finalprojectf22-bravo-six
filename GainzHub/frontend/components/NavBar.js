@@ -43,13 +43,28 @@ function NutritionStackScreen(){
     )
 }
 
+const SocialStack = createStackNavigator();
+
+function SocialStackScreen(){
+    return(
+        <SocialStack.Navigator
+            initialRouteName='Daily'
+            screenOptions={{headerShown: false}}
+        >
+            <SocialStack.Screen name= "SocialHome" component={SocialHome} initialParams={{routeName: "Daily"}}/>
+            <SocialStack.Screen name="SocialExplore" component={SocialExplore}/>
+            <SocialStack.Screen name= "SocialCreate" component={SocialCreate}/>
+        </SocialStack.Navigator>
+    )
+}
+
 export default function NavBar({ navigation }) {
     return (
         <Tab.Navigator
             screenOptions={{ headerShown: false }}   
             tabBarOptions={{activeTintColor: '#FF0000', inactiveTintColor: '#000000'}
         }>
-        <Tab.Screen name="Social" component={Social}
+        <Tab.Screen name="Social" component={SocialStackScreen}
             options={{
                 tabBarLabel: 'Social',
                 tabBarIcon: ({ color, size }) => (

@@ -8,28 +8,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
-import { SocialCard } from '../components/socialcard';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Divider , Card, Title, Paragraph } from 'react-native-paper';
-
-
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
-const SocialHome = ({navigation}) =>{
+
+const Workout = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
-    const [AllPost, setAllPost] = useState([]);
-    const isFocused = useIsFocused();;
-
-
-    useEffect(()=>{
-        async function getAllPost(){
-            const Posts = await axios.get("http://localhost:5001/social/getpost");
-            setAllPost(Posts.data);
-        }
-        getAllPost();
-        }, [isFocused])
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -42,17 +27,6 @@ const SocialHome = ({navigation}) =>{
         }
     }, [loggedIn]);
 
-    const renderPosts = ({item}) => (
-            <View style={{padding: 5}} >
-                <Card>
-                    <Card.Content key={item._id}>
-                        <Title>{item.PostMessage}</Title>
-                        <Paragraph>{ item.userId }</Paragraph>
-                    </Card.Content>
-                </Card>
-                <Divider/>
-            </View>
-    )
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -67,60 +41,42 @@ const SocialHome = ({navigation}) =>{
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 30, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:10}}>
-                    Social
+                    Workout
                 </Text>
             </View>
             <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center', paddingHorizontal:30, justifyContent:'space-between'}}>
-                <TouchableOpacity onPress={()=> {navigation.navigate('SocialHome'),window.location.reload()}}>
+                <TouchableOpacity onPress={()=> navigation.navigate('Workout')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16, color:maroon}}>
-                       Home
+                       Plans
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('SocialExplore')}>
+                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutLogs')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                       Explore
+                       Logs
                     </Text>
                 </TouchableOpacity> 
-                <TouchableOpacity onPress={()=> navigation.navigate('SocialCreate')}>
+                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutExplore')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                        Create
+                        Explore
                     </Text>
                 </TouchableOpacity> 
             </View>
-            <View style={{height:"100%"}}>
-                <ScrollView style={{height:"50%"}}>
-                    <FlatList
-                        data = {AllPost}
-                        renderItem={renderPosts}
-                        scrollEnabled={true}
-                    />
-                </ScrollView>
+            <View style={{paddingLeft: 5}}>
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:black, marginBottom:20}}>
+                        Workout Plans
+                </Text>
             </View>
-    </View>
+            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
+                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutAddPlan')} style={[styles.TouchableOpacity]}>
+                    <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
+                        Add Plan
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </View>
     );
 }
 
-
-
-/**
- *                     {AllPost.map(Post => (
-                        <ScrollView>
-                            <View style={{padding: 5}} >
-                            <ScrollView>
-                                <Card>
-                                <ScrollView>
-                                    <Card.Content key={Post._id}>
-                                        <Title>{Post.PostMessage}</Title>
-                                        <Paragraph>{ Post.userId }</Paragraph>
-                                    </Card.Content>
-                                    </ScrollView>
-                                </Card>
-                                <Divider/>
-                                </ScrollView>
-                            </View>
-                        </ScrollView>
-                    ))}
- */
 const styles = StyleSheet.create({
     root:{
         padding: 30,
@@ -155,4 +111,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SocialHome;
+export default Workout;

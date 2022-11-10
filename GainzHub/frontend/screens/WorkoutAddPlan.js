@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { useIsFocused } from '@react-navigation/native';
 import WorkoutSearchItem from '../components/WorkoutSearchItem';
+import WorkoutItem from '../components/WorkoutItem';
 
 const {maroon, black} = Colors;
 
@@ -22,19 +23,18 @@ const WorkoutAddPlan = ({navigation: {goBack}}) => {
     const [description, setDescription] = useState("");
     const [workouts, setWorkouts] = useState([]); //Workouts that are added to our plan
     const [searchText, setSearchText] = useState("");
-    const [searchWorkouts, setSearchWorkouts] = useState({});
+    const [searchWorkouts, setSearchWorkouts] = useState([]);
     const [selectedWorkouts, setSelectedWorkouts] = useState([]) //Array of workout ids of workouts that were selected
     const [bottomSheetIdx, setBottomSheetIdx] = useState(-1);
     const snapPoints = useMemo(() => ['70%', '70%'], []);
     const bottomSheetRef = useRef(null);
 
     const renderWorkouts = ({item}) => (<View>
-        <Text>{item.Workout}</Text>
+        <WorkoutItem navigation={navigation} name={item.workoutData.Workout} group ={item.MuscleGroups} id={item._id}
+            workoutIdx = {item.workoutIdx}
+            workoutSets={item.sets}
+            handleUpdateSet={handleUpdateSet}/>
     </View>);
-
-    useEffect(()=>{
-        console.log(workouts);
-    }, [workouts])
 
     const handleSelectWorkout = (id, method)=>{
         if(method == "add"){
@@ -46,23 +46,28 @@ const WorkoutAddPlan = ({navigation: {goBack}}) => {
             if(removeIdx != -1){
                 tempArr.splice(removeIdx, 1);
             }
-            console.log(tempArr.length);
             setSelectedWorkouts([...tempArr]);
         }
+    }
+
+    const handleUpdateSet = (workoutIdx, newSets) =>{
+        const newWorkouts = workouts;
+        newWorkouts[workoutIdx].sets = newSets;
+        console.log(newWorkouts);
+        setWorkouts(newWorkouts);
     }
 
     const handleAddSelectedWorkouts = async() => {
         //populate workout array with workout ids from selected workouts
         tempArr = workouts;
         for(const id of selectedWorkouts){
-            console.log(selectedWorkouts);
             const workoutData = await axios.get("http://localhost:5001/workout/getWorkout", {
                 params:{
                     workoutId: id,
                 }
             });
             if(workoutData.status == 200){
-                tempArr = [...tempArr, workoutData.data];
+                tempArr = [...tempArr, {workoutData: workoutData.data, workoutId: id, workoutIdx: selectedWorkouts.indexOf(id), sets:null}];
             }
         }
         setWorkouts(tempArr);
@@ -139,7 +144,7 @@ const WorkoutAddPlan = ({navigation: {goBack}}) => {
                         }
                     }}}
                     onChangeText={(desc)=>setDescription(desc)}/>
-                <ScrollView style={{flexGrow: 0, maxHeight: 280, minHeight:0}}>
+                <ScrollView style={{flexGrow: 0, maxHeight: 500, minHeight:0}}>
                     <FlatList
                         data={workouts}
                         renderItem={renderWorkouts}
