@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 const BodyWeight = require("../models/BodyWeight");
 const BMI = require("../models/BMI");
+const BF = require("../models/BF");
 const { json } = require('express');
 
 const addBodyWeight = asyncHandler(async(req, res) => {
@@ -38,7 +39,6 @@ const getIndividualBodyWeight = async(req, res) => {
 const addBMI = asyncHandler(async(req, res) => {
     const userId = req.user;
     const {newBMI} = req.body;
-    console.log(req.body);
     try{
         const BMIObj = new BMI(newBMI);
         BMIObj.userId = userId;
@@ -68,13 +68,12 @@ const getIndividualBMI = async(req, res) => {
 
 const addBF = asyncHandler(async(req, res) => {
     const userId = req.user;
-    const {newBMI} = req.body;
-    console.log(req.body);
+    const {newBF} = req.body;
     try{
-        const BMIObj = new BMI(newBMI);
-        BMIObj.userId = userId;
-        BMIObj.save();
-        return res.status(200).send("Added BMI");
+        const BFObj = new BF(newBF);
+        BFObj.userId = userId;
+        BFObj.save();
+        return res.status(200).send("Added BF");
     }catch(err){
         return res.status(400).send(err.message);
     }
@@ -82,16 +81,16 @@ const addBF = asyncHandler(async(req, res) => {
 
 const getBF = async(req, res) =>{
     const userId = req.user;
-    const foundPlan = await BMI.find({userId: userId});
+    const foundPlan = await BF.find({userId: userId});
     return res.status(200).json(foundPlan);
 
 }
 
 const getIndividualBF = async(req, res) => {
-    const BIMid = req.query['BMIid'];
+    const BFid = req.query['BFid'];
     try{
-        const foundBodyWeight = await BMI.findOne({_id:BIMid});
-        return res.status(200).json(foundBodyWeight);
+        const foundBF = await BF.findOne({_id:BFid});
+        return res.status(200).json(foundBF);
     }catch(err){
         return res.status(400).send(err.message);
     }

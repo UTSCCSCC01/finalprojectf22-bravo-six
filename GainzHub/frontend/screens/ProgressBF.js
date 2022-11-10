@@ -8,6 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
+import BFItem from '../components/BFItem';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
@@ -15,6 +17,8 @@ const Tab = createBottomTabNavigator();
 
 const ProgressBF = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
+    const isFocused = useIsFocused();
+    const [BF, setBF] = useState({});
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -27,7 +31,24 @@ const ProgressBF = ({navigation}) =>{
         }
     }, [loggedIn]);
 
+    useEffect(() => {
+        const getStoredBF = async() => {
+            const token = await AsyncStorage.getItem("userData");
+            const response  = await axios.get('http://localhost:5001/progress/getUserBFs', {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            response.data.reverse();
+            setBF(response.data);
+        }
 
+        getStoredBF();
+    }, [isFocused]);
+
+    const renderBF = ({ item }) => (
+        <BFItem BFid={item._id} navigation={navigation}/>
+    );
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
@@ -66,6 +87,17 @@ const ProgressBF = ({navigation}) =>{
                         Logs
                 </Text>
             </View>
+            <View style={{flex:1}}>
+                <ScrollView style={{flexGrow: 0, height: 280}}>
+                    <FlatList
+                        data={BF}
+                        renderItem={renderBF}
+                        keyExtractor={item => item._id}
+                        scrollEnabled={true}
+                    />
+                </ScrollView>
+            </View>
+
             <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
                 <TouchableOpacity onPress={()=> navigation.navigate('BFCalculator')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
@@ -107,7 +139,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     }
 });
 

@@ -23,7 +23,6 @@ const Progresss = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
     const isFocused = useIsFocused();
     const [bodyWeight, setBodyWeight] = useState({});
-
     useEffect(() => {
         const getStoredBodyWeight = async() => {
             const token = await AsyncStorage.getItem("userData");
@@ -105,7 +104,7 @@ const Progresss = ({navigation}) =>{
                 </ScrollView>
             </View>
 
-            <View style={{paddingBottom:5, alignItems:'center', paddingTop: 5}}>
+            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>                
                 <TouchableOpacity onPress={()=> navigation.navigate('AddBodyWeight')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                         Add Entry

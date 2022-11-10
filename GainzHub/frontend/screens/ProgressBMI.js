@@ -40,7 +40,6 @@ const ProgressBMI = ({navigation}) =>{
                 }
             })
             response.data.reverse();
-            console.log(response.data);
             setBMI(response.data);
         }
 

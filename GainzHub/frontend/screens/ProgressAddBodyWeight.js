@@ -1,19 +1,16 @@
-import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react-native'
-//import Slider from '@react-native-community/slider';
-import {Colors} from '../components/colors'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios';
-import Toast from 'react-native-root-toast';
-import { loginUser } from '../requests/userRequests';
+import {Text, View, StyleSheet, TouchableOpacity, Button, Platform} from 'react-native'
+import {Colors} from '../components/colors'
+import { TextInput } from 'react-native-paper';
+//import { Select } from "native-base";
+//import RNPickerSelect from "react-native-picker-select";
+//import { Model, Query } from 'mongoose';
+import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Progress from 'react-native-progress';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useIsFocused } from '@react-navigation/native';
-//import CircularProgress from 'react-native-circular-progress-indicator';
-//import "./reanimated2/js-reanimated/global";
-// import CircularProgress from 'react-native-circular-progress-indicator';
-//import * as Progress from 'react-native-progress'
+import Toast from 'react-native-root-toast';
 const {maroon, black} = Colors;
+
 
 //const Tab = createBottomTabNavigator();
 
@@ -26,11 +23,21 @@ let today = new Date().toLocaleDateString()
 
 const BodyWeightAdder = ({navigation: { goBack }}) => {
     const [bodyWeight, setBodyWeight] = useState("");
+    const [formErrors, setFormErrors] = useState({"bodyWeight": ""});
 
 
     const AddBodyWeight = async() => {
-    
-        // add calories to user.calorieGoal in the database
+        let currFormErrors = {"weight": ""};
+        if(bodyWeight.length == 0){
+            currFormErrors['bodyWeight'] = 'Please enter a bodyWeight';
+            setFormErrors(currFormErrors);
+            Toast.show(currFormErrors['bodyWeight'], {
+                duration: Toast.durations.SHORT,
+            });
+            return;
+        }
+
+
         const token = await AsyncStorage.getItem("userData");
 
         const response = await axios.post('http://localhost:5001/progress/addBodyWeight',
@@ -58,8 +65,8 @@ const BodyWeightAdder = ({navigation: { goBack }}) => {
     };
 
     return(
-        <View style={[styles.root, {paddingLeft: 20}]}>
-            <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
+        <View style={[styles.root, {paddingLeft: 15}]}>
+            <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 30}}>
                 <View style = {{paddingRight: 50}}>
                     <TouchableOpacity onPress={()=> goBack()}>
                         <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
@@ -69,26 +76,27 @@ const BodyWeightAdder = ({navigation: { goBack }}) => {
                 </View>
             </View>
             <View>
-                <Text style={{fontFamily: "Inter-Medium", fontSize: 30, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:10}}>
-                    Add Body Weight
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center', marginBottom:10}}>
+                    Add a Body Weight!
                 </Text>
             </View>
-            
-            <View style={[styles.inputView, {width: '100%'}]}>
-                <TextInput
-                style={[styles.inputText]}
-                placeholder="Body Weight(KG)"
-                placeholderTextColor="black"
-                onChangeText={(bodyWeight) => setBodyWeight(bodyWeight)}
-                />
-            </View>
-
-            <View>
-                <TouchableOpacity onPress={AddBodyWeight} style={[styles.TouchableOpacity]}>
-                    <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
-                        Save
-                    </Text>
-                </TouchableOpacity>
+                <View style={[{alignContent:'center'}]}>
+                    <View style={[styles.inputView, {width: 350}, formErrors['bodyWeight'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
+                        <TextInput 
+                            style={styles.textInputLine}
+                            activeUnderlineColor={Colors.maroon} 
+                            mode = "flat" label = "Weight (kg)" 
+                            placeholder = "Enter Weight (kg)"
+                            onChangeText={(bodyWeight) => setBodyWeight(bodyWeight)}
+                        />
+                    </View>
+                    <TouchableOpacity onPress={AddBodyWeight} style={[styles.TouchableOpacity]}>
+                            <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
+                                Save
+                            </Text>
+                        </TouchableOpacity>
+                    <View>
+                </View>
             </View>
         </View>
        );
@@ -96,19 +104,13 @@ const BodyWeightAdder = ({navigation: { goBack }}) => {
 
 const styles = StyleSheet.create({
     root:{
-        padding: 30
+        padding: 30,
     },
     inputView:{
-        height: 45,
-        backgroundColor: "#FFFFFF",
-        borderColor: "black",
-        borderWidth: 1,
-        borderRadius: 8,
         marginBottom: 20,
-        alignContent: 'center'
     },
     inputText:{
-        height: 30,
+        height: 50,
         flex: 1,
         marginRight: 30,
         padding: 10,
@@ -116,42 +118,22 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         fontSize: 14,
         alignContent: 'center',
-        textAlign: 'left',
+        textAlign: 'center',
         borderRadius: 8,
-        width: '100%'
-
-    },
-    inputViewRow:{
-        height: 45,
-        backgroundColor: "#FFFFFF",
-        borderColor: "black",
-        borderWidth: 1,
-        borderRadius: 8,
-        marginBottom: 20,
-        alignContent: 'center'
-    },
-    inputTextRow:{
-        height: 30,
-        flex: 1,
-        marginRight: 30,
-        padding: 10,
-        fontFamily: "Inter-Medium",
-        fontWeight: "500",
-        fontSize: 14,
-        alignContent: 'center',
-        textAlign: 'left',
-        borderRadius: 8,
-        width: '100%'
+        width: 350
 
     },
     TouchableOpacity:{
         height:25,
-        width:'100%',
+        width:343,
         borderRadius: 30,
         marginTop: 20,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    textInputLine:{
+        backgroundColor: Colors.appBackground,
     },
     container: {
         alignItems: 'center',

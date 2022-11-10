@@ -18,13 +18,11 @@ const getUser = async() =>{
 
 
 const BMICalculator = ({navigation: { goBack }}) => {
-    const [sex, setSex] = useState("");
-    const [diet, setDiet] = useState("");
-    const [activity, setActivity] = useState("");
     const [weight, setWeight] = useState("");
     const [height, setHeight] = useState("");
     const [calories, setCalories] = useState("");
-    const [age, setAge] = useState("");
+    const [save, setSave] = useState(false);
+
     let today = new Date().toLocaleDateString()
 
 
@@ -33,7 +31,14 @@ const BMICalculator = ({navigation: { goBack }}) => {
 
 
     const AddBMI = async() => {
-    
+        
+        if(save == false){
+            Toast.show("Calculate BMI before Saving", {
+                duration: Toast.durations.SHORT,
+            })
+            return;
+        }
+
         // add calories to user.calorieGoal in the database
         const token = await AsyncStorage.getItem("userData");
 
@@ -87,7 +92,7 @@ const BMICalculator = ({navigation: { goBack }}) => {
             });
             return;
         }
-
+        setSave(true);
         setCalories(Number(weight/((height/100)*(height/100))).toFixed(0));    
 
     }
