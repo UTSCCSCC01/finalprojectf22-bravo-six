@@ -17,14 +17,12 @@ const getUser = async() =>{
 }
 
 
-const BMICalculator = ({navigation: { goBack }}) => {
-    const [sex, setSex] = useState("");
-    const [diet, setDiet] = useState("");
-    const [activity, setActivity] = useState("");
+const BFCalculator = ({navigation: { goBack }}) => {
     const [weight, setWeight] = useState("");
     const [height, setHeight] = useState("");
-    const [calories, setCalories] = useState("");
     const [age, setAge] = useState("");
+
+    const [calories, setCalories] = useState("");
     let today = new Date().toLocaleDateString()
 
 
@@ -63,30 +61,6 @@ const BMICalculator = ({navigation: { goBack }}) => {
 
 
     const calculateCalories = () => {
-        let currFormErrors = {"height": "", "weight": "", 
-        "age": "", "diet": "", "sex": "", "activity": ""};
-
-        if(height.length == 0){
-            currFormErrors['height'] = 'Please enter an height';
-        }
-        
-        if(weight.length == 0){
-            currFormErrors['weight'] = 'Please enter a weight';
-        }
-
-        setFormErrors(currFormErrors);
-
-        const checkAllEmpty = Object.entries(currFormErrors).reduce((a,b) => a[1].length > b[1].length ? a : b)[1];
-        
-        //Check if its empty (if not it means there are errors) 
-        if(checkAllEmpty.length != 0){
-            let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
-            allErrorMessages = allErrorMessages.trim();
-            Toast.show(allErrorMessages, {
-                duration: Toast.durations.SHORT,
-            });
-            return;
-        }
 
         setCalories(Number(weight/((height/100)*(height/100))).toFixed(0));    
 
@@ -106,7 +80,7 @@ const BMICalculator = ({navigation: { goBack }}) => {
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center', marginBottom:10}}>
-                    Calculate Your BMI!
+                    Calculate Your BF!
                 </Text>
             </View>
                 <View style={[{alignContent:'center'}]}>
@@ -128,8 +102,17 @@ const BMICalculator = ({navigation: { goBack }}) => {
                             onChangeText={(weight) => setWeight(weight)}
                         />
                     </View>
+                    <View style={[styles.inputView, {width: 350}, formErrors['weight'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
+                        <TextInput 
+                            style={styles.textInputLine}
+                            activeUnderlineColor={Colors.maroon} 
+                            mode = "flat" label = "Age" 
+                            placeholder = "Enter Age "
+                            onChangeText={(age) => setAge(age)}
+                        />
+                    </View>
                     <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center'}}>
-                        {"Your BMI: "}{calories}
+                        {"Your BF%: "}{calories}
                     </Text>
                     <View style={{paddingBottom:15}}>
                         <TouchableOpacity onPress={calculateCalories} style={[styles.TouchableOpacity]}>
@@ -198,4 +181,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default BMICalculator;
+export default BFCalculator;

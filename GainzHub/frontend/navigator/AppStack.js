@@ -21,7 +21,9 @@ import WorkoutLogs from '../screens/WorkoutLogs';
 import Progresss from '../screens/Progress';
 import ProgressBMI from '../screens/ProgressBMI';
 import ProgressBF from '../screens/ProgressBF';
+import ProgressAddBodyWeight from '../screens/ProgressAddBodyWeight';
 import BMICalculator from '../screens/BMICalculator';
+import BFCalculator from '../screens/BFCalculator';
 import NutritionMealPlanEditor from '../screens/NutritionMealPlanEditor';
 import ReviewMealPlan from '../screens/ReviewMealPlan';
 import Social from '../screens/Social';
@@ -56,8 +58,11 @@ const AppStack = ()=>{
                 <Stack.Screen name = "ProgressBMI" component={ProgressBMI}/>
                 <Stack.Screen name = "ProgressBF" component={ProgressBF}/>
                 <Stack.Screen name = "BMICalculator" component={BMICalculator}/>
+                <Stack.Screen name = "BFCalculator" component={BFCalculator}/>
                 <Stack.Screen name = "NutritionMealPlanEditor" component={NutritionMealPlanEditor}/>
                 <Stack.Screen name = "ReviewMealPlan" component={ReviewMealPlan}/>
+                <Stack.Screen name = "AddBodyWeight" component={ProgressAddBodyWeight}/>
+
             </Stack.Navigator>
         </NavigationContainer>
     );

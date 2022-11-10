@@ -63,11 +63,15 @@ const ProgressBF = ({navigation}) =>{
             </View>
             <View style={{paddingLeft: 5}}>
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:black, marginBottom:20}}>
-                        logs appear here
+                        Logs
                 </Text>
             </View>
             <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
-
+                <TouchableOpacity onPress={()=> navigation.navigate('BFCalculator')} style={[styles.TouchableOpacity]}>
+                    <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
+                        Add Entry
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
