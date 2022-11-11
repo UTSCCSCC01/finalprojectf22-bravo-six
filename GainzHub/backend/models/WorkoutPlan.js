@@ -5,26 +5,28 @@ const WorkoutPlanSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    planDescription:{
+    description:{
         type:String
     },
-    workoutId: {
-        type: String,
-        required: true,
-    },
-    sets: [{
-        setNum:{
-            type: Number,
+    workouts: [{
+        workoutId:{
+            type: String,
             required: true,
         },
-        lbs:{
-            type: Number,
-            required: true,
-        },
-        reps:{
-            type: Number,
-            required: true,
-        }
+        sets:[{
+            setNum:{
+                type: Number,
+                required: true,
+            },
+            lbs:{
+                type: Number,
+                required: true,
+            },
+            reps:{
+                type: Number,
+                required: true,
+            }
+        }]
     }]
 });
 

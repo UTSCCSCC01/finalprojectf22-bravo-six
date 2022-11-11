@@ -103,6 +103,47 @@ const WorkoutAddPlan = ({navigation: {goBack}}) => {
         setSearchWorkouts(searchResults.data);
     }
 
+    const handleAddPlan = async() => {
+        //Validate the fields
+        
+        //Check if there is a planName
+        if(!planName || planName == ""){
+            Toast.show("Plan Name cannot be empty", {
+                duration: Toast.durations.SHORT,
+            });
+        }
+
+        //Check if there is a description
+        if(!description || description == ""){
+            Toast.show("Description cannot be empty", {
+                duration: Toast.durations.SHORT,
+            });
+        }
+
+        //Check if theres atleast one workout
+        if(!workouts || workouts.length == 0 ){
+            Toast.show("Must have atleast one workout", {
+                duration: Toast.durations.SHORT,
+            });
+        }
+
+        const workoutPlanObj = {
+            planName,
+            description,
+            workouts
+        }
+        
+        const token = await AsyncStorage.getItem("userData");
+
+        const saveWorkoutPlan = await axios.post("http://localhost:5001/workout/addWorkoutPlan", workoutPlanObj, {
+            headers:{
+                "x-auth-token": token
+            }
+        })
+
+        console.log(saveWorkoutPlan.status);
+    }
+
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
@@ -159,7 +200,13 @@ const WorkoutAddPlan = ({navigation: {goBack}}) => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                
+                <View style={{display: "flex", alignItems:"center", justifyContent:"center"}}>
+                    <TouchableOpacity onPress={()=>{handleAddPlan()}}>
+                        <Text style={{fontFamily: "Inter-Medium", fontSize: 18, fontWeight:"800",color:maroon}}>
+                            Create Plan
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 <BottomSheet
                     ref={bottomSheetRef}
                     index={bottomSheetIdx}
