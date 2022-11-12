@@ -1,19 +1,42 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar} from 'react-native'
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar,   ActivityIndicator, Image} from 'react-native'
 import {Colors} from '../components/colors'
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
 import { loginUser } from '../requests/userRequests';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useIsFocused } from '@react-navigation/native';
+import ImagesExample from '../assets/mike.jpg'
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
 const SocialExplore = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
+    const [AllUsers, setAllUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const isFocused = useIsFocused();
+
+    const data = [
+        { id: '1', title: 'First item' },
+        { id: '2', title: 'Second item' },
+        { id: '3', title: 'Third item' },
+        { id: '4', title: 'Fourth item' }
+      ];
+
+    useEffect(()=>{
+    async function getAllUsers(){
+        const Users = await axios.get("http://localhost:5001/user/getAllUser");
+        setAllUsers(Users.data);
+    }
+    getAllUsers();
+    }, [isFocused])
+
+    console.log(AllUsers);
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -25,6 +48,7 @@ const SocialExplore = ({navigation}) =>{
             handleLogout();
         }
     }, [loggedIn]);
+
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -59,6 +83,27 @@ const SocialExplore = ({navigation}) =>{
                     </Text>
                 </TouchableOpacity> 
             </View>
+
+            <View style={styles.container}>
+                <Text style={styles.text}>User's</Text>
+                <FlatList
+                    data={AllUsers}
+                    keyExtractor={item => item._id}
+                    renderItem={({ item }) => (
+                    <View style={styles.listItem}>
+                        <Image
+                        source={{ uri: ImagesExample }}
+                        style={styles.coverImage}
+                        />
+                        <View style={styles.metaInfo}>
+                        <Text style={styles.title}>{`${item.username}`}</Text>
+                        <Text style={styles.subtitle}>{`${item.firstName} ${item.lastName}`}</Text>
+                        </View>
+                    </View>
+                    )}
+                />
+            </View> 
+
     </View>
     );
 }
@@ -94,7 +139,43 @@ const styles = StyleSheet.create({
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#f8f8f8',
+        alignItems: 'center'
+      },
+      text: {
+        fontSize: 20,
+        color: '#101010',
+        marginTop: 60,
+        fontWeight: '700'
+      },
+      listItem: {
+        marginTop: 10,
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        backgroundColor: '#fff',
+        flexDirection: 'row'
+      },
+      coverImage: {
+        width: 100,
+        height: 100,
+        borderRadius: 8
+      },
+      metaInfo: {
+        marginLeft: 10
+      },
+      title: {
+        fontSize: 18,
+        width: 200,
+        padding: 10
+      },
+      subtitle: {
+        fontSize: 14,
+        width: 200,
+        padding: 10
+      }
 });
 
 export default SocialExplore;
