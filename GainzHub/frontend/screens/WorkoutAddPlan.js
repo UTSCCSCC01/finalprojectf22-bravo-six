@@ -141,7 +141,17 @@ const WorkoutAddPlan = ({navigation: {goBack}}) => {
             }
         })
 
-        console.log(saveWorkoutPlan.status);
+        if(saveWorkoutPlan.status == 200){
+            Toast.show("Successfully added plan",{
+                duration: Toast.durations.SHORT
+            })
+            goBack();
+        }else{
+            Toast.show("Failed to add workout plan",{
+                duration: Toast.durations.SHORT
+            })
+        }
+
     }
 
     return(

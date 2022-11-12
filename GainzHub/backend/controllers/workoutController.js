@@ -35,14 +35,27 @@ const addWorkoutPlanToCollection = asyncHandler(async(req, res)=>{
 
     try{
         const newWorkoutPlan = await WorkoutPlan.create({
+            userId: user,
             planName,
             description,
             workouts
         });
         return res.status(200).send("Workout added");
     }catch(err){
-        return res.status(500).send("Could not add workout plan");
+        return res.status(500).send(err.message);
     }
 })
 
-module.exports = {searchWorkouts, getWorkout, addWorkoutPlanToCollection};
+const getWorkoutPlans = asyncHandler(async (req, res)=>{
+    const user = req.user;
+    
+    try{
+        const userWorkoutPlans = await WorkoutPlan.find({userId: user});
+        console.log(userWorkoutPlans);
+        return res.status(200).json(userWorkoutPlans);
+    }catch(err){
+        return res.status(500).send("Server error");
+    }
+});
+
+module.exports = {searchWorkouts, getWorkout, addWorkoutPlanToCollection, getWorkoutPlans};
