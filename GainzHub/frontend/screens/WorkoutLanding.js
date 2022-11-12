@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar} from 'react-native'
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, Modal} from 'react-native'
 import {Colors} from '../components/colors'
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
@@ -8,6 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
+import WorkoutPlanCard from '../components/WorkoutPlanCard';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
@@ -15,6 +17,8 @@ const Tab = createBottomTabNavigator();
 
 const WorkoutLanding = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
+    const isFocused = useIsFocused();
+    const [workoutPlans, setWorkoutPlans] = useState(true);
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -27,6 +31,23 @@ const WorkoutLanding = ({navigation}) =>{
         }
     }, [loggedIn]);
 
+    useEffect(()=>{
+        const getWorkoutPlans = async ()=>{
+            const token = await AsyncStorage.getItem("userData");
+            const workoutPlans = await axios.get("http://localhost:5001/workout/getWorkoutPlans", {
+                headers:{
+                    "x-auth-token": token
+                }
+            });
+            setWorkoutPlans(workoutPlans.data);
+        }
+        getWorkoutPlans();
+    }, [isFocused])
+
+
+    const renderWorkoutPlans = ({item}) => (
+        <WorkoutPlanCard planName={item.planName} planDescription={item.description}/>
+    )
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -66,6 +87,19 @@ const WorkoutLanding = ({navigation}) =>{
                         Your Workout Plans
                 </Text>
             </View>
+
+            <ScrollView>
+                <FlatList
+                    style={{height:140}}
+                    scrollEnabled={true}
+                    horizontal={true}
+                    data={workoutPlans}
+                    renderItem={renderWorkoutPlans}
+                    />
+            </ScrollView>
+
+
+
             <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
                 <TouchableOpacity onPress={()=> navigation.navigate('WorkoutAddPlan')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
@@ -80,6 +114,7 @@ const WorkoutLanding = ({navigation}) =>{
 const styles = StyleSheet.create({
     root:{
         padding: 30,
+        display:'flex'
     },
     inputView:{
         height: 60,
@@ -108,6 +143,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    workoutSideScroll:{
+        minHeight:800
     }
 });
 
