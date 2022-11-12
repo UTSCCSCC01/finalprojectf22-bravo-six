@@ -20,7 +20,7 @@ const Tab = createBottomTabNavigator();
 const SocialHome = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
     const [AllPost, setAllPost] = useState([]);
-    const isFocused = useIsFocused();;
+    const isFocused = useIsFocused();
 
 
     useEffect(()=>{
