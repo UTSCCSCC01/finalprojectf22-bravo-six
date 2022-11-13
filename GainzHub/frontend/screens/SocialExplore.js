@@ -80,7 +80,7 @@ const SocialExplore = ({navigation}) =>{
         return false;
     };
       
-    function GoodrenderHeader() {
+    function renderHeader() {
         return (
           <View
             style={{
@@ -102,7 +102,7 @@ const SocialExplore = ({navigation}) =>{
           </View>
         );
       }
-      function renderHeader() {
+      function TestingrenderHeader() {
         return (
           <View
             style={{
