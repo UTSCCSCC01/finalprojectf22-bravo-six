@@ -10,23 +10,11 @@ import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ImagesExample from '../assets/mike.jpg'
 import filter from 'lodash.filter';
+import { Searchbar } from 'react-native-paper';
+import { Ionicons } from '@expo/vector-icons';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
-
-const MyTextInput = ({ query , queryText }) => {
-    return (
-         <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              clearButtonMode="always"
-              value={query}
-              onChangeText={queryText}
-              placeholder="Search"
-              style={{ backgroundColor: '#fff', padding: 10 , fontSize: 20 }}
-         />
-    );
- };
  
 const SocialExplore = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
@@ -79,46 +67,6 @@ const SocialExplore = ({navigation}) =>{
         }
         return false;
     };
-      
-    function renderHeader() {
-        return (
-          <View
-            style={{
-              backgroundColor: '#fff',
-              padding: 13,
-              marginVertical: 10,
-              borderRadius: 20
-            }}
-          >
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              clearButtonMode="always"
-              value={query}
-              onChangeText={queryText => handleSearch(queryText)}
-              placeholder="Search"
-              style={{ backgroundColor: '#fff', padding: 10 , fontSize: 20 }}
-            />
-          </View>
-        );
-      }
-      function TestingrenderHeader() {
-        return (
-          <View
-            style={{
-              backgroundColor: '#fff',
-              padding: 13,
-              marginVertical: 10,
-              borderRadius: 20
-            }}
-          >
-        <MyTextInput
-          query
-          changeText={queryText => handleSearch(queryText)}
-        />
-          </View>
-        );
-      }
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -157,7 +105,19 @@ const SocialExplore = ({navigation}) =>{
             <View style={styles.container}>
                 <Text style={styles.text}>User's</Text>
                 <FlatList
-                    ListHeaderComponent={renderHeader}
+                    ListHeaderComponent={
+                      <Searchbar
+                      icon = {({ color, size }) => (
+                          <Ionicons name="search-outline" color={color} size={size} />
+                          )}
+                      placeholder='Search for Users!' style={{paddingLeft:10}}
+                      value = {query}
+                      onChangeText = {queryText => handleSearch(queryText)}
+                      clearIcon = {({ color, size }) => (
+                          <Ionicons name="trash" color={color} size={size} />
+                      )}
+                  />
+                    }
                     data={AllUsers}
                     keyExtractor={item => item._id}
                     renderItem={({ item }) => (
