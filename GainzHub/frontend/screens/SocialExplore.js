@@ -9,29 +9,38 @@ import { useIsFocused } from '@react-navigation/native';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ImagesExample from '../assets/mike.jpg'
+import filter from 'lodash.filter';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
+const MyTextInput = ({ query , queryText }) => {
+    return (
+         <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              clearButtonMode="always"
+              value={query}
+              onChangeText={queryText}
+              placeholder="Search"
+              style={{ backgroundColor: '#fff', padding: 10 , fontSize: 20 }}
+         />
+    );
+ };
+ 
 const SocialExplore = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
     const [AllUsers, setAllUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [fullData, setFullData] = useState([]);
+    const [query, setQuery] = useState('');
 
     const isFocused = useIsFocused();
-
-    const data = [
-        { id: '1', title: 'First item' },
-        { id: '2', title: 'Second item' },
-        { id: '3', title: 'Third item' },
-        { id: '4', title: 'Fourth item' }
-      ];
 
     useEffect(()=>{
     async function getAllUsers(){
         const Users = await axios.get("http://localhost:5001/user/getAllUser");
         setAllUsers(Users.data);
+        setFullData(Users.data);
     }
     getAllUsers();
     }, [isFocused])
@@ -49,6 +58,67 @@ const SocialExplore = ({navigation}) =>{
         }
     }, [loggedIn]);
 
+    const handleSearch = text => {
+        const formattedQuery = text.toLowerCase();
+        const filteredData = filter(fullData, user => {
+          return contains(user, formattedQuery);
+        });
+        if(formattedQuery != ''){
+        setAllUsers(filteredData);
+        } else {
+        setAllUsers(fullData);
+        }
+        setQuery(text);
+      };
+      
+    const contains = ({ username, firstName , lastName }, query) => {
+        console.log(firstName);
+        console.log(query);
+        if (username.toLowerCase().includes(query) || firstName.toLowerCase().includes(query) || lastName.toLowerCase().includes(query)) {
+            return true;
+        }
+        return false;
+    };
+      
+    function GoodrenderHeader() {
+        return (
+          <View
+            style={{
+              backgroundColor: '#fff',
+              padding: 13,
+              marginVertical: 10,
+              borderRadius: 20
+            }}
+          >
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              clearButtonMode="always"
+              value={query}
+              onChangeText={queryText => handleSearch(queryText)}
+              placeholder="Search"
+              style={{ backgroundColor: '#fff', padding: 10 , fontSize: 20 }}
+            />
+          </View>
+        );
+      }
+      function renderHeader() {
+        return (
+          <View
+            style={{
+              backgroundColor: '#fff',
+              padding: 13,
+              marginVertical: 10,
+              borderRadius: 20
+            }}
+          >
+        <MyTextInput
+          query
+          changeText={queryText => handleSearch(queryText)}
+        />
+          </View>
+        );
+      }
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -87,6 +157,7 @@ const SocialExplore = ({navigation}) =>{
             <View style={styles.container}>
                 <Text style={styles.text}>User's</Text>
                 <FlatList
+                    ListHeaderComponent={renderHeader}
                     data={AllUsers}
                     keyExtractor={item => item._id}
                     renderItem={({ item }) => (
@@ -110,7 +181,7 @@ const SocialExplore = ({navigation}) =>{
 
 const styles = StyleSheet.create({
     root:{
-        padding: 30,
+        padding: 10,
     },
     inputView:{
         height: 60,
@@ -141,14 +212,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     container: {
-        flex: 1,
+        flex: 1.2,
         backgroundColor: '#f8f8f8',
         alignItems: 'center'
       },
       text: {
         fontSize: 20,
         color: '#101010',
-        marginTop: 60,
         fontWeight: '700'
       },
       listItem: {
