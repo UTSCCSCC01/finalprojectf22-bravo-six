@@ -44,10 +44,15 @@ const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile, h
             <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
                 <Card style={[styles.planCardContainer, {width: '75%'}]} elevation={5}>
                 <Card.Title title = {planName}/>
-                <Card.Content style={{minHeight:"90%",height:"90%"}}>
+                <Card.Content style={{display: 'flex',  minHeight:"60%", height:"60%"}}>
                     <Paragraph  style={{overflow:"scroll", width:100,flexWrap:"wrap"}}>
                         {planDescription }
                     </Paragraph>
+                    <But
+                    style = {styles.button} 
+                    mode = 'contained' 
+                    buttonColor = {Colors.maroon}
+                    onPress = {togglePrivacy}>{dict[privacy]}</But>
                 </Card.Content>
                 </Card>
     
