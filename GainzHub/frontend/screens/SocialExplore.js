@@ -10,7 +10,7 @@ import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ImagesExample from '../assets/mike.jpg'
 import filter from 'lodash.filter';
-import { Searchbar } from 'react-native-paper';
+import { Searchbar, Modal, Portal , Provider } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 
 const {maroon, black} = Colors;
@@ -20,20 +20,65 @@ const SocialExplore = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
     const [AllUsers, setAllUsers] = useState([]);
     const [fullData, setFullData] = useState([]);
+    const [userId, setUser] = useState('');
+    const [SelectedUser, setSelectedUser] = useState([]);
     const [query, setQuery] = useState('');
 
+    const [visible, setVisible] = React.useState(false);
+
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
+
     const isFocused = useIsFocused();
+
+    const ViewProfile = () => {
+      return (
+        <Provider>
+        <Portal>
+        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{backgroundColor: 'white',padding:10}}>
+          <View style={{alignItems: 'center', paddingBottom: 1 }}>
+              <Image style={styles.image} source={{ uri: ImagesExample }} />
+          </View> 
+              <View>
+                  <Text style={{fontFamily: "Inter-Medium", fontSize: 28, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
+                      {SelectedUser.firstName} {SelectedUser.lastName}
+                  </Text>
+              </View>
+              <View>
+                  <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
+                      {SelectedUser.bio ? SelectedUser.bio : 'No Bio'}
+                </Text>
+              </View>
+        </Modal>
+      </Portal>
+    </Provider>
+      )
+    }
+
+    useEffect(() => {
+      CheckName();
+  }, [])
+
+  const CheckName = async() => {
+      const jwtToken = await AsyncStorage.getItem("userData");
+      const currentUser = await axios.get("http://localhost:5001/user/getUserSecure", {
+          headers: {
+              'x-auth-token': jwtToken,
+          }
+      })
+      setUser(currentUser.data.username.toString());
+  }
 
     useEffect(()=>{
     async function getAllUsers(){
         const Users = await axios.get("http://localhost:5001/user/getAllUser");
         setAllUsers(Users.data);
         setFullData(Users.data);
+
     }
     getAllUsers();
     }, [isFocused])
 
-    console.log(AllUsers);
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -60,9 +105,7 @@ const SocialExplore = ({navigation}) =>{
       };
       
     const contains = ({ username, firstName , lastName }, query) => {
-        console.log(firstName);
-        console.log(query);
-        if (username.toLowerCase().includes(query) || firstName.toLowerCase().includes(query) || lastName.toLowerCase().includes(query)) {
+        if (username.toLowerCase().includes(query) || firstName.toLowerCase().includes(query) || lastName.toLowerCase().includes(query) || (firstName+lastName).toLowerCase().includes(query)  || (firstName+" "+lastName).toLowerCase().includes(query)) {
             return true;
         }
         return false;
@@ -104,6 +147,7 @@ const SocialExplore = ({navigation}) =>{
 
             <View style={styles.container}>
                 <Text style={styles.text}>User's</Text>
+
                 <FlatList
                     ListHeaderComponent={
                       <Searchbar
@@ -121,6 +165,7 @@ const SocialExplore = ({navigation}) =>{
                     data={AllUsers}
                     keyExtractor={item => item._id}
                     renderItem={({ item }) => (
+                    <TouchableOpacity onPress={ () => {showModal(); setSelectedUser(item) }}>
                     <View style={styles.listItem}>
                         <Image
                         source={{ uri: ImagesExample }}
@@ -131,9 +176,12 @@ const SocialExplore = ({navigation}) =>{
                         <Text style={styles.subtitle}>{`${item.firstName} ${item.lastName}`}</Text>
                         </View>
                     </View>
-                    )}
+                    </TouchableOpacity>
+                    )
+                  }
                 />
-            </View> 
+                <ViewProfile></ViewProfile>
+            </View>
 
     </View>
     );
@@ -205,7 +253,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         width: 200,
         padding: 10
-      }
+      },
+      image: {
+        width: 150,
+        height: 150,
+        borderRadius: 1000,
+      },
 });
 
 export default SocialExplore;
