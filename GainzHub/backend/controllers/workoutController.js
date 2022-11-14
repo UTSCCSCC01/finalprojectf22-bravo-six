@@ -65,12 +65,22 @@ const privateWorkout = async(req, res) => {
         return res.status(400).send(err.message);
     }
 }
+
 const unPrivateWorkout = async(req, res) => {
     const {mealPlanId} = req.body
     try{
         await WorkoutPlan.findOneAndUpdate({_id: mealPlanId}, {$set:{private: false}});
         return res.status(200).send("Meal Plan Now Public");
     }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+// GET /workout/getPublishedWorkoutPlans 
+const getPublishedWorkoutPlans = async(req, res) =>{
+    try{
+        const publishedWorkoutPlans = await WorkoutPlan.find({published: true});
+        return res.status(200).json(publishedWorkoutPlans);
+    } catch(err){
         return res.status(400).send(err.message);
     }
 }
@@ -86,4 +96,40 @@ const getPrivate = async(req, res) => {
     }
 }
 
-module.exports = {getPrivate, searchWorkouts, getWorkout, addWorkoutPlanToCollection, getWorkoutPlans, privateWorkout, unPrivateWorkout};
+// PATCH /workout/publishWorkoutPlan
+const publishWorkoutPlan = async(req,res) => {
+    const {workoutId} = req.params;
+    try{
+        const result = await WorkoutPlan.findOne({_id: workoutId}, {$set:{published: true}});
+        return res.status(200).json("Workout Plan: Published");
+    } catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+// PATCH /workout/unpublishWorkoutPlan
+const unpublishWorkoutPlan = async(req,res) => {
+    const {workoutId} = req.params;
+    try{
+        const result = await WorkoutPlan.findOne({_id: workoutId}, {$set:{published: false}});
+        return res.status(200).json("Workout Plan: Unpublished");
+    } catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+
+
+
+module.exports = {
+    searchWorkouts, 
+    getWorkout,
+    addWorkoutPlanToCollection, 
+    getWorkoutPlans,
+    getPublishedWorkoutPlans, 
+    publishWorkoutPlan,
+    unpublishWorkoutPlan,
+    getPrivate,
+    unPrivateWorkout,
+    privateWorkout,
+}

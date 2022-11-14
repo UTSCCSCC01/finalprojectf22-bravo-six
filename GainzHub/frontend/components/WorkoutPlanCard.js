@@ -1,13 +1,12 @@
 //Workout plan card for workout plans page
 import React, {useState, useEffect} from 'react'
 import {Text, View, StyleSheet, TextInput, Button} from 'react-native'
-import { Card, Paragraph } from 'react-native-paper'
+import { Card, Paragraph, Button as But} from 'react-native-paper'
 import {Colors} from "../components/colors"
 import {TouchableOpacity} from "@gorhom/bottom-sheet"
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
-
 
 const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile}) => {
     const [isPrivate, setIsPrivate] = useState(true);
@@ -60,14 +59,28 @@ const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile}) 
             </View>
         );
     }
+ 
+    const [privacy, setPrivacy] = useState(planPrivacy);
+    
+    const togglePrivacy = () =>{
+        setPrivacy(priv => !priv);
+    }
+
+    const dict = {true: 'Unpublish', false: 'Publish'};
+    
     return(
-        <View style={{paddingRight:10}}>
-            <Card style={[styles.planCardContainer, {width:'100%'}]} elevation={5}>
+        <View style={{display: 'flex', paddingRight:10}}>
+            <Card style={styles.planCardContainer} elevation={5}>
                 <Card.Title title = {planName}/>
-                <Card.Content style={{minHeight:"90%",height:"90%"}}>
+                <Card.Content style={{display: 'flex',  minHeight:"60%", height:"60%"}}>
                     <Paragraph  style={{overflow:"scroll", width:100,flexWrap:"wrap"}}>
                         {planDescription }
                     </Paragraph>
+                    <But
+                    style = {styles.button} 
+                    mode = 'contained' 
+                    buttonColor = {Colors.maroon}
+                    onPress = {togglePrivacy}>{dict[privacy]}</But>
                 </Card.Content>
             </Card>
         </View>

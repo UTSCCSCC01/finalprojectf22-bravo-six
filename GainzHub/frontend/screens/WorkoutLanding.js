@@ -46,7 +46,7 @@ const WorkoutLanding = ({navigation}) =>{
 
 
     const renderWorkoutPlans = ({item}) => (
-        <WorkoutPlanCard planName={item.planName} planDescription={item.description}/>
+        <WorkoutPlanCard planName={item.planName} planDescription={item.description} planPrivacy = {item.published}/>
     )
 
     return (
@@ -90,7 +90,7 @@ const WorkoutLanding = ({navigation}) =>{
 
             <ScrollView>
                 <FlatList
-                    style={{height:140}}
+                    style={{height:160}}
                     scrollEnabled={true}
                     horizontal={true}
                     data={workoutPlans}

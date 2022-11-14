@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
+import PublishedWorkoutPlanCard from '../components/PublishedWorkoutPlanCard';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
@@ -15,6 +16,21 @@ const Tab = createBottomTabNavigator();
 
 const WorkoutExplore = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
+    const [publishedWorkoutPlans, setPublishedWorkoutPlans] = useState([]);
+
+    useEffect(()=>{
+        async function getPublishedWorkoutPlans(){
+            try{
+                const publishedWorkoutPlans = await axios.get("http://localhost:5001/workout/getPublishedWorkoutPlans");
+                setPublishedWorkoutPlans(publishedWorkoutPlans.data);
+            } catch (err){
+                console.log(err);
+            }
+        }
+        getPublishedWorkoutPlans();
+    }, []);
+
+
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -27,7 +43,9 @@ const WorkoutExplore = ({navigation}) =>{
         }
     }, [loggedIn]);
 
-
+    const renderPublishedWorkoutPlans = ({item}) =>{
+        return <PublishedWorkoutPlanCard planName = {item.planName} planDescription = {item.planDescription} />
+    }
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
@@ -66,6 +84,17 @@ const WorkoutExplore = ({navigation}) =>{
                         Workout Explore
                 </Text>
             </View>
+
+            
+            <ScrollView>
+                <FlatList
+                    style={{height:160}}
+                    scrollEnabled={true}
+                    horizontal={true}
+                    data={publishedWorkoutPlans}
+                    renderItem={renderPublishedWorkoutPlans}
+                    />
+            </ScrollView>
         </View>
     );
 }
