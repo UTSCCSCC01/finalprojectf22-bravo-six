@@ -21,6 +21,8 @@ const {maroon, black} = Colors;
 // Temporary image that we will change once we figure out aws
 const IMAGE = "https://www.onlinearsenal.com/uploads/default/original/3X/7/7/7788236c1bed0a1e47eebe7aee96d0b0864ce385.jpeg";
 
+
+
 const getUser = async() =>{
     const value = await AsyncStorage.getItem('userData');
     return value;
@@ -31,6 +33,24 @@ const Profile = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
     const [user, setUser] = useState({});
     const isFocused = useIsFocused();
+    const [profileImage, setProfileImage]  = useState(null);
+
+    useEffect(()=>{
+        //Get the url to this user's pfp
+        const getProfilePicture = async()=>{
+            const token = await AsyncStorage.getItem("userData");
+            const url = await axios.post("http://localhost:5001/user/getProfilePicture", {} , {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            if(url.status == 200){
+                setProfileImage(url.data.url);
+            }
+        }
+        getProfilePicture();
+    }, [isFocused])
+
     useEffect(() =>{
         const getStoredUser = async() =>{
             const userDataStored = await AsyncStorage.getItem('userData');
@@ -88,7 +108,7 @@ const Profile = ({navigation}) =>{
                 </Text>
             </View>
             <View style={{alignItems: 'center', paddingBottom: 10}}>
-                <Image style={styles.image} source={{ uri: IMAGE }} />
+                <Image style={styles.image} source={{ uri: profileImage }} />
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 28, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>

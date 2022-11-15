@@ -10,6 +10,7 @@ import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import { TextInput , Button} from "react-native-paper";
+import * as ImagePicker from 'expo-image-picker';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
@@ -27,6 +28,8 @@ const Profile_Edit = ({navigation}) =>{
     const [lastName, setLastName] = useState("");
     const [username, setUserName] = useState("");
     const [email, setEmail] = useState("");
+    const [image, setImage] = useState(null);
+
     const isFocused = useIsFocused();
     useEffect(() =>{
         const getStoredUser = async() =>{
@@ -89,6 +92,30 @@ const Profile_Edit = ({navigation}) =>{
             })
         }
     };
+
+    const pickImage = async () => {
+        // No permissions request is necessary for launching the image library
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+    
+        console.log(result);
+    
+        if (!result.cancelled) {
+            const data = {"image": result.uri}
+            const token = await AsyncStorage.getItem("userData");
+            const status = await axios.post("http://localhost:5001/user/uploadProfilePic", data, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            console.log(status);
+            setImage(result.uri);
+        }
+      };
 
     return(
         <View style={[styles.root, {paddingLeft: 20}]}>
@@ -201,6 +228,13 @@ const Profile_Edit = ({navigation}) =>{
                 <TouchableOpacity onPress={editProfile} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"600", fontSize: 18, color: "white"}}>
                         Save
+                    </Text>
+                </TouchableOpacity>
+            </View>
+            <View>
+                <TouchableOpacity onPress={pickImage} style={[styles.TouchableOpacity]}>
+                    <Text style={{fontFamily:"Inter-Medium", fontWeight:"600", fontSize: 18, color: "white"}}>
+                        Change profile picture
                     </Text>
                 </TouchableOpacity>
             </View>
