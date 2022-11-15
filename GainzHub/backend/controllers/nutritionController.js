@@ -131,7 +131,7 @@ const unPublishMealPlan = async(req, res) => {
         //Flip the published boolean currently in the object
         await MealPlan.findOneAndUpdate({_id: mealPlanId}, {$set:{published: false}});
         return res.status(200).send("Updated Meal Plan");
-    }catch(err){
+    } catch(err){
         return res.status(400).send(err.message);
     }
 }

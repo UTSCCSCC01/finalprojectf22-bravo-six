@@ -47,7 +47,7 @@ const addWorkoutPlanToCollection = asyncHandler(async(req, res)=>{
 
 const getWorkoutPlans = asyncHandler(async (req, res)=>{
     const user = req.user;
-    
+
     try{
         const userWorkoutPlans = await WorkoutPlan.find({userId: user});
         return res.status(200).json(userWorkoutPlans);
@@ -98,9 +98,9 @@ const getPrivate = async(req, res) => {
 
 // PATCH /workout/publishWorkoutPlan
 const publishWorkoutPlan = async(req,res) => {
-    const {workoutId} = req.params;
+    const {workoutPlanID} = req.params;
     try{
-        const result = await WorkoutPlan.findOne({_id: workoutId}, {$set:{published: true}});
+        const result = await WorkoutPlan.findOne({_id: workoutPlanID}, {$set:{published: true}});
         return res.status(200).json("Workout Plan: Published");
     } catch(err){
         return res.status(400).send(err.message);
@@ -109,15 +109,24 @@ const publishWorkoutPlan = async(req,res) => {
 
 // PATCH /workout/unpublishWorkoutPlan
 const unpublishWorkoutPlan = async(req,res) => {
-    const {workoutId} = req.params;
+    const {workoutPlanID} = req.params;
     try{
-        const result = await WorkoutPlan.findOne({_id: workoutId}, {$set:{published: false}});
+        const result = await WorkoutPlan.findOne({_id: workoutPlanID}, {$set:{published: false}});
         return res.status(200).json("Workout Plan: Unpublished");
     } catch(err){
         return res.status(400).send(err.message);
     }
 }
 
+const getWorkoutPlan = async(req, res) => {
+    const {workoutPlanID} = req.params;
+    try{
+        const result = await WorkoutPlan.findOne({_id: workoutPlanID});
+        return res.status(200).json(result);
+    } catch(err) {
+        return res.status(400).send(err.message);
+    }
+}
 
 
 
