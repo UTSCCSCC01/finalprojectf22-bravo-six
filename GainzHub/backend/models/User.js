@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    bio:{
+        type: String,
+        requried: false
+    },
     food:[{
         foodName:{
             type: String
