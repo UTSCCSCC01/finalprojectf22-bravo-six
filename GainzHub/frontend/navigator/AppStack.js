@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 //Screens
 import Login from '../screens/Login'
 import Register from '../screens/Register';
-import TempLanding from '../screens/TempLanding';
+import Profile from '../screens/Profile';
 import NavBar from '../components/NavBar';
 import CalorieCalculator from '../screens/CalorieCalculator';
 import Nutrition from '../screens/Nutrition';
@@ -30,6 +30,7 @@ import Social from '../screens/Social';
 import SocialHome from '../screens/SocialHome';
 import SocialExplore from '../screens/SocialExplore';
 import SocialCreate from '../screens/SocialCreate';
+import Profile_Edit from '../screens/Profile_Edit';
 
 const Stack = createStackNavigator();
 
@@ -42,7 +43,7 @@ const AppStack = ()=>{
                             }}>
                 <Stack.Screen name = "Login" component={Login}/>
                 <Stack.Screen name = "Register" component={Register}/>
-                <Stack.Screen name = "TempLanding" component={TempLanding}/>
+                <Stack.Screen name = "Profile" component={Profile}/>
                 <Stack.Screen name = "NavBar" component={NavBar}/>
                 <Stack.Screen name = "CalorieCalculator" component={CalorieCalculator}/>
                 <Stack.Screen name = "NutritionAddFood" component={NutritionAddFood}/>
@@ -62,7 +63,7 @@ const AppStack = ()=>{
                 <Stack.Screen name = "NutritionMealPlanEditor" component={NutritionMealPlanEditor}/>
                 <Stack.Screen name = "ReviewMealPlan" component={ReviewMealPlan}/>
                 <Stack.Screen name = "AddBodyWeight" component={ProgressAddBodyWeight}/>
-
+                <Stack.Screen name = "Profile_Edit" component={Profile_Edit}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
