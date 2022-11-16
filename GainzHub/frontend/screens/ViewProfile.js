@@ -18,28 +18,29 @@ import NutritionNav from '../components/NutritionNav';
 
 const {maroon, black} = Colors;
 
-// Temporary image that we will change once we figure out aws
-const IMAGE = "https://www.onlinearsenal.com/uploads/default/original/3X/7/7/7788236c1bed0a1e47eebe7aee96d0b0864ce385.jpeg";
-
-
-
 const getUser = async() =>{
     const value = await AsyncStorage.getItem('userData');
     return value;
 }
 
-const Profile = ({navigation}) =>{
+const ViewProfile = ({route, navigation}) =>{
     const [userData, setUserData] = useState("No user data");
     const [loggedIn, setLoggedIn] = useState(true);
     const [user, setUser] = useState({});
+    const SelectedUser = route.params.SelectedUser;
+    const selectedId = route.params.SelectedUser._id;
     const isFocused = useIsFocused();
     const [profileImage, setProfileImage]  = useState(null);
-
+    const [isFollowed, setIsFollowed] = useState(false);
+    const [followedText, setFollowedText] = useState("Follow");
+    //const isFollowed = user.following.includes(SelectedUser.username);
+    console.log(SelectedUser);
+    
     useEffect(()=>{
         //Get the url to this user's pfp
         const getProfilePicture = async()=>{
             const token = await AsyncStorage.getItem("userData");
-            const url = await axios.post("http://localhost:5001/user/getProfilePicture", {} , {
+            const url = await axios.post("http://localhost:5001/user/getProfilePictureOther", {SelectedUser} , {
                 headers: {
                     'x-auth-token': token,
                 }
@@ -50,6 +51,7 @@ const Profile = ({navigation}) =>{
         }
         getProfilePicture();
     }, [isFocused])
+    
 
     useEffect(() =>{
         const getStoredUser = async() =>{
@@ -62,20 +64,26 @@ const Profile = ({navigation}) =>{
         getStoredUser();
     }, [])
 
+    
     useEffect(() => {
         const getUser = async() => {
             const jwtToken = await AsyncStorage.getItem("userData");
-            
+
             const currentUser = await axios.get("http://localhost:5001/user/getUserSecure", {
                 headers: {
                     'x-auth-token': jwtToken,
                 }
             })
+            console.log("helpppppppppppp");
             console.log(currentUser.data);
+            console.log(currentUser.data.following.includes(SelectedUser._id));
+            setIsFollowed(currentUser.data.following.includes(SelectedUser._id));
+            console.log(isFollowed);
             setUser(currentUser.data);
         }
         getUser();
     }, [isFocused])
+    
     //console.log(userData);
 
     useEffect(()=>{
@@ -89,43 +97,65 @@ const Profile = ({navigation}) =>{
         }
     }, [loggedIn]);
 
-   
-    
+    const followUser = async() => {
+        const token = await AsyncStorage.getItem("userData");
+        const response = await axios.post('http://localhost:5001/user/followUser', {selectedId}, {
+            headers: {
+                'x-auth-token': token,
+            }
+        });
+        
+        const addFollower = await axios.post('http://localhost:5001/user/addFollower', {SelectedUser}, {
+            headers: {
+                'x-auth-token': token,
+            }
+        });
+        
+
+        if(response.status == 200 && addFollower.status == 200){
+            Toast.show("Success!", {
+                duration: Toast.durations.SHORT,
+            })
+            setIsFollowed(true);
+        }
+        else{
+            Toast.show("Could follow User", {
+                duration: Toast.durations.SHORT,
+            })
+        }
+        
+    };
+
     return(
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
                 <View style = {{paddingRight: 50}}>
-                    <TouchableOpacity onPress={()=> setLoggedIn(false)}>
+                    <TouchableOpacity onPress={()=> navigation.pop()}>
                         <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
-                            Logout
+                            Back
                         </Text>
                     </TouchableOpacity>
                 </View>
             </View>
-            <View>
-                <Text style={{fontFamily: "Inter-Medium", fontSize: 30, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:10}}>
-                    Profile
-                </Text>
-            </View>
+            <View style = {{padding:10}}>
+                <TouchableOpacity onPress={()=> followUser()} style={[styles.TouchableOpacity, {width: '100%'}]}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:20, color: 'white'}}>
+                        {isFollowed ? "Following" : "Follow"}
+                    </Text>
+                </TouchableOpacity>
+            </View> 
             <View style={{alignItems: 'center', paddingBottom: 10}}>
                 <Image style={styles.image} source={{ uri: profileImage }} />
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 28, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
-                    {user.firstName} {user.lastName}
+                    {SelectedUser.firstName} {SelectedUser.lastName}
                 </Text>
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
-                    {user.bio ? user.bio : 'No Bio'}
+                    {SelectedUser.bio ? SelectedUser.bio : 'No Bio'}
                 </Text>
-            </View>
-            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('Profile_Edit')} style={[styles.TouchableOpacity]}>
-                    <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
-                        Edit Profile
-                    </Text>
-                </TouchableOpacity>
             </View>
          </View>
     );
@@ -170,4 +200,4 @@ const styles = StyleSheet.create({
       },
 });
 
-export default Profile;
+export default ViewProfile;
