@@ -42,6 +42,7 @@ const SocialCreate = ({navigation}) =>{
         setUser(currentUser.data.username.toString());
     }
 
+
     const addPost = async() => {
         let currFormErrors = {"PostMessage": ""};
         if(PostMessage.length == 0){

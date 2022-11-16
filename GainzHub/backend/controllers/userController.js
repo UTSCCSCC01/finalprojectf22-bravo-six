@@ -19,6 +19,17 @@ const getUserData = asyncHandler(async(req, res) => {
     }
 });
 
+const getAllUserData = asyncHandler(async(req, res) => {
+    User.find({},(err,result) => {
+        if (err)
+        {
+            res.json(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
 const getUserDataSecure = asyncHandler(async(req, res) => {
     const userId = req.user; //Temporary workaround, massive security risk, please refactor later
     try{
@@ -104,4 +115,4 @@ const getProfilePic = asyncHandler(async(req, res)=>{
 
 })
 
-module.exports = {getUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic};
+module.exports = {getAllUserData, getUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic};
