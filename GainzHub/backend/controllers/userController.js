@@ -97,8 +97,6 @@ const uploadProfilePic = asyncHandler(async(req, res) => {
     }catch(err){
         return res.status(500).send("Could not upload profile");
     }
-
-
 });
 
 const getProfilePic = asyncHandler(async(req, res)=>{

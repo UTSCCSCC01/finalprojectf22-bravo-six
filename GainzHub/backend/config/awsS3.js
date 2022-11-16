@@ -103,4 +103,12 @@ s3DAO.prototype.getProfilePicture = function(username){
     })
 }
 
+s3DAO.prototype.uploadPost = function(fileContent, postId) {
+    return new Promise((resolve, reject) => { 
+        const buffer = Buffer.from(fileContent64.replace(/^data:image\/\w+;base64,/, ""),'base64');
+
+
+    });
+}
+
 module.exports = {createBucketProfilePictureBucket, createSocialBucket, s3DAO};
