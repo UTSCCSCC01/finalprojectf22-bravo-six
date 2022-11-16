@@ -171,7 +171,9 @@ const addFollower = async(req, res) => {
 
 const removeFollower = async(req, res)=> {
     const user = req.user;
+    //console.log(user);
     const following = req.body.SelectedUser;
+    //console.log(following);
     try{
         await User.findOneAndUpdate({_id: following._id}, {$pull: {followers: user}});
         return res.status(200).send("Follower Successfully removed");

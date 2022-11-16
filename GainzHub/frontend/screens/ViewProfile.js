@@ -33,6 +33,9 @@ const ViewProfile = ({route, navigation}) =>{
     const [profileImage, setProfileImage]  = useState(null);
     const [isFollowed, setIsFollowed] = useState(false);
     const [followedText, setFollowedText] = useState("Follow");
+    //following = route.parans.SelectedUser.following.length;
+    //followers = route.params.SelectedUser.followers.length;
+    const [followers, setFollowers] = useState(SelectedUser.followers.length);
     //const isFollowed = user.following.includes(SelectedUser.username);
     console.log(SelectedUser);
     
@@ -118,6 +121,7 @@ const ViewProfile = ({route, navigation}) =>{
                     duration: Toast.durations.SHORT,
                 })
                 setIsFollowed(true);
+                setFollowers(followers+1);
             }
             else{
                 Toast.show("Could follow User", {
@@ -144,6 +148,7 @@ const ViewProfile = ({route, navigation}) =>{
                     duration: Toast.durations.SHORT,
                 })
                 setIsFollowed(false);
+                setFollowers(followers-1);
             }
             else{
                 Toast.show("Could follow User", {
@@ -174,7 +179,7 @@ const ViewProfile = ({route, navigation}) =>{
             </View> 
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
-                    Followers: {SelectedUser.followers ? SelectedUser.followers.length : "0"}   Following: {SelectedUser.following ? SelectedUser.following.length : "0"}
+                    Followers: {followers ? followers : "0"}   Following: {SelectedUser.following ? SelectedUser.following.length : "0"}
                 </Text>
             </View>
             <View style={{alignItems: 'center', paddingBottom: 10}}>
