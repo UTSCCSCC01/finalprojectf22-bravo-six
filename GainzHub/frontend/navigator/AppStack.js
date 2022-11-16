@@ -31,6 +31,7 @@ import SocialHome from '../screens/SocialHome';
 import SocialExplore from '../screens/SocialExplore';
 import SocialCreate from '../screens/SocialCreate';
 import Profile_Edit from '../screens/Profile_Edit';
+import ViewProfile from '../screens/ViewProfile';
 
 const Stack = createStackNavigator();
 
@@ -64,6 +65,7 @@ const AppStack = ()=>{
                 <Stack.Screen name = "ReviewMealPlan" component={ReviewMealPlan}/>
                 <Stack.Screen name = "AddBodyWeight" component={ProgressAddBodyWeight}/>
                 <Stack.Screen name = "Profile_Edit" component={Profile_Edit}/>
+                <Stack.Screen name = "ViewProfile" component={ViewProfile}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

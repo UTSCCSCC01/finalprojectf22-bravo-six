@@ -114,5 +114,46 @@ const getProfilePic = asyncHandler(async(req, res)=>{
     }
 
 })
+// Its named SelectedUser to keep in sync with SocialExplore.js
+const getProfilePicOther = asyncHandler(async(req, res)=>{
+    const username = req.body.SelectedUser.username;
 
-module.exports = {getAllUserData, getUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic};
+    const url = await s3DAO.getProfilePicture(username);
+    if(url != ""){
+        return res.status(200).json({url});
+    }
+    else{
+        return res.status(404).send("Could not find profile picture");
+    }
+
+})
+
+// Following is a lis of usernames
+const followUser = async(req, res) => {
+    const user = req.user;
+    console.log(user);
+    const {selectedId} = req.body;
+    console.log(selectedId);
+    try{
+        await User.findOneAndUpdate({_id: user}, {$addToSet: {following: selectedId}});
+        return res.status(200).send("Successfully Followed");
+    } catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+// Followers is a lis of usernames
+const addFollower = async(req, res) => {
+    const user = req.user;
+    const following = req.body.SelectedUser.username;
+    try{
+        //console.log(updatedMealPlan);
+        //not gonna work cuz user is the id not the object, would have to pass entire user
+        await User.findOneAndUpdate({_id: following._id}, {$addToSet: {followers: user.username}});
+        return res.status(200).send("Successfully Followed");
+    } catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+module.exports = {getUserData, getAllUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic, getProfilePicOther, followUser, addFollower};
