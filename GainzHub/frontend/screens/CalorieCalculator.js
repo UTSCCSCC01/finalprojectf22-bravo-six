@@ -25,6 +25,7 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
     const [height, setHeight] = useState("");
     const [calories, setCalories] = useState("");
     const [age, setAge] = useState("");
+    const [save, setSave] = useState(false);
 
 
     const [activityOptions, setActivityOptions] = useState([
@@ -56,6 +57,12 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
     const [loggedIn, setLoggedIn] = useState(true);
 
     const updateCalorieGoal = async() => {
+        if(save == false){
+            Toast.show("Calculate BMI before Saving", {
+                duration: Toast.durations.SHORT,
+            })
+            return;
+        }
         // add calories to user.calorieGoal in the database
         const token = await AsyncStorage.getItem("userData");
 
@@ -76,6 +83,7 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
                 duration: Toast.durations.SHORT,
             })
         }
+        goBack();
     };
 
     const calculateCalories = () => {
@@ -156,6 +164,7 @@ const CalorieCalculator = ({navigation: { goBack }}) => {
             });
             return;
         }
+        setSave(true);
 
         if(sex === "female"){
             setCalories(Number(((activity_level * (10 * weight + 6.25 * height - 5 * age -161)) + dietNum)).toFixed(0));

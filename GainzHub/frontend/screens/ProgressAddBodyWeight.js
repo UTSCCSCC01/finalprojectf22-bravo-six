@@ -11,41 +11,39 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-root-toast';
 const {maroon, black} = Colors;
 
+
+//const Tab = createBottomTabNavigator();
+
 const getUser = async() =>{
     const value = await AsyncStorage.getItem('userData');
     return value;
 }
 
+let today = new Date().toLocaleDateString()
 
-const BMICalculator = ({navigation: { goBack }}) => {
-    const [weight, setWeight] = useState("");
-    const [height, setHeight] = useState("");
-    const [calories, setCalories] = useState("");
-    const [save, setSave] = useState(false);
-
-    let today = new Date().toLocaleDateString()
+const BodyWeightAdder = ({navigation: { goBack }}) => {
+    const [bodyWeight, setBodyWeight] = useState("");
+    const [formErrors, setFormErrors] = useState({"bodyWeight": ""});
 
 
-    const [formErrors, setFormErrors] = useState({"height": "", "weight": "", 
-    "age": "", "diet": "", "sex": "", "activity": ""});
-
-
-    const AddBMI = async() => {
-        
-        if(save == false){
-            Toast.show("Calculate BMI before Saving", {
+    const AddBodyWeight = async() => {
+        let currFormErrors = {"weight": ""};
+        if(bodyWeight.length == 0){
+            currFormErrors['bodyWeight'] = 'Please enter a bodyWeight';
+            setFormErrors(currFormErrors);
+            Toast.show(currFormErrors['bodyWeight'], {
                 duration: Toast.durations.SHORT,
-            })
+            });
             return;
         }
 
-        // add calories to user.calorieGoal in the database
+
         const token = await AsyncStorage.getItem("userData");
 
-        const response = await axios.post('http://localhost:5001/progress/addBMI',
-                                        {newBMI:
+        const response = await axios.post('http://localhost:5001/progress/addBodyWeight',
+                                        {newBodyWeight:
                                         {
-                                            BMI: calories,
+                                            weight: bodyWeight,
                                             date: today
                                         }}, {
             headers:{
@@ -59,45 +57,13 @@ const BMICalculator = ({navigation: { goBack }}) => {
             })
         }
         else{
-            Toast.show("Could not add BMI", {
+            Toast.show("Could not add body weight", {
                 duration: Toast.durations.SHORT,
             })
         }
         goBack();
     };
 
-
-    const calculateCalories = () => {
-        let currFormErrors = {"height": "", "weight": "", 
-        "age": "", "diet": "", "sex": "", "activity": ""};
-
-        if(height.length == 0){
-            currFormErrors['height'] = 'Please enter an height';
-        }
-        
-        if(weight.length == 0){
-            currFormErrors['weight'] = 'Please enter a weight';
-        }
-
-        setFormErrors(currFormErrors);
-
-        const checkAllEmpty = Object.entries(currFormErrors).reduce((a,b) => a[1].length > b[1].length ? a : b)[1];
-        
-        //Check if its empty (if not it means there are errors) 
-        if(checkAllEmpty.length != 0){
-            let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
-            allErrorMessages = allErrorMessages.trim();
-            Toast.show(allErrorMessages, {
-                duration: Toast.durations.SHORT,
-            });
-            return;
-        }
-        setSave(true);
-        setCalories(Number(weight/((height/100)*(height/100))).toFixed(0));    
-
-    }
-
-  
     return(
         <View style={[styles.root, {paddingLeft: 15}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 30}}>
@@ -111,39 +77,20 @@ const BMICalculator = ({navigation: { goBack }}) => {
             </View>
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center', marginBottom:10}}>
-                    Calculate Your BMI!
+                    Add a Body Weight!
                 </Text>
             </View>
                 <View style={[{alignContent:'center'}]}>
-                    <View style={[styles.inputView, {width: 350}, formErrors['height'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
-                        <TextInput 
-                            style={styles.textInputLine}
-                            activeUnderlineColor={Colors.maroon} 
-                            mode = "flat" label = "Height (cm)" 
-                            placeholder = "Enter Height (cm)"
-                            onChangeText={(height) => setHeight(height)}
-                        />
-                    </View>
-                    <View style={[styles.inputView, {width: 350}, formErrors['weight'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
+                    <View style={[styles.inputView, {width: 350}, formErrors['bodyWeight'].length == 0 ? {borderColor: "black"} : {borderColor: "red"}]}>
                         <TextInput 
                             style={styles.textInputLine}
                             activeUnderlineColor={Colors.maroon} 
                             mode = "flat" label = "Weight (kg)" 
                             placeholder = "Enter Weight (kg)"
-                            onChangeText={(weight) => setWeight(weight)}
+                            onChangeText={(bodyWeight) => setBodyWeight(bodyWeight)}
                         />
                     </View>
-                    <Text style={{fontFamily: "Inter-Medium", fontSize: 25, fontWeight:"800",color:maroon, textAlign: 'center'}}>
-                        {"Your BMI: "}{calories}
-                    </Text>
-                    <View style={{paddingBottom:15}}>
-                        <TouchableOpacity onPress={calculateCalories} style={[styles.TouchableOpacity]}>
-                            <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
-                                Calculate
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity onPress={AddBMI} style={[styles.TouchableOpacity]}>
+                    <TouchableOpacity onPress={AddBodyWeight} style={[styles.TouchableOpacity]}>
                             <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                                 Save
                             </Text>
@@ -152,7 +99,7 @@ const BMICalculator = ({navigation: { goBack }}) => {
                 </View>
             </View>
         </View>
-    );
+       );
 }
 
 const styles = StyleSheet.create({
@@ -203,4 +150,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default BMICalculator;
+export default BodyWeightAdder;
