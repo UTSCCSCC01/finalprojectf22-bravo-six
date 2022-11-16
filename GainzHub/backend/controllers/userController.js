@@ -128,12 +128,12 @@ const getProfilePicOther = asyncHandler(async(req, res)=>{
 
 })
 
-// Following is a lis of usernames
+// Following is a list of user ID's
 const followUser = async(req, res) => {
     const user = req.user;
-    console.log(user);
+    //console.log(user);
     const {selectedId} = req.body;
-    console.log(selectedId);
+    //console.log(selectedId);
     try{
         await User.findOneAndUpdate({_id: user}, {$addToSet: {following: selectedId}});
         return res.status(200).send("Successfully Followed");
@@ -142,12 +142,23 @@ const followUser = async(req, res) => {
     }
 }
 
-// Followers is a lis of usernames
+const unfollowUser = async(req, res) => {
+    const user = req.user;
+    const {selectedId} = req.body;
+    try{
+        await User.findOneAndUpdate({_id: user}, {$pull: {following: selectedId}});
+        return res.status(200).send("Successfully Unfollowed");
+    } catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+// Followers is a list of user ID's
 const addFollower = async(req, res) => {
     const user = req.user;
-    console.log(user);
+    //console.log(user);
     const following = req.body.SelectedUser;
-    console.log(following);
+    //console.log(following);
     try{
         //console.log(updatedMealPlan);
         //not gonna work cuz user is the id not the object, would have to pass entire user
@@ -158,4 +169,15 @@ const addFollower = async(req, res) => {
     }
 }
 
-module.exports = {getUserData, getAllUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic, getProfilePicOther, followUser, addFollower};
+const removeFollower = async(req, res)=> {
+    const user = req.user;
+    const following = req.body.SelectedUser;
+    try{
+        await User.findOneAndUpdate({_id: following._id}, {$pull: {followers: user}});
+        return res.status(200).send("Follower Successfully removed");
+    } catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+module.exports = {getUserData, getAllUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic, getProfilePicOther, followUser, addFollower, unfollowUser, removeFollower};

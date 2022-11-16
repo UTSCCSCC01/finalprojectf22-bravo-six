@@ -33,32 +33,62 @@ const SocialExplore = ({navigation, route}) =>{
 
     const isFocused = useIsFocused();
 
-    const followUser = async() => {
-        const token = await AsyncStorage.getItem("userData");
-        const selectedId = SelectedUser._id
-        const response = await axios.post('http://localhost:5001/user/followUser', {selectedId}, {
-            headers: {
-                'x-auth-token': token,
-            }
-        });
-        
-        const addFollower = await axios.post('http://localhost:5001/user/addFollower', {SelectedUser}, {
-            headers: {
-                'x-auth-token': token,
-            }
-        });
+    const handleFollow = async() => {
+        if(!isFollowed){
+            const token = await AsyncStorage.getItem("userData");
+            const selectedId = SelectedUser._id;
+            const response = await axios.post('http://localhost:5001/user/followUser', {selectedId}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+            const addFollower = await axios.post('http://localhost:5001/user/addFollower', {SelectedUser}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
 
-        if(response.status == 200 && addFollower.status == 200){
-            Toast.show("Success!", {
-                duration: Toast.durations.SHORT,
-            })
-            setIsFollowed(true);
-        }
-        else{
-            Toast.show("Could follow User", {
-                duration: Toast.durations.SHORT,
-            })
-        }
+            if(response.status == 200 && addFollower.status == 200){
+                Toast.show("Successfully Followed!", {
+                    duration: Toast.durations.SHORT,
+                })
+                setIsFollowed(true);
+            }
+            else{
+                Toast.show("Could follow User", {
+                    duration: Toast.durations.SHORT,
+                })
+            }
+         } else {
+            const token = await AsyncStorage.getItem("userData");
+            const selectedId = SelectedUser._id;
+            const response = await axios.post('http://localhost:5001/user/unfollowUser', {selectedId}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+            const addFollower = await axios.post('http://localhost:5001/user/removeFollower', {SelectedUser}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+
+            if(response.status == 200 && addFollower.status == 200){
+                Toast.show("Successfully Unfollowed!", {
+                    duration: Toast.durations.SHORT,
+                })
+                setIsFollowed(false);
+            }
+            else{
+                Toast.show("Could follow User", {
+                    duration: Toast.durations.SHORT,
+                })
+            }
+         }
         
     };
 
@@ -88,7 +118,7 @@ const SocialExplore = ({navigation, route}) =>{
                 </TouchableOpacity>
             </View> 
             <View style = {{flex:1, marginTop:10}}>
-                <TouchableOpacity onPress={()=> followUser()} style={[styles.TouchableOpacity, {width: '100%'}]}>
+                <TouchableOpacity onPress={()=> handleFollow()} style={[styles.TouchableOpacity, {width: '100%'}]}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:20, color: 'white'}}>
                         {isFollowed ? "Following" : "Follow"}
                     </Text>

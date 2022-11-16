@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllUserData, getUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, getProfilePic, editProfile, uploadProfilePic, getProfilePicOther, followUser, addFollower } = require('../controllers/userController');
+const { getAllUserData, getUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, getProfilePic, editProfile, uploadProfilePic, getProfilePicOther, followUser, addFollower, unfollowUser, removeFollower } = require('../controllers/userController');
 const { JWTAuth } = require('../middleware/JWTAuth');
 const router = express.Router();
 
@@ -14,5 +14,7 @@ router.post("/getProfilePicture", JWTAuth, getProfilePic);
 router.post("/getProfilePictureOther", JWTAuth, getProfilePicOther);
 router.post("/followUser", JWTAuth, followUser);
 router.post("/addFollower", JWTAuth, addFollower);
+router.post("/unfollowUser", JWTAuth, unfollowUser);
+router.post("/removeFollower", JWTAuth, removeFollower);
 
 module.exports = (router);
