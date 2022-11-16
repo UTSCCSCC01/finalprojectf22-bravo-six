@@ -74,7 +74,7 @@ const ViewProfile = ({route, navigation}) =>{
                     'x-auth-token': jwtToken,
                 }
             })
-            console.log("helpppppppppppp");
+            //console.log("helpppppppppppp");
             console.log(currentUser.data);
             console.log(currentUser.data.following.includes(SelectedUser._id));
             setIsFollowed(currentUser.data.following.includes(SelectedUser._id));
@@ -172,6 +172,11 @@ const ViewProfile = ({route, navigation}) =>{
                     </Text>
                 </TouchableOpacity>
             </View> 
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
+                    Followers: {SelectedUser.followers ? SelectedUser.followers.length : "0"}   Following: {SelectedUser.following ? SelectedUser.following.length : "0"}
+                </Text>
+            </View>
             <View style={{alignItems: 'center', paddingBottom: 10}}>
                 <Image style={styles.image} source={{ uri: profileImage }} />
             </View>

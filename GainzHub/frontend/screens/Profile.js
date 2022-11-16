@@ -107,6 +107,11 @@ const Profile = ({navigation}) =>{
                     Profile
                 </Text>
             </View>
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
+                    Followers: {user.followers ? user.followers.length : "0"}   Following: {user.following ? user.following.length : "0"}
+                </Text>
+            </View>
             <View style={{alignItems: 'center', paddingBottom: 10}}>
                 <Image style={styles.image} source={{ uri: profileImage }} />
             </View>
@@ -120,6 +125,7 @@ const Profile = ({navigation}) =>{
                     {user.bio ? user.bio : 'No Bio'}
                 </Text>
             </View>
+            
             <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
                 <TouchableOpacity onPress={()=> navigation.navigate('Profile_Edit')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
