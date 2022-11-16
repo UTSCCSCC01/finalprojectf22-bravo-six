@@ -145,11 +145,13 @@ const followUser = async(req, res) => {
 // Followers is a lis of usernames
 const addFollower = async(req, res) => {
     const user = req.user;
-    const following = req.body.SelectedUser.username;
+    console.log(user);
+    const following = req.body.SelectedUser;
+    console.log(following);
     try{
         //console.log(updatedMealPlan);
         //not gonna work cuz user is the id not the object, would have to pass entire user
-        await User.findOneAndUpdate({_id: following._id}, {$addToSet: {followers: user.username}});
+        await User.findOneAndUpdate({_id: following._id}, {$addToSet: {followers: user}});
         return res.status(200).send("Successfully Followed");
     } catch(err){
         return res.status(400).send(err.message);
