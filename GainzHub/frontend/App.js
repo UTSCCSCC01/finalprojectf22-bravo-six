@@ -11,6 +11,7 @@ export default function App() {
   let [fontsLoaded] = useFonts({
     "Inter-Thin": require("./assets/fonts/static/Inter-Thin.ttf"),
     "Inter-Bold": require("./assets/fonts/static/Inter-Bold.ttf"),
+    "Inter-ExtraBold": require("./assets/fonts/static/Inter-ExtraBold.ttf"),
     "Inter-Medium": require("./assets/fonts/static/Inter-Medium.ttf")
   });
   

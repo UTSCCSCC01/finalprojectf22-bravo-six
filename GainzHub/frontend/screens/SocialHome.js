@@ -25,8 +25,19 @@ const SocialHome = ({navigation}) =>{
 
     useEffect(()=>{
         async function getAllPost(){
-            const Posts = await axios.get("http://localhost:5001/social/getpost");
-            setAllPost(Posts.data);
+            let Posts = await axios.get("http://localhost:5001/social/getAllPosts");
+            Posts = Posts.data;
+            //Get username for all posts
+            for(let i = 0; i < Posts.length; i++){
+                const userObj = await axios.get("http://localhost:5001/user/getUser", {
+                    headers:{
+                        'x-auth-token': Posts[i].userId,
+                    }
+                })
+                Posts[i].userName = userObj.data.username;
+            }
+
+            setAllPost(Posts);
         }
         getAllPost();
         }, [isFocused])
@@ -47,7 +58,7 @@ const SocialHome = ({navigation}) =>{
                 <Card>
                     <Card.Content key={item._id}>
                         <Title>{item.PostMessage}</Title>
-                        <Paragraph>{ item.userId }</Paragraph>
+                        <Paragraph>{ item.userName }</Paragraph>
                     </Card.Content>
                 </Card>
                 <Divider/>
@@ -87,7 +98,7 @@ const SocialHome = ({navigation}) =>{
                     </Text>
                 </TouchableOpacity> 
             </View>
-            <View style={{height:"100%"}}>
+            <View style={{height:"90%"}}>
                 <ScrollView style={{height:"50%"}}>
                     <FlatList
                         data = {AllPost}

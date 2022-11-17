@@ -10,7 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import { TextInput , Button} from "react-native-paper";
 import { registerPost } from '../requests/SocialRequest';
-
+import * as ImagePicker from 'expo-image-picker';
 import ErrorMSG from '../components/ErrorMsg';
 
 const {maroon, black} = Colors;
@@ -44,35 +44,55 @@ const SocialCreate = ({navigation}) =>{
         setUser(currentUser.data.username.toString());
     }
 
-    const handleUploadImage = () =>{
-        //Upload the image to our AWS S3 bucket
-        
+    const handleUploadImage = async() =>{
+        //Replace the image with the selected image
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+          });
+
+        if (!result.cancelled) {
+            const data = {"image": result.uri}
+            /*
+            const token = await AsyncStorage.getItem("userData");
+            const status = await axios.post("http://localhost:5001/user/uploadProfilePic", data, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            console.log(status);
+            */
+            console.log(result.uri);
+            setImage(result.uri);
+        }
     }
 
 
     const addPost = async() => {
         let currFormErrors = {"PostMessage": ""};
         if(PostMessage.length == 0){
-            currFormErrors['PostMessage'] = 'Nothing Yet ?';
+            currFormErrors['PostMessage'] = 'No post description provided.';
         }
         setFormErrors(currFormErrors);
         const checkAllEmpty = Object.entries(currFormErrors).reduce((a,b) => a[1].length > b[1].length ? a : b)[1];
         if(checkAllEmpty.length != 0){
             let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
-            allErrorMessages = allErrorMessages.trim();
+            allErrorMessages = allErrorMsseages.trim();
             Toast.show(allErrorMessages, {
                 duration: Toast.durations.SHORT,
             });
             return;
         }
         //await CheckName();
-        
-        console.log(PostMessage);
+
+        const token = await AsyncStorage.getItem("userData");
         const userData = {
-            userId,
-            PostMessage
+            PostMessage,
+            image
         }
-        console.log(PostMessage);
+
         try{
             const data = await registerPost(userData);
             console.log(data);
@@ -139,7 +159,7 @@ const SocialCreate = ({navigation}) =>{
             </View>
 
             <View style = {styles.imageContainer}>
-                <Image style = {styles.image} source={{ uri:  PLACEHOLDER_IMAGE}} />
+                <Image style = {styles.image} source={{ uri:  image}} />
             </View>
 
             <View style={{paddingTop:10}}>
@@ -271,6 +291,7 @@ const styles = StyleSheet.create({
     image:{
         width:"100%",
         height:"100%",
+        resizeMode: 'contain'
     },
     imageContainer:{
         width:"100%",

@@ -234,7 +234,6 @@ const SocialExplore = ({navigation, route}) =>{
             </View>
 
             <View style={styles.container}>
-                <Text style={styles.text}>User's</Text>
 
                 <FlatList
                     ListHeaderComponent={

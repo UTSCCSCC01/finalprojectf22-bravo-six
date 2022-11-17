@@ -11,6 +11,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import NutritionPlans from './NutritionPlans';
 import NutritionNav from '../components/NutritionNav';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Searchbar, Modal, Portal , Provider } from 'react-native-paper';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
@@ -34,6 +36,14 @@ const Profile = ({navigation}) =>{
     const [user, setUser] = useState({});
     const isFocused = useIsFocused();
     const [profileImage, setProfileImage]  = useState(null);
+    const [posts, setPosts] = useState(null);
+    const [selectedNav, setSelectedNav] = useState({posts: true, workout: false, nutrition: false, 
+                                                    progress:false});
+                                                    const [visible, setVisible] = React.useState(false);
+    const [modalItem, setModalItem] = useState(null);
+
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
 
     useEffect(()=>{
         //Get the url to this user's pfp
@@ -49,6 +59,22 @@ const Profile = ({navigation}) =>{
             }
         }
         getProfilePicture();
+    }, [isFocused])
+
+    useEffect(()=>{
+        const getAllPosts = async()=>{
+            //Get all of the user's posts
+            const token = await AsyncStorage.getItem("userData");
+
+            const postData = await axios.post("http://localhost:5001/social/getAllUserPosts", {} ,{
+                headers:{
+                    'x-auth-token': token,
+                }
+            })
+            setPosts(postData.data);
+        }
+
+        getAllPosts();
     }, [isFocused])
 
     useEffect(() =>{
@@ -71,12 +97,10 @@ const Profile = ({navigation}) =>{
                     'x-auth-token': jwtToken,
                 }
             })
-            console.log(currentUser.data);
             setUser(currentUser.data);
         }
         getUser();
     }, [isFocused])
-    //console.log(userData);
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -89,8 +113,56 @@ const Profile = ({navigation}) =>{
         }
     }, [loggedIn]);
 
-   
+    const handleNavPress = (linkName) => {
+        let tempSelected = {posts: false, workout: false, nutrition: false, 
+            progress:false};
+        tempSelected[linkName] = true;
+        setSelectedNav(tempSelected);
+    }
+
+    const renderPosts = ({item}) =>(
+        <View  style={{paddingTop: 20, display:'flex', justifyContent:'center', alignItems:'center', backgroundColor:"#F6F6F6", paddingRight: 5}}>
+            <TouchableOpacity onPress={()=>{showModal(); setModalItem(item)}}>
+                <Image style={styles.postImage} source={{ uri: item.url }} />
+            </TouchableOpacity>
+        </View>
+    )
     
+    const userPosts = ()=>{
+        return(<FlatList 
+                data = {posts}
+                renderItem = {renderPosts}
+                keyExtractor={item => item._id}
+                scrollEnabled={true}
+                numColumns={3}
+                />)
+    }
+
+    const ViewImage = ({image, description}) => {
+        return (
+          <Provider>
+          <Portal>
+          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{backgroundColor: 'white',padding:10}}>
+            <View style={{alignItems: 'center', paddingBottom: 1 }}>
+                <Image style={{width:400, height:400, resizeMode:'contain'}} source={{ uri: image }} />
+            </View>
+
+            <View style={{paddingVertical: 10}}>
+                <View style={{width:"100%", backgroundColor:'#000000', height:2}}/>
+            </View>
+
+            <View>
+                <Text  style={{fontFamily: "Inter-Medium", fontSize: 15, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
+                    {description}
+                </Text>
+            </View>
+          </Modal>
+        </Portal>
+      </Provider>
+        )
+      }
+
+
     return(
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
@@ -133,6 +205,39 @@ const Profile = ({navigation}) =>{
                     </Text>
                 </TouchableOpacity>
             </View>
+
+            <View style={styles.profileNavCont}>
+                <View style={{borderBottomColor:"#8D0A0A", borderBottomWidth: selectedNav['posts'] ? 2 : 0}}>
+                    <TouchableOpacity onPress={()=>handleNavPress("posts")}>
+                        <Text style={styles.profileNavTxt}> Posts</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{borderBottomColor:"#8D0A0A", borderBottomWidth: selectedNav['workout'] ? 2 : 0}}>
+                    <TouchableOpacity onPress={()=>handleNavPress("workout")}>
+                        <Text style={styles.profileNavTxt} >Workout</Text>
+                    </TouchableOpacity> 
+                </View>
+
+                <View style={{borderBottomColor:"#8D0A0A", borderBottomWidth: selectedNav['nutrition'] ? 2 : 0}}>
+                    <TouchableOpacity onPress={()=>handleNavPress("nutrition")}>
+                        <Text style={styles.profileNavTxt} >Nutrition</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{borderBottomColor:"#8D0A0A", borderBottomWidth: selectedNav['progress'] ? 2 : 0}}>
+                    <TouchableOpacity onPress={()=>handleNavPress("progress")}>
+                        <Text style={styles.profileNavTxt} >Progress</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+            
+            <ScrollView>
+                {userPosts()}
+            </ScrollView>
+            <ViewImage image={modalItem ? modalItem.url : ""} description={modalItem ? modalItem.PostMessage : ""} />
+
+
          </View>
     );
 }
@@ -141,6 +246,19 @@ const styles = StyleSheet.create({
     root:{
         padding: 30,
     },
+    profileNavCont:{
+        display:'flex',
+        flexDirection:"row",
+        justifyContent:'space-evenly',
+    },
+    profileNavTxt:{
+        fontFamily: "Inter-Medium", 
+        fontSize: 14, 
+        fontWeight:"800",
+        color:maroon,
+        marginBottom:10,
+    }
+    ,
     inputView:{
         height: 90,
         backgroundColor: "#F6F6F6",
@@ -174,6 +292,11 @@ const styles = StyleSheet.create({
         height: 150,
         borderRadius: 1000,
       },
+    postImage:{
+        width:115,
+        height:115,
+        resizeMode:'cover'
+    }
 });
 
 export default Profile;
