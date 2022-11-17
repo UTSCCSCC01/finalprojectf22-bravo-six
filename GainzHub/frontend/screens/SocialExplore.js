@@ -16,13 +16,15 @@ import { Ionicons } from '@expo/vector-icons';
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
  
-const SocialExplore = ({navigation}) =>{
+const SocialExplore = ({navigation, route}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
     const [AllUsers, setAllUsers] = useState([]);
     const [fullData, setFullData] = useState([]);
-    const [userId, setUser] = useState('');
-    const [SelectedUser, setSelectedUser] = useState([]);
+    const [user, setUser] = useState({});
+    const [SelectedUser, setSelectedUser] = useState({});
     const [query, setQuery] = useState('');
+    const [isFollowed, setIsFollowed] = useState(false);
+    const [followedText, setFollowedText] = useState("Follow");
 
     const [visible, setVisible] = React.useState(false);
 
@@ -30,6 +32,65 @@ const SocialExplore = ({navigation}) =>{
     const hideModal = () => setVisible(false);
 
     const isFocused = useIsFocused();
+
+    const handleFollow = async() => {
+        if(!isFollowed){
+            const token = await AsyncStorage.getItem("userData");
+            const selectedId = SelectedUser._id;
+            const response = await axios.post('http://localhost:5001/user/followUser', {selectedId}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+            const addFollower = await axios.post('http://localhost:5001/user/addFollower', {SelectedUser}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+
+            if(response.status == 200 && addFollower.status == 200){
+                Toast.show("Successfully Followed!", {
+                    duration: Toast.durations.SHORT,
+                })
+                setIsFollowed(true);
+            }
+            else{
+                Toast.show("Could follow User", {
+                    duration: Toast.durations.SHORT,
+                })
+            }
+         } else {
+            const token = await AsyncStorage.getItem("userData");
+            const selectedId = SelectedUser._id;
+            const response = await axios.post('http://localhost:5001/user/unfollowUser', {selectedId}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+            const addFollower = await axios.post('http://localhost:5001/user/removeFollower', {SelectedUser}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+
+            if(response.status == 200 && addFollower.status == 200){
+                Toast.show("Successfully Unfollowed!", {
+                    duration: Toast.durations.SHORT,
+                })
+                setIsFollowed(false);
+            }
+            else{
+                Toast.show("Could follow User", {
+                    duration: Toast.durations.SHORT,
+                })
+            }
+         }
+        
+    };
 
     const ViewProfile = () => {
       return (
@@ -49,6 +110,20 @@ const SocialExplore = ({navigation}) =>{
                       {SelectedUser.bio ? SelectedUser.bio : 'No Bio'}
                 </Text>
               </View>
+              <View style = {{flex:1}}>
+                <TouchableOpacity onPress={()=> navigation.navigate("ViewProfile", {SelectedUser})} style={[styles.TouchableOpacity, {width: '100%'}]}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:20, color: 'white'}}>
+                        View Profile
+                    </Text>
+                </TouchableOpacity>
+            </View> 
+            <View style = {{flex:1, marginTop:10}}>
+                <TouchableOpacity onPress={()=> handleFollow()} style={[styles.TouchableOpacity, {width: '100%'}]}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:20, color: 'white'}}>
+                        {isFollowed ? "Following" : "Follow"}
+                    </Text>
+                </TouchableOpacity>
+            </View> 
         </Modal>
       </Portal>
     </Provider>
@@ -57,7 +132,7 @@ const SocialExplore = ({navigation}) =>{
 
     useEffect(() => {
       CheckName();
-  }, [])
+  }, [isFocused, SelectedUser])
 
   const CheckName = async() => {
       const jwtToken = await AsyncStorage.getItem("userData");
@@ -66,8 +141,19 @@ const SocialExplore = ({navigation}) =>{
               'x-auth-token': jwtToken,
           }
       })
-      setUser(currentUser.data.username.toString());
+      //setUser(currentUser.data.username.toString());
+      setIsFollowed(currentUser.data.following.includes(SelectedUser._id));
+      setUser(currentUser.data)
   }
+  /*
+  useEffect(()=> {
+    if(user.following.includes(SelectedUser._id)){
+        isFollowed=true;
+    } else {
+        isFollowed=false;
+    }
+  }, [SelectedUser])
+  */
 
     useEffect(()=>{
     async function getAllUsers(){
@@ -110,6 +196,8 @@ const SocialExplore = ({navigation}) =>{
         }
         return false;
     };
+
+    //console.log(SelectedUser);
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
