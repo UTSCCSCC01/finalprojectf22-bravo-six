@@ -8,7 +8,7 @@ import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
 
-const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile}) => {
+const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile, handleClick, plan, planPrivacy}) => {
     const [isPrivate, setIsPrivate] = useState(true);
     const isFocused = useIsFocused();
 
@@ -70,7 +70,7 @@ const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile}) 
     
     return(
         <View style={{display: 'flex', paddingRight:10}}>
-            <Card style={styles.planCardContainer} elevation={5}>
+            <Card onPress = {() => navigation.navigate("WorkoutPlanInfo", {plan: plan})} style={styles.planCardContainer} elevation={5}>
                 <Card.Title title = {planName}/>
                 <Card.Content style={{display: 'flex',  minHeight:"60%", height:"60%"}}>
                     <Paragraph  style={{overflow:"scroll", width:100,flexWrap:"wrap"}}>

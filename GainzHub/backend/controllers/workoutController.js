@@ -141,4 +141,5 @@ module.exports = {
     getPrivate,
     unPrivateWorkout,
     privateWorkout,
+    getWorkoutPlan
 }

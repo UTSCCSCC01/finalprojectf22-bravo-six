@@ -42,11 +42,18 @@ const WorkoutLanding = ({navigation}) =>{
             setWorkoutPlans(workoutPlans.data);
         }
         getWorkoutPlans();
-    }, [isFocused])
+    }, [isFocused]);
+
+
+
+    const clickHandler = () => {
+        navigation.navigate("WorkoutPlanInfo");
+    }
+    
 
 
     const renderWorkoutPlans = ({item}) => (
-        <WorkoutPlanCard planName={item.planName} planDescription={item.description} planPrivacy = {item.published}/>
+        <WorkoutPlanCard navigation = {navigation} plan = {item} planName={item.planName} planPrivacy = {item.published}/>
     )
 
     return (

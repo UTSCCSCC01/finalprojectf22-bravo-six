@@ -8,7 +8,8 @@ const { searchWorkouts,
     unpublishWorkoutPlan,
     privateWorkout,
     unPrivateWorkout,
-    getPrivate} = require('../controllers/workoutController');
+    getPrivate,
+    getWorkoutPlan} = require('../controllers/workoutController');
 const router = express.Router();
 const { JWTAuth } = require('../middleware/JWTAuth');
 
@@ -22,5 +23,6 @@ router.get("/getPrivate", getPrivate);
 router.get("/getPublishedWorkoutPlans", getPublishedWorkoutPlans);
 router.patch("/publishWorkoutPlan", publishWorkoutPlan);
 router.patch("/unpublishWorkoutPlan", unpublishWorkoutPlan);
+router.get("/getWorkoutPlan", JWTAuth, getWorkoutPlan);
 
 module.exports = (router);
