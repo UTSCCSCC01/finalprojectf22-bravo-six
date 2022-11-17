@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const {CreatePost , GetPost } = require("../controllers/socialController");
+const {createPost , getAllPosts, getAllUserPosts } = require("../controllers/socialController");
 const { JWTAuth } = require('../middleware/JWTAuth');
 
-router.post("/post", CreatePost);
-router.get("/getpost", GetPost);
+router.post("/post", JWTAuth, createPost);
+router.get("/getAllPosts", getAllPosts);
+router.post("/getAllUserPosts", JWTAuth, getAllUserPosts);
 
 module.exports = (router);

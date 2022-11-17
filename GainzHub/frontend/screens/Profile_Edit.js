@@ -102,8 +102,6 @@ const Profile_Edit = ({navigation}) =>{
           quality: 1,
         });
     
-        console.log(result);
-    
         if (!result.cancelled) {
             const data = {"image": result.uri}
             const token = await AsyncStorage.getItem("userData");

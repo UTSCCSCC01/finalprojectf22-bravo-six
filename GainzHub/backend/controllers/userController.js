@@ -11,6 +11,7 @@ const fs = require('fs');
 
 const getUserData = asyncHandler(async(req, res) => {
     const userId = req.headers['x-auth-token']; //Temporary workaround, massive security risk, please refactor later
+    
     try{
         const foundUser = await User.findOne({_id: userId});
         return res.status(200).json(foundUser);
@@ -97,8 +98,6 @@ const uploadProfilePic = asyncHandler(async(req, res) => {
     }catch(err){
         return res.status(500).send("Could not upload profile");
     }
-
-
 });
 
 const getProfilePic = asyncHandler(async(req, res)=>{

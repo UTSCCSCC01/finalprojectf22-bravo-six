@@ -103,4 +103,50 @@ s3DAO.prototype.getProfilePicture = function(username){
     })
 }
 
+s3DAO.prototype.uploadPost = function(fileContent64, postId) {
+    return new Promise((resolve, reject) => { 
+        const buffer = Buffer.from(fileContent64.replace(/^data:image\/\w+;base64,/, ""),'base64');
+        const params = {
+            Bucket: SOCIAL_BUCKET_NAME,
+            Key: `${postId}.jpg`,
+            Body: buffer,
+        }
+
+        s3.upload(params, function(err, data){
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve("Success");
+            }
+        })
+    });
+}
+
+s3DAO.prototype.getPostImage = function(postId){
+    return new Promise((resolve, reject) => {
+        const params = {
+            Bucket: SOCIAL_BUCKET_NAME,
+            Key: `${postId}.jpg`,
+        }
+
+        s3.headObject(params, function(err, metadata){
+            if(err && err.name == "NotFound"){
+                console.log("Could not find Object")
+                resolve("");
+            }else if (err){
+                console.log(err);
+                resolve("");
+            }
+            else{
+                params.Expires = 86400;
+                s3.getSignedUrl('getObject', params, (err, url)=>{
+                    if(err) reject(err);
+                    resolve(url);
+                })
+            }
+        })
+    })
+}
+
 module.exports = {createBucketProfilePictureBucket, createSocialBucket, s3DAO};
