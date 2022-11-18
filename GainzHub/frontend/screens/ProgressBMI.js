@@ -11,8 +11,10 @@ import { useIsFocused } from '@react-navigation/native';
 import BMIitem from '../components/BMIitem';
 import { ScrollView } from 'react-native-gesture-handler';
 
+
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
+
 
 
 const ProgressBMI = ({navigation}) =>{
@@ -87,6 +89,12 @@ const ProgressBMI = ({navigation}) =>{
                         Logs
                 </Text>
             </View>
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:10}}>
+                   BMI Progress
+                </Text>
+            </View>
+            
             <View style={{flex:1}}>
                 <ScrollView style={{flexGrow: 0, height: 280}}>
                     <FlatList
