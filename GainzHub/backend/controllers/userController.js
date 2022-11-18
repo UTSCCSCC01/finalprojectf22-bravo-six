@@ -78,6 +78,16 @@ const editProfile = async(req, res) => {
     }
 }
 
+const getUserFromWorkoutPlan = async(req, res) => {
+    const {userID} = req.query;
+    try{
+        const result = await User.findOne({_id: userID});
+        return res.status(200).json(result);
+    } catch (err){
+        return res.status(400).send(err.message);
+    }
+}
+
 /*
 Access Key ID:
 AKIA5VMO3VKYPBCYOH32
@@ -181,4 +191,17 @@ const removeFollower = async(req, res)=> {
     }
 }
 
-module.exports = {getUserData, getAllUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic, getProfilePicOther, followUser, addFollower, unfollowUser, removeFollower};
+module.exports = {getUserData, 
+                getAllUserData, 
+                removeAddedMealPlan, 
+                addPublishedMealPlan,
+                 getUserDataSecure, 
+                 editProfile, 
+                 uploadProfilePic,
+                  getProfilePic, 
+                  getProfilePicOther,
+                  followUser, 
+                  addFollower, 
+                  unfollowUser, 
+                  removeFollower,
+                  getUserFromWorkoutPlan};

@@ -7,30 +7,44 @@ import {TouchableOpacity} from "@gorhom/bottom-sheet"
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
+const {maroon} = Colors;
 
-const PublishedWorkoutPlanCard = ({navigation, planName, planDescription, planPrivacy}) => {
-    const [privacy, setPrivacy] = useState(planPrivacy);
-    
-    const togglePrivacy = () =>{
-        setPrivacy(priv => !priv);
-    }
+const PublishedWorkoutPlanCard = ({navigation, plan, planName, userId, planPrivacy, planDescription}) => {
+    const [privacy, setPrivacy] = useState(plan.planPrivacy);
+    const [user, setUser] = useState({});
+    const isFocused = useIsFocused();
 
     const dict = {true: 'Unpublish', false: 'Publish'};
-    
+
+    useEffect(() =>{
+        const getUser = async() =>{
+            try{ 
+                const response = await axios.get("http://localhost:5001/user/getUserFromWorkoutPlan",
+                {
+                    params:{
+                        userID: userId,
+                    }
+                });
+                setUser(response.data);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        getUser();
+    }, [isFocused]);
+
+
+
+
+
     return(
         <View style={{display: 'flex', paddingRight:10}}>
             <Card style={styles.planCardContainer} elevation={5}>
-                <Card.Title title = {planName}/>
+                <Card.Title title = {plan.planName}/>
                 <Card.Content style={{display: 'flex',  minHeight:"60%", height:"60%"}}>
-                    <Paragraph  style={{overflow:"scroll", width:100,flexWrap:"wrap"}}>
-                        {planDescription }
-                    </Paragraph>
-                    <But
-                    style = {styles.button} 
-                    mode = 'contained' 
-                    buttonColor = {Colors.maroon}
-                    onPress = {togglePrivacy}>{dict[privacy]}</But>
+                    <Text style = {{color: maroon}}>{user.username}</Text>
                 </Card.Content>
             </Card>
         </View>

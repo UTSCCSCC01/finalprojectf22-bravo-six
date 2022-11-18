@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar} from 'react-native'
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar, ScrollView} from 'react-native'
 import {Colors} from '../components/colors'
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
@@ -28,7 +28,7 @@ const WorkoutExplore = ({navigation}) =>{
             }
         }
         getPublishedWorkoutPlans();
-    }, []);
+    }, [publishedWorkoutPlans]);
 
 
 
@@ -44,7 +44,8 @@ const WorkoutExplore = ({navigation}) =>{
     }, [loggedIn]);
 
     const renderPublishedWorkoutPlans = ({item}) =>{
-        return <PublishedWorkoutPlanCard planName = {item.planName} planDescription = {item.planDescription} />
+        return <PublishedWorkoutPlanCard plan = {item} userId = {item.userId} planName = {item.planName} planDescription = {item.description} 
+        planPrivacy = {item.published}/>
     }
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -85,7 +86,6 @@ const WorkoutExplore = ({navigation}) =>{
                 </Text>
             </View>
 
-            
             <ScrollView>
                 <FlatList
                     style={{height:160}}
