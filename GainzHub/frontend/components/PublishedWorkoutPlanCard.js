@@ -14,12 +14,18 @@ const {maroon} = Colors;
 const PublishedWorkoutPlanCard = ({navigation, plan, planName, userId, planPrivacy, planDescription}) => {
     const [privacy, setPrivacy] = useState(plan.planPrivacy);
     const [user, setUser] = useState({});
+<<<<<<< HEAD
     const [currUser, setCurrUser] = useState({});
+=======
+>>>>>>> deef618 (BRAV-11 Completed Workout Explore)
     const isFocused = useIsFocused();
 
     const dict = {true: 'Unpublish', false: 'Publish'};
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> deef618 (BRAV-11 Completed Workout Explore)
     useEffect(() =>{
         const getUser = async() =>{
             try{ 
@@ -38,6 +44,7 @@ const PublishedWorkoutPlanCard = ({navigation, plan, planName, userId, planPriva
     }, [isFocused]);
 
 
+<<<<<<< HEAD
     useEffect(() => {
         async function getCurrentUser()  {
             try{
@@ -81,6 +88,17 @@ const PublishedWorkoutPlanCard = ({navigation, plan, planName, userId, planPriva
                     <Text style = {{color: maroon, fontStyle: 'bold'}}>{user.username}</Text>
 
                     {renderButton()}
+=======
+
+
+
+    return(
+        <View style={{display: 'flex', paddingRight:10}}>
+            <Card style={styles.planCardContainer} elevation={5}>
+                <Card.Title title = {plan.planName}/>
+                <Card.Content style={{display: 'flex',  minHeight:"60%", height:"60%"}}>
+                    <Text style = {{color: maroon}}>{user.username}</Text>
+>>>>>>> deef618 (BRAV-11 Completed Workout Explore)
                 </Card.Content>
             </Card>
         </View>

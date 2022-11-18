@@ -1,4 +1,5 @@
 const express = require('express');
+<<<<<<< HEAD
 const { searchWorkouts, 
     getWorkout, 
     addWorkoutPlanToCollection, 
@@ -10,6 +11,9 @@ const { searchWorkouts,
     unPrivateWorkout,
     getPrivate,
     getWorkoutPlan} = require('../controllers/workoutController');
+=======
+const { searchWorkouts, getWorkout, addWorkoutPlanToCollection, getWorkoutPlans, getPublishedWorkoutPlans, publishWorkoutPlan, unpublishWorkoutPlan, getWorkoutPlan} = require('../controllers/workoutController');
+>>>>>>> deef618 (BRAV-11 Completed Workout Explore)
 const router = express.Router();
 const { JWTAuth } = require('../middleware/JWTAuth');
 

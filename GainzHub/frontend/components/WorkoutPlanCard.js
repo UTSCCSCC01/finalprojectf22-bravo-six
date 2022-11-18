@@ -12,6 +12,7 @@ const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile, h
     const [isPrivate, setIsPrivate] = useState(true);
     const isFocused = useIsFocused();
 
+<<<<<<< HEAD
     useEffect(()=>{
         async function getPrivate(){
             const mealPlanObj = await axios.get("http://localhost:5001/workout/getprivate", {params:{workoutPlanId: workoutId}});
@@ -35,6 +36,18 @@ const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile, h
         else{
             await axios.patch("http://localhost:5001/workout/privateWorkout", {mealPlanId: workoutId});
             setIsPrivate(true);
+=======
+const WorkoutPlanCard = ({navigation, handleClick, plan, planName, planDescription, planPrivacy}) => {
+    const [privacy, setPrivacy] = useState(planPrivacy);
+    
+    const togglePrivacy = async() =>{
+        setPrivacy(priv => !priv);
+        if(privacy === true){
+            const res = await axios.patch('http://localhost:5001/workout/unpublishWorkoutPlan', {params:{workoutPlanID: plan._id }});
+        } else{
+            const res = await axios.patch('http://localhost:5001/workout/publishWorkoutPlan', {params:{ workoutPlanID: plan._id }});
+            console.log(res);
+>>>>>>> deef618 (BRAV-11 Completed Workout Explore)
         }
     }
 
@@ -45,14 +58,11 @@ const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile, h
                 <Card style={[styles.planCardContainer, {width: '75%'}]} elevation={5}>
                 <Card.Title title = {planName}/>
                 <Card.Content style={{display: 'flex',  minHeight:"60%", height:"60%"}}>
-                    <Paragraph  style={{overflow:"scroll", width:100,flexWrap:"wrap"}}>
-                        {planDescription }
-                    </Paragraph>
                     <But
                     style = {styles.button} 
                     mode = 'contained' 
-                    buttonColor = {Colors.maroon}
-                    onPress = {togglePrivacy}>{dict[privacy]}</But>
+                    onPress = {togglePrivacy}>{dict[privacy]}
+                    </But>
                 </Card.Content>
                 </Card>
     
@@ -116,6 +126,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: '2px',
         backgroundColor: 'black'
+<<<<<<< HEAD
+=======
+
+>>>>>>> deef618 (BRAV-11 Completed Workout Explore)
     }
 });
 

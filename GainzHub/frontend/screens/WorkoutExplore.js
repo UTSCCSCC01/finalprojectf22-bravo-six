@@ -29,6 +29,7 @@ const WorkoutExplore = ({navigation}) =>{
         }
         getPublishedWorkoutPlans();
     }, [publishedWorkoutPlans]);
+<<<<<<< HEAD
 
 
     useEffect(() => {
@@ -47,6 +48,8 @@ const WorkoutExplore = ({navigation}) =>{
         }    
 
     })
+=======
+>>>>>>> deef618 (BRAV-11 Completed Workout Explore)
 
 
 
@@ -61,11 +64,18 @@ const WorkoutExplore = ({navigation}) =>{
         }
     }, [loggedIn]);
 
+<<<<<<< HEAD
     const renderPublishedWorkoutPlans = ({item}) => (
         <PublishedWorkoutPlanCard navigation = {navigation} 
             plan = {item} userId = {item.userId} planName = {item.planName} 
             planDescription = {item.description} planPrivacy = {item.published}/>
     );
+=======
+    const renderPublishedWorkoutPlans = ({item}) =>{
+        return <PublishedWorkoutPlanCard plan = {item} userId = {item.userId} planName = {item.planName} planDescription = {item.description} 
+        planPrivacy = {item.published}/>
+    }
+>>>>>>> deef618 (BRAV-11 Completed Workout Explore)
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
