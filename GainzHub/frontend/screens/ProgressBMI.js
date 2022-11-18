@@ -10,6 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import BMIitem from '../components/BMIitem';
 import { ScrollView } from 'react-native-gesture-handler';
+import {LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart} from 'react-native-chart-kit';
 
 
 const {maroon, black} = Colors;
