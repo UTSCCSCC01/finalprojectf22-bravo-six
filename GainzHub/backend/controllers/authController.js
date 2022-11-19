@@ -104,6 +104,7 @@ const registerUser = asyncHandler(async(req, res)=>{
                 username: user.username,
             })
         }
+
     }catch(error){
         return res.status(500).json({errors: error.message});
     }

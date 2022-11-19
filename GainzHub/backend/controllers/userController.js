@@ -76,7 +76,7 @@ const editProfile = async(req, res) => {
     } catch(err){
         return res.status(400).send(err.message);
     }
-}
+}  
 
 const getUserFromWorkoutPlan = async(req, res) => {
     const {userID} = req.query;
@@ -191,17 +191,4 @@ const removeFollower = async(req, res)=> {
     }
 }
 
-module.exports = {getUserData, 
-                getAllUserData, 
-                removeAddedMealPlan, 
-                addPublishedMealPlan,
-                 getUserDataSecure, 
-                 editProfile, 
-                 uploadProfilePic,
-                  getProfilePic, 
-                  getProfilePicOther,
-                  followUser, 
-                  addFollower, 
-                  unfollowUser, 
-                  removeFollower,
-                  getUserFromWorkoutPlan};
+module.exports = {getUserFromWorkoutPlan, getUserData, getAllUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic, getProfilePicOther, followUser, addFollower, unfollowUser, removeFollower};

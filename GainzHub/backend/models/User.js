@@ -67,6 +67,9 @@ const UserSchema = new mongoose.Schema({
             type: String,
             required: true,
         }],
+    addedWorkoutPlans: [{
+        type: String,
+    }], 
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

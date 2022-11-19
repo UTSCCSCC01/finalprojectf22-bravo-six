@@ -31,6 +31,24 @@ const WorkoutExplore = ({navigation}) =>{
     }, [publishedWorkoutPlans]);
 
 
+    useEffect(() => {
+        async function getCurrentUser()  {
+            try{
+                const token = await AsyncStorage.getItem("userData");
+                const response = await axios.get("http://localhost:5001/user/getUserData", {
+                    headers: {
+                        "x-auth-token": token
+                    }
+                });
+                console.log(response.data);
+            }catch(err){
+                console.log(err);
+            }
+        }    
+
+    })
+
+
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -43,10 +61,11 @@ const WorkoutExplore = ({navigation}) =>{
         }
     }, [loggedIn]);
 
-    const renderPublishedWorkoutPlans = ({item}) =>{
-        return <PublishedWorkoutPlanCard plan = {item} userId = {item.userId} planName = {item.planName} planDescription = {item.description} 
-        planPrivacy = {item.published}/>
-    }
+    const renderPublishedWorkoutPlans = ({item}) => (
+        <PublishedWorkoutPlanCard navigation = {navigation} 
+            plan = {item} userId = {item.userId} planName = {item.planName} 
+            planDescription = {item.description} planPrivacy = {item.published}/>
+    );
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>

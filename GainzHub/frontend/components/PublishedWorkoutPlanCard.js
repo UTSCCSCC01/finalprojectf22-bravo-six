@@ -14,9 +14,11 @@ const {maroon} = Colors;
 const PublishedWorkoutPlanCard = ({navigation, plan, planName, userId, planPrivacy, planDescription}) => {
     const [privacy, setPrivacy] = useState(plan.planPrivacy);
     const [user, setUser] = useState({});
+    const [currUser, setCurrUser] = useState({});
     const isFocused = useIsFocused();
 
     const dict = {true: 'Unpublish', false: 'Publish'};
+
 
     useEffect(() =>{
         const getUser = async() =>{
@@ -36,19 +38,52 @@ const PublishedWorkoutPlanCard = ({navigation, plan, planName, userId, planPriva
     }, [isFocused]);
 
 
+    useEffect(() => {
+        async function getCurrentUser()  {
+            try{
+                const token = await AsyncStorage.getItem('userData');
+                const response = await axios.get("http://localhost:5001/user/getUserSecure", {
+                    headers: {
+                        "x-auth-token": token
+                    }
+                });
+                setCurrUser(response.data);
+            }catch(err){
+                console.log(err);
+            }
+        } 
+        getCurrentUser();   
+    }, [isFocused]);
 
 
+    const handlePress = () => {
+        console.log("pressed");
+    }
+
+    const renderButton = () => {
+        if(currUser._id != user._id){
+            return(
+                <But style = {styles.button} 
+                mode = 'contained'
+                onPress = {handlePress}  
+                >
+                Add
+                </But>
+            );
+        }
+    }
 
     return(
         <View style={{display: 'flex', paddingRight:10}}>
-            <Card style={styles.planCardContainer} elevation={5}>
+            <Card onPress = {() => navigation.navigate("WorkoutPlanInfo", {plan: plan})} style={styles.planCardContainer} elevation={5}>
                 <Card.Title title = {plan.planName}/>
                 <Card.Content style={{display: 'flex',  minHeight:"60%", height:"60%"}}>
-                    <Text style = {{color: maroon}}>{user.username}</Text>
+                    <Text style = {{color: maroon, fontStyle: 'bold'}}>{user.username}</Text>
+
+                    {renderButton()}
                 </Card.Content>
             </Card>
         </View>
-
     );
 }
 
@@ -63,11 +98,12 @@ const styles = StyleSheet.create({
         flexDirection:"column",
     },
     button:{
+        marginTop: 10,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: '2px',
-
+        backgroundColor: 'black'
     }
 });
 
