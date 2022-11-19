@@ -10,9 +10,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import BMIitem from '../components/BMIitem';
 import { ScrollView } from 'react-native-gesture-handler';
+import {LineChart} from 'react-native-chart-kit';
+
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
+
 
 
 const ProgressBMI = ({navigation}) =>{
@@ -86,6 +89,21 @@ const ProgressBMI = ({navigation}) =>{
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:black, marginBottom:20}}>
                         Logs
                 </Text>
+            </View>
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:10}}>
+                   BMI Progress
+                </Text>
+            </View>
+            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
+                    <LineChart data={{labels: [],
+                                    datasets: [{data: [20,21,21,22,23,22,21],strokeWidth: 3},],}}
+                                    width={300}
+                                    height={250}
+                                    chartConfig={{backgroundColor: '#FF0000',backgroundGradientFrom: '#F6F6F6',
+                                    backgroundGradientTo: '#F6F6F6', decimalPlaces: 0, color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
+                                    style: {borderRadius: 16,},}}
+                                    style={{ marginVertical: 20, borderRadius: 16, }} />
             </View>
             <View style={{flex:1}}>
                 <ScrollView style={{flexGrow: 0, height: 280}}>

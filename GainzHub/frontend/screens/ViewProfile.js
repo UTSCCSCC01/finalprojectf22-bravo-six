@@ -11,6 +11,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import NutritionPlans from './NutritionPlans';
 import NutritionNav from '../components/NutritionNav';
+import BodyWeightItem from '../components/BodyWeightItem';
+import WorkoutPlanCard from '../components/WorkoutPlanCard';
+import { ScrollView } from 'react-native-gesture-handler';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
@@ -33,12 +36,38 @@ const ViewProfile = ({route, navigation}) =>{
     const [profileImage, setProfileImage]  = useState(null);
     const [isFollowed, setIsFollowed] = useState(false);
     const [followedText, setFollowedText] = useState("Follow");
+    const [tabselect, setTAB] = useState("posts");
+    const [caloriesAte, setCaloriesAte] = useState(0);
+    const [calorieGoal, setCalorieGoal] = useState('');
+    const [selectedNav, setSelectedNav] = useState({posts: true, workout: false, nutrition: false, 
+        progress:false});
+    const [visible, setVisible] = React.useState(false);
+    const [posts, setPosts] = useState(null);
     //following = route.parans.SelectedUser.following.length;
     //followers = route.params.SelectedUser.followers.length;
     const [followers, setFollowers] = useState(SelectedUser.followers.length);
     //const isFollowed = user.following.includes(SelectedUser.username);
     console.log(SelectedUser);
     
+    useEffect(() => {
+        const getUser = async() => {
+            const jwtToken = await AsyncStorage.getItem("userData");
+
+            const currentUser = await axios.get("http://localhost:5001/user/getUserSecure", {
+                headers: {
+                    'x-auth-token': jwtToken,
+                }
+            })
+            //console.log("helpppppppppppp");
+            console.log(currentUser.data);
+            console.log(currentUser.data.following.includes(SelectedUser._id));
+            setIsFollowed(currentUser.data.following.includes(SelectedUser._id));
+            console.log(isFollowed);
+            setUser(currentUser.data);
+        }
+        getUser();
+    }, [isFocused])
+
     useEffect(()=>{
         //Get the url to this user's pfp
         const getProfilePicture = async()=>{
@@ -67,24 +96,76 @@ const ViewProfile = ({route, navigation}) =>{
         getStoredUser();
     }, [])
 
-    
-    useEffect(() => {
-        const getUser = async() => {
-            const jwtToken = await AsyncStorage.getItem("userData");
+    useEffect(()=>{
+        const getWorkoutPlans = async ()=>{
+            const token = await AsyncStorage.getItem("userData");
+            const workoutPlans = await axios.get("http://localhost:5001/workout/getWorkoutPlans", {SelectedUser} , {
+                headers:{
+                    "x-auth-token": token
+                }
+            });
+            setWorkoutPlans(workoutPlans.data);
+        }
+        getWorkoutPlans();
+    }, [isFocused])
 
-            const currentUser = await axios.get("http://localhost:5001/user/getUserSecure", {
+    useEffect(() => {
+        const getStoredGoal = async() => {
+            const token = await AsyncStorage.getItem("userData");
+    
+            const response  = await axios.get('http://localhost:5001/nutrition/getCalorieGoal', {SelectedUser} , {
                 headers: {
-                    'x-auth-token': jwtToken,
+                    'x-auth-token': token,
                 }
             })
-            //console.log("helpppppppppppp");
-            console.log(currentUser.data);
-            console.log(currentUser.data.following.includes(SelectedUser._id));
-            setIsFollowed(currentUser.data.following.includes(SelectedUser._id));
-            console.log(isFollowed);
-            setUser(currentUser.data);
+            setCalorieGoal(response.data.calorieGoal);
         }
-        getUser();
+        getStoredGoal();
+    }, [isFocused])
+
+    useEffect(() => {
+        const getStoredAte = async() => {
+            const token = await AsyncStorage.getItem("userData");
+    
+            const response  = await axios.get('http://localhost:5001/nutrition/getCaloriesAte', {SelectedUser} , {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            setCaloriesAte(response.data.caloriesAte);
+        }
+        getStoredAte();
+    }, [isFocused])
+
+    useEffect(() => {
+        const getStoredBodyWeight = async() => {
+            const token = await AsyncStorage.getItem("userData");
+            const response  = await axios.get('http://localhost:5001/progress/getUserBodyWeights', {SelectedUser} , {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            response.data.reverse();
+            setBodyWeight(response.data);
+        }
+
+        getStoredBodyWeight();
+    }, [isFocused]);
+
+    useEffect(()=>{
+        const getAllPosts = async()=>{
+            //Get all of the user's posts
+            const token = await AsyncStorage.getItem("userData");
+
+            const postData = await axios.post("http://localhost:5001/social/getAllUserPosts", {SelectedUser} , {
+                headers:{
+                    'x-auth-token': token,
+                }
+            })
+            setPosts(postData.data);
+        }
+
+        getAllPosts();
     }, [isFocused])
     
     //console.log(userData);
@@ -99,6 +180,13 @@ const ViewProfile = ({route, navigation}) =>{
             handleLogout();
         }
     }, [loggedIn]);
+
+    const handleNavPress = (linkName) => {
+        let tempSelected = {posts: false, workout: false, nutrition: false, 
+            progress:false};
+        tempSelected[linkName] = true;
+        setSelectedNav(tempSelected);
+    }
 
     const handleFollow = async() => {
         if(!isFollowed){
@@ -159,6 +247,68 @@ const ViewProfile = ({route, navigation}) =>{
         
     };
 
+    const renderPosts = ({item}) =>(
+        <View  style={{paddingTop: 20, display:'flex', justifyContent:'center', alignItems:'center', backgroundColor:"#F6F6F6", paddingRight: 5}}>
+            <TouchableOpacity onPress={()=>{showModal(); setModalItem(item)}}>
+                <Image style={styles.postImage} source={{ uri: item.url }} />
+            </TouchableOpacity>
+        </View>
+    )
+
+    const renderBodyWeight = ({ item }) => (
+        <BodyWeightItem bodyWeightId={item._id} navigation={navigation}/>
+    );
+
+    const renderWorkoutPlans = ({item}) => (
+        <WorkoutPlanCard planName={item.planName} planDescription={item.description}/>
+    )
+    
+    const userPosts = ()=>{
+        return(<FlatList 
+                data = {posts}
+                renderItem = {renderPosts}
+                keyExtractor={item => item._id}
+                scrollEnabled={true}
+                numColumns={3}
+                />)
+    }
+
+    const userBW = ()=>{
+        return(<FlatList 
+                data = {posts}
+                renderItem = {renderBodyWeight}
+                keyExtractor={item => item._id}
+                scrollEnabled={true}
+                numColumns={3}
+                />)
+    }
+
+    const userWO = ()=>{
+        return(<FlatList 
+                data = {posts}
+                renderItem = {renderWorkoutPlans}
+                keyExtractor={item => item._id}
+                scrollEnabled={true}
+                numColumns={3}
+                />)
+    }
+
+    const userNUT = ()=>{
+        return(<Text style={{paddingLeft: -30, fontSize: 16}}> {SelectedUser.firstName} {SelectedUser.lastName}'s daily calorie goal {caloriesAte}/{calorieGoal} </Text>)
+    }
+
+    const renderElement = ()=>{
+        if(tabselect == 'posts')
+           return userPosts();
+        if(tabselect == 'progress')
+           return userBW();
+        if(tabselect == 'workout')
+           return userWO();
+        if(tabselect == 'nutrition')
+           return userNUT();
+        return null;
+    }
+
     return(
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
@@ -194,6 +344,35 @@ const ViewProfile = ({route, navigation}) =>{
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
                     {SelectedUser.bio ? SelectedUser.bio : 'No Bio'}
                 </Text>
+            </View>
+            <View style={styles.profileNavCont}>
+                <View style={{borderBottomColor:"#8D0A0A", borderBottomWidth: selectedNav['posts'] ? 2 : 0}}>
+                    <TouchableOpacity onPress={()=>{handleNavPress("posts"); setTAB("posts")}}>
+                        <Text style={styles.profileNavTxt}> Posts</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{borderBottomColor:"#8D0A0A", borderBottomWidth: selectedNav['workout'] ? 2 : 0}}>
+                    <TouchableOpacity onPress={()=>{handleNavPress("workout"); setTAB("workout")}}>
+                        <Text style={styles.profileNavTxt} >Workout</Text>
+                    </TouchableOpacity> 
+                </View>
+
+                <View style={{borderBottomColor:"#8D0A0A", borderBottomWidth: selectedNav['nutrition'] ? 2 : 0}}>
+                    <TouchableOpacity onPress={()=>{handleNavPress("nutrition"); setTAB("nutrition")}}>
+                        <Text style={styles.profileNavTxt} >Nutrition</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{borderBottomColor:"#8D0A0A", borderBottomWidth: selectedNav['progress'] ? 2 : 0}}>
+                    <TouchableOpacity onPress={()=>{handleNavPress("progress"); setTAB("progress")}}>
+                        <Text style={styles.profileNavTxt} >Progress</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <ScrollView>
+                    {renderElement()}
+                </ScrollView>
             </View>
          </View>
     );
