@@ -192,20 +192,26 @@ const removeFollower = async(req, res)=> {
 }
 
 const addPublishedWorkoutPlan = asyncHandler(async(req,res) => {
-    const userId = req.params;
-    const {workoutPlanId} = req.params;
+    const userId = req.user;
+    const {workoutPlanId} = req.body;
 
     try{
-        await User.updateOne({_id: userId}, {$push: {addedWorkoutPlans: workoutPlanId}});
-        res.status(200).send("Successfully added workout plan");
+        const exists = await User.findOne({_id: userId}, {addedWorkoutPlans: [workoutPlanId]});
+        if(!exists){
+            await User.updateOne({_id: userId}, {$push: {addedWorkoutPlans: workoutPlanId}});
+            res.status(200).send("Successfully added workout plan"); 
+        }
+        else{
+            res.status(400).send("Workout plan already added");
+        }
     } catch (err) {
         return res.status(400).send(err.message);
     }
 });
 
 const removePublishedWorkoutPlan = asyncHandler(async(req,res) => {
-    const userId = req.params;
-    const {workoutPlanId} = req.params;
+    const userId = req.user;
+    const {workoutPlanId} = req.body;
 
     try{
         const userObj = await User.findOne({_id:userId});

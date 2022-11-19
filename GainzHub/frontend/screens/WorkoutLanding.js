@@ -19,6 +19,8 @@ const WorkoutLanding = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
     const isFocused = useIsFocused();
     const [workoutPlans, setWorkoutPlans] = useState(true);
+    const [addedWorkoutPlans, setAddedWorkoutPlans] = useState(true);
+    const [currUser, setCurrUser] = useState([]);
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -30,6 +32,28 @@ const WorkoutLanding = ({navigation}) =>{
             handleLogout();
         }
     }, [loggedIn]);
+
+    useEffect(() => {
+        async function getCurrentUser()  {
+            try{
+                const token = await AsyncStorage.getItem('userData');
+                const response = await axios.get("http://localhost:5001/user/getUserSecure", {
+                    headers: {
+                        "x-auth-token": token
+                    }
+                });
+                console.log(response.data);
+                setCurrUser(response.data.addedWorkoutPlans);
+
+
+            }catch(err){
+                console.log(err);
+            }
+        } 
+        getCurrentUser();   
+    }, [isFocused]);
+
+
 
     useEffect(()=>{
         const getWorkoutPlans = async ()=>{
@@ -101,6 +125,21 @@ const WorkoutLanding = ({navigation}) =>{
                     scrollEnabled={true}
                     horizontal={true}
                     data={workoutPlans}
+                    renderItem={renderWorkoutPlans}
+                    />
+            </ScrollView>
+            <View style={{paddingLeft: 5}}>
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:24, color:black, marginBottom:20}}>
+                        Added Workout Plans
+                </Text>
+            </View>
+
+            <ScrollView>
+                <FlatList
+                    style={{height:160}}
+                    scrollEnabled={true}
+                    horizontal={true}
+                    data={addedWorkoutPlans}
                     renderItem={renderWorkoutPlans}
                     />
             </ScrollView>

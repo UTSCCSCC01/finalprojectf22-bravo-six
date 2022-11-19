@@ -69,6 +69,7 @@ const UserSchema = new mongoose.Schema({
         }],
     addedWorkoutPlans: [{
         type: String,
+        required: true,
     }], 
 });
 
