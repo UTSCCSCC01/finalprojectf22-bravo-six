@@ -18,6 +18,7 @@ We plan to finish the following stories
 - BRAV-19 (Jason)
 - BRAV-25 (Jason)
 - BRAV-13 (Ryan)
+- BRAV-10 (Porom)
 
 
 # Task Breakdown
@@ -69,6 +70,8 @@ We plan to finish the following stories
 ## BRAV-13
 - As an exercising user interested in providing feedback, I want to rate public workout playlists so I can provide feedback to content creators within the app.
 
+## BRAV-10
+- As an exercising user, I want to log my completed workouts, and view them in chronological order, so I have a record of the workouts I completed.
 
 # Spikes/Blockers
 - Getting AWS set up
