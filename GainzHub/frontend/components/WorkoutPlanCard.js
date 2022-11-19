@@ -9,10 +9,60 @@ import axios from 'axios';
 import { FlatList } from 'react-native-gesture-handler';
 
 
-const WorkoutPlanCard = ({navigation, planName, planDescription}) => {
+const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile}) => {
+    const [isPrivate, setIsPrivate] = useState(true);
+    const isFocused = useIsFocused();
+
+    useEffect(()=>{
+        async function getPrivate(){
+            const mealPlanObj = await axios.get("http://localhost:5001/workout/getprivate", {params:{workoutPlanId: workoutId}});
+            try{
+                setIsPrivate(mealPlanObj.data.private);
+            }
+            catch{
+                setIsPrivate(false);
+            }
+        }
+        getPrivate();
+    }, [isFocused])
+
+
+
+    const handlePrivateWrapper = async() => {
+        if(isPrivate){
+            await axios.patch("http://localhost:5001/workout/unPrivateWorkout", {mealPlanId: workoutId});
+            setIsPrivate(false);
+        }
+        else{
+            await axios.patch("http://localhost:5001/workout/privateWorkout", {mealPlanId: workoutId});
+            setIsPrivate(true);
+        }
+    }
+
+
+    if(profile){
+        return(
+            <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
+                <Card style={[styles.planCardContainer, {width: '75%'}]} elevation={5}>
+                <Card.Title title = {planName}/>
+                <Card.Content style={{minHeight:"90%",height:"90%"}}>
+                    <Paragraph  style={{overflow:"scroll", width:100,flexWrap:"wrap"}}>
+                        {planDescription }
+                    </Paragraph>
+                </Card.Content>
+                </Card>
+    
+                <TouchableOpacity onPress={()=> handlePrivateWrapper()} style={[styles.TouchableOpacityList]} >
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
+                        {isPrivate ? "Private" : "Public"}
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
     return(
         <View style={{paddingRight:10}}>
-            <Card style={styles.planCardContainer} elevation={5}>
+            <Card style={[styles.planCardContainer, {width:'100%'}]} elevation={5}>
                 <Card.Title title = {planName}/>
                 <Card.Content style={{minHeight:"90%",height:"90%"}}>
                     <Paragraph  style={{overflow:"scroll", width:100,flexWrap:"wrap"}}>
@@ -27,13 +77,22 @@ const WorkoutPlanCard = ({navigation, planName, planDescription}) => {
 
 const styles = StyleSheet.create({
     planCardContainer: {
-        width:'100%',
+        width:'80%',
         height:"100%",
         borderRadius:10,
         borderWidth: 3,
         borderColor:'#545454',
         display: "flex",
         flexDirection:"column",
+    },
+    TouchableOpacityList:{
+        height:35,
+        width:'100%',
+        borderRadius: 30,
+        marginTop: 8,
+        backgroundColor: '#8D0A0A',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 });
 

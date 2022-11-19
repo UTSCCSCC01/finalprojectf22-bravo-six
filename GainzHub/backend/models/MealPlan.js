@@ -67,6 +67,10 @@ const MealPlanSchema = new mongoose.Schema({
         reviewNumber:{
             type: Number,
             required: false
+        },
+        private:{
+            type: Boolean,
+            default: false,
         }
     });
 

@@ -13,6 +13,9 @@ import NutritionPlans from './NutritionPlans';
 import NutritionNav from '../components/NutritionNav';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Searchbar, Modal, Portal , Provider } from 'react-native-paper';
+import MealPlanItem from '../components/MealPlanItem';
+import WorkoutPlanCard from '../components/WorkoutPlanCard';
+import BodyWeightItem from '../components/BodyWeightItem';
 import BodyWeightItem from '../components/BodyWeightItem';
 import WorkoutPlanCard from '../components/WorkoutPlanCard';
 //import CircularProgress from 'react-native-circular-progress-indicator';
@@ -43,14 +46,29 @@ const Profile = ({navigation}) =>{
                                                     progress:false});
                                                     const [visible, setVisible] = React.useState(false);
     const [modalItem, setModalItem] = useState(null);
+    const [mealPlans, setMealPlans] = useState({});
+    const [workoutPlans, setWorkoutPlans] = useState(true);
     const [bodyWeight, setBodyWeight] = useState({});
     const [tabselect, setTAB] = useState("posts");
     const [caloriesAte, setCaloriesAte] = useState(0);
     const [calorieGoal, setCalorieGoal] = useState('');
-    const [workoutPlans, setWorkoutPlans] = useState(true);
 
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
+
+    useEffect(() => {
+        const getStoredMealPlans = async() => {
+            const token = await AsyncStorage.getItem("userData");
+            const response  = await axios.get('http://localhost:5001/nutrition/getPersonalMealPlans', {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            setMealPlans(response.data);
+        }
+        getStoredMealPlans();
+    }, [isFocused]);
+
 
     useEffect(()=>{
         //Get the url to this user's pfp
@@ -67,6 +85,9 @@ const Profile = ({navigation}) =>{
         }
         getProfilePicture();
     }, [isFocused])
+
+
+
 
     useEffect(()=>{
         const getWorkoutPlans = async ()=>{
@@ -190,6 +211,9 @@ const Profile = ({navigation}) =>{
             </TouchableOpacity>
         </View>
     )
+    const handlePublish = (obj) =>{
+        
+    }
 
     const renderBodyWeight = ({ item }) => (
         <BodyWeightItem bodyWeightId={item._id} navigation={navigation}/>
@@ -199,14 +223,94 @@ const Profile = ({navigation}) =>{
         <WorkoutPlanCard planName={item.planName} planDescription={item.description}/>
     )
     
+    const renderMeals = ({ item }) => (
+        <MealPlanItem mealPlanId={item._id} navigation={navigation} handlePublish={handlePublish} profile={true}/>
+    );
+
+
+    useEffect(()=>{
+        const getWorkoutPlans = async ()=>{
+            const token = await AsyncStorage.getItem("userData");
+            const workoutPlans = await axios.get("http://localhost:5001/workout/getWorkoutPlans", {
+                headers:{
+                    "x-auth-token": token
+                }
+            });
+            setWorkoutPlans(workoutPlans.data);
+        }
+        getWorkoutPlans();
+    }, [isFocused])
+
+    const renderWorkoutPlans = ({item}) => (
+        <WorkoutPlanCard workoutId = {item._id} planName={item.planName} planDescription={item.description} profile = {true} priv = {item.private}/>
+    )
+
+    useEffect(() => {
+        const getStoredBodyWeight = async() => {
+            const token = await AsyncStorage.getItem("userData");
+            const response  = await axios.get('http://localhost:5001/progress/getUserBodyWeights', {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            response.data.reverse();
+            setBodyWeight(response.data);
+        }
+
+        getStoredBodyWeight();
+    }, [isFocused]);
+    const renderBodyWeight = ({ item }) => (
+        <BodyWeightItem bodyWeightId={item._id} navigation={navigation} profile = {true}/>
+    );
+
     const userPosts = ()=>{
-        return(<FlatList 
+        if(selectedNav['posts'] == true){
+            return(<FlatList 
+                key={'_'}
                 data = {posts}
                 renderItem = {renderPosts}
-                keyExtractor={item => item._id}
+                keyExtractor={item => "_" + item._id}
                 scrollEnabled={true}
                 numColumns={3}
                 />)
+        }
+        else if(selectedNav['nutrition'] == true){
+            return(
+                <FlatList
+                key={'#'}
+                data={mealPlans}
+                renderItem={renderMeals}
+                keyExtractor={item => "#" + item._id}
+                scrollEnabled={true}
+                numColumns={1}
+
+            />)
+        }
+        else if(selectedNav['workout']){
+            return(
+                <FlatList
+                    style={{height:140}}
+                    scrollEnabled={true}
+                    data={workoutPlans}
+                    renderItem={renderWorkoutPlans}
+                    numColumns={1}
+                    />
+            )
+        }
+        else if(selectedNav['progress']){
+            return(
+                <FlatList
+                    key={'!'}
+                    data={bodyWeight}
+                    renderItem={renderBodyWeight}
+                    keyExtractor={item => "!" + item._id}
+                    scrollEnabled={true}
+                    numColumns={1}
+
+            />
+            )
+        }
+
     }
 
     const userBW = ()=>{

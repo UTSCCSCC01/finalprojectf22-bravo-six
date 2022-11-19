@@ -28,7 +28,6 @@ const getWorkout = asyncHandler(async(req, res)=>{
 const addWorkoutPlanToCollection = asyncHandler(async(req, res)=>{
     const user = req.user;
     const {planName, description, workouts} = req.body;
-    console.log(description);
     if(!planName || !description || !workouts){
         return res.status(400).send("Incorrect input format");
     }
@@ -51,11 +50,40 @@ const getWorkoutPlans = asyncHandler(async (req, res)=>{
     
     try{
         const userWorkoutPlans = await WorkoutPlan.find({userId: user});
-        console.log(userWorkoutPlans);
         return res.status(200).json(userWorkoutPlans);
     }catch(err){
         return res.status(500).send("Server error");
     }
 });
 
-module.exports = {searchWorkouts, getWorkout, addWorkoutPlanToCollection, getWorkoutPlans};
+const privateWorkout = async(req, res) => {
+    const {mealPlanId} = req.body
+    try{
+        await WorkoutPlan.findOneAndUpdate({_id: mealPlanId}, {$set:{private: true}});
+        return res.status(200).send("Meal Plan Now Private");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+const unPrivateWorkout = async(req, res) => {
+    const {mealPlanId} = req.body
+    try{
+        await WorkoutPlan.findOneAndUpdate({_id: mealPlanId}, {$set:{private: false}});
+        return res.status(200).send("Meal Plan Now Public");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+const getPrivate = async(req, res) => {
+    const workoutPlanId = req.query['workoutPlanId'];
+    console.log(workoutPlanId);
+    try{
+        const foundWorkout = await WorkoutPlan.findOne({_id: workoutPlanId});
+        return res.status(200).json(foundWorkout);
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+module.exports = {getPrivate, searchWorkouts, getWorkout, addWorkoutPlanToCollection, getWorkoutPlans, privateWorkout, unPrivateWorkout};

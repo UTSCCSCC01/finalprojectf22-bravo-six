@@ -10,6 +10,10 @@ const bodyWeightSchema = new mongoose.Schema({
         userId:{
             type: String,
             required: true,
+        },
+        private:{
+            type: Boolean,
+            default: false
         }
     });
 

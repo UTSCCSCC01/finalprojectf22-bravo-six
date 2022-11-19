@@ -31,7 +31,11 @@ const WorkoutPlanSchema = new mongoose.Schema({
                 required: true,
             }
         }]
-    }]
+    }],
+    private:{
+        type: Boolean,
+        default: false,
+    }
 });
 
 module.exports = WorkoutPlan = mongoose.model('WorkoutPlans', WorkoutPlanSchema);
