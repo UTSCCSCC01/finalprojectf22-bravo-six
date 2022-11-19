@@ -67,7 +67,6 @@ const addPublishedMealPlan = asyncHandler( async(req, res)=>{
 });
 
 
-<<<<<<< HEAD
 const editProfile = async(req, res) => {
     const {updatedUser} = req.body;
     try{
@@ -79,8 +78,6 @@ const editProfile = async(req, res) => {
     }
 }  
 
-=======
->>>>>>> deef618 (BRAV-11 Completed Workout Explore)
 const getUserFromWorkoutPlan = async(req, res) => {
     const {userID} = req.query;
     try{
@@ -91,7 +88,6 @@ const getUserFromWorkoutPlan = async(req, res) => {
     }
 }
 
-<<<<<<< HEAD
 /*
 Access Key ID:
 AKIA5VMO3VKYPBCYOH32
@@ -223,6 +219,3 @@ const removePublishedWorkoutPlan = asyncHandler(async(req,res) => {
 
 
 module.exports = {removePublishedWorkoutPlan, addPublishedWorkoutPlan, getUserFromWorkoutPlan, getUserData, getAllUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic, getProfilePicOther, followUser, addFollower, unfollowUser, removeFollower};
-=======
-module.exports = {getUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, getUserFromWorkoutPlan};
->>>>>>> deef618 (BRAV-11 Completed Workout Explore)
