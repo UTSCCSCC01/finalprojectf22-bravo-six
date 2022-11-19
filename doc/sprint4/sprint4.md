@@ -14,18 +14,10 @@ We plan to finish the following stories
   - BRAV-59 (Ryan)
   - BRAV-60 (Ryan)
 - BRAV-12 (Ryan)
-- BRAV-72 (Kevin)
 - BRAV-21 (Porom)
 - BRAV-19 (Jason)
 - BRAV-25 (Jason)
 - BRAV-13 (Ryan)
-- BRAV-9 (Porom)
-- BRAV-26
-- BRAV-15
-- BRAV-16
-- BRAV-17
-- BRAV-10
-- BRAV-27
 
 
 # Task Breakdown
@@ -77,26 +69,6 @@ We plan to finish the following stories
 ## BRAV-13
 - As an exercising user interested in providing feedback, I want to rate public workout playlists so I can provide feedback to content creators within the app.
 
-## BRAV-17
-- As a progress tracking user I want to graph my progression with specific exercises over a specified time period, so that I can visualize my progress with each lift.
-
-## BRAV-26
-- As a social user, I want the option to block another user, so that prevent bullying or harrassment I may recieve from the user.
-
-## BRAV-16
-- As a progress tracking user, I want to input my weight, and reps for a specific exercise, and keep the data in a log so that I can keep a record of my progress.
-
-## BRAV-15
-- As a progress tracking user, I want to graph my weight over any specified time period, so that I can visualize my weight changes.
-
-## BRAV-10
-- As an exercising user, I want to log my completed workouts, and view them in chronological order, so I have a record of the workouts I completed.
-
-## BRAV-17
-- As a progress tracking user I want to graph my progression with specific exercises over a specified time period, so that I can visualize my progress with each lift.
-
-## BRAV-27
-- As a social user, I want the ability to message other users so that I can interact with them directly, and learn more about them
 
 # Spikes/Blockers
 - Getting AWS set up
