@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TouchableOpacity, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar} from 'react-native'
+import {Text, View, StyleSheet, TouchableOpacity, Image, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar} from 'react-native'
 import {Colors} from '../components/colors'
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
@@ -10,7 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import { TextInput , Button} from "react-native-paper";
 import { registerPost } from '../requests/SocialRequest';
-
+import * as ImagePicker from 'expo-image-picker';
 import ErrorMSG from '../components/ErrorMsg';
 
 const {maroon, black} = Colors;
@@ -22,13 +22,18 @@ const getUser = async() =>{
 }
 
 const SocialCreate = ({navigation}) =>{
+    const PLACEHOLDER_IMAGE = "https://talentclick.com/wp-content/uploads/2021/08/placeholder-image.png";
     const [PostMessage, setPost] = useState("");
     const [userId, setUser] = useState({});
     const [loggedIn, setLoggedIn] = useState(true);
+    const [image, setImage] = useState(PLACEHOLDER_IMAGE);
 
     const [formErrors, setFormErrors] = useState({"PostMessage": ""})
 
-    
+    useEffect(() => {
+        CheckName();
+    }, [])
+
     const CheckName = async() => {
         const jwtToken = await AsyncStorage.getItem("userData");
         const currentUser = await axios.get("http://localhost:5001/user/getUserSecure", {
@@ -39,29 +44,55 @@ const SocialCreate = ({navigation}) =>{
         setUser(currentUser.data.username.toString());
     }
 
+    const handleUploadImage = async() =>{
+        //Replace the image with the selected image
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+          });
+
+        if (!result.cancelled) {
+            const data = {"image": result.uri}
+            /*
+            const token = await AsyncStorage.getItem("userData");
+            const status = await axios.post("http://localhost:5001/user/uploadProfilePic", data, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            console.log(status);
+            */
+            console.log(result.uri);
+            setImage(result.uri);
+        }
+    }
+
+
     const addPost = async() => {
         let currFormErrors = {"PostMessage": ""};
         if(PostMessage.length == 0){
-            currFormErrors['PostMessage'] = 'Nothing Yet ?';
+            currFormErrors['PostMessage'] = 'No post description provided.';
         }
         setFormErrors(currFormErrors);
         const checkAllEmpty = Object.entries(currFormErrors).reduce((a,b) => a[1].length > b[1].length ? a : b)[1];
         if(checkAllEmpty.length != 0){
             let allErrorMessages = Object.entries(currFormErrors).map(x => x[1]).join("\n");
-            allErrorMessages = allErrorMessages.trim();
+            allErrorMessages = allErrorMsseages.trim();
             Toast.show(allErrorMessages, {
                 duration: Toast.durations.SHORT,
             });
             return;
         }
-        await CheckName();
-        
-        console.log(PostMessage);
+        //await CheckName();
+
+        const token = await AsyncStorage.getItem("userData");
         const userData = {
-            userId,
-            PostMessage
+            PostMessage,
+            image
         }
-        console.log(PostMessage);
+
         try{
             const data = await registerPost(userData);
             console.log(data);
@@ -102,11 +133,13 @@ const SocialCreate = ({navigation}) =>{
                     </TouchableOpacity>
                 </View>
             </View>
+            
             <View>
                 <Text style={{fontFamily: "Inter-Medium", fontSize: 30, fontWeight:"800",color:maroon, textAlign:'center', marginBottom:10}}>
                     Social
                 </Text>
             </View>
+
             <View style={{flexDirection: 'row', marginBottom:20, textAlign:'center', paddingHorizontal:30, justifyContent:'space-between'}}>
                 <TouchableOpacity onPress={()=> navigation.navigate('SocialHome')}>
                     <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:16}}>
@@ -124,13 +157,18 @@ const SocialCreate = ({navigation}) =>{
                     </Text>
                 </TouchableOpacity> 
             </View>
-            <View>
+
+            <View style = {styles.imageContainer}>
+                <Image style = {styles.image} source={{ uri:  image}} />
+            </View>
+
+            <View style={{paddingTop:10}}>
                 <TextInput
                     maxLength={150}
                     multiline
                     editable
                     numberOfLines={4}
-                    label="Say your mind,"
+                    label="Description"
                     onChangeText={(val) => setPost(val)}
                     activeUnderlineColor="red"
                 />
@@ -138,6 +176,7 @@ const SocialCreate = ({navigation}) =>{
                     Characters Left:{PostMessage.length}/150
                 </Text>
             </View>
+            
             <View>
                 <Button
                     style={styles.centerButton}
@@ -146,6 +185,17 @@ const SocialCreate = ({navigation}) =>{
                     Post
                 </Button>
             </View>
+
+            
+            <View style={{paddingTop:10}}>
+                <Button
+                    style={styles.centerButton}
+                    mode="outlined"
+                    onPress={()=> handleUploadImage()}>
+                    Upload Image
+                </Button>
+            </View>
+
     </View>
     );
 }
@@ -237,6 +287,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#F6F6F6",
         borderColor: "#e8e8e8"
 
+    },
+    image:{
+        width:"100%",
+        height:"100%",
+        resizeMode: 'contain'
+    },
+    imageContainer:{
+        width:"100%",
+        height:"30%"
     }
 });
 

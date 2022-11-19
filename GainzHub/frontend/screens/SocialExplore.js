@@ -1,19 +1,170 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar} from 'react-native'
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar,   ActivityIndicator, Image} from 'react-native'
 import {Colors} from '../components/colors'
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
 import { loginUser } from '../requests/userRequests';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useIsFocused } from '@react-navigation/native';
+import ImagesExample from '../assets/mike.jpg'
+import filter from 'lodash.filter';
+import { Searchbar, Modal, Portal , Provider } from 'react-native-paper';
+import { Ionicons } from '@expo/vector-icons';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
-
-const SocialExplore = ({navigation}) =>{
+ 
+const SocialExplore = ({navigation, route}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
+    const [AllUsers, setAllUsers] = useState([]);
+    const [fullData, setFullData] = useState([]);
+    const [user, setUser] = useState({});
+    const [SelectedUser, setSelectedUser] = useState({});
+    const [query, setQuery] = useState('');
+    const [isFollowed, setIsFollowed] = useState(false);
+    const [followedText, setFollowedText] = useState("Follow");
+
+    const [visible, setVisible] = React.useState(false);
+
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
+
+    const isFocused = useIsFocused();
+
+    const handleFollow = async() => {
+        if(!isFollowed){
+            const token = await AsyncStorage.getItem("userData");
+            const selectedId = SelectedUser._id;
+            const response = await axios.post('http://localhost:5001/user/followUser', {selectedId}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+            const addFollower = await axios.post('http://localhost:5001/user/addFollower', {SelectedUser}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+
+            if(response.status == 200 && addFollower.status == 200){
+                Toast.show("Successfully Followed!", {
+                    duration: Toast.durations.SHORT,
+                })
+                setIsFollowed(true);
+            }
+            else{
+                Toast.show("Could follow User", {
+                    duration: Toast.durations.SHORT,
+                })
+            }
+         } else {
+            const token = await AsyncStorage.getItem("userData");
+            const selectedId = SelectedUser._id;
+            const response = await axios.post('http://localhost:5001/user/unfollowUser', {selectedId}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+            const addFollower = await axios.post('http://localhost:5001/user/removeFollower', {SelectedUser}, {
+                headers: {
+                    'x-auth-token': token,
+                }
+            });
+            
+
+            if(response.status == 200 && addFollower.status == 200){
+                Toast.show("Successfully Unfollowed!", {
+                    duration: Toast.durations.SHORT,
+                })
+                setIsFollowed(false);
+            }
+            else{
+                Toast.show("Could follow User", {
+                    duration: Toast.durations.SHORT,
+                })
+            }
+         }
+        
+    };
+
+    const ViewProfile = () => {
+      return (
+        <Provider>
+        <Portal>
+        <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={{backgroundColor: 'white',padding:10}}>
+          <View style={{alignItems: 'center', paddingBottom: 1 }}>
+              <Image style={styles.image} source={{ uri: ImagesExample }} />
+          </View> 
+              <View>
+                  <Text style={{fontFamily: "Inter-Medium", fontSize: 28, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
+                      {SelectedUser.firstName} {SelectedUser.lastName}
+                  </Text>
+              </View>
+              <View>
+                  <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:5}}>
+                      {SelectedUser.bio ? SelectedUser.bio : 'No Bio'}
+                </Text>
+              </View>
+              <View style = {{flex:1}}>
+                <TouchableOpacity onPress={()=> navigation.navigate("ViewProfile", {SelectedUser})} style={[styles.TouchableOpacity, {width: '100%'}]}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:20, color: 'white'}}>
+                        View Profile
+                    </Text>
+                </TouchableOpacity>
+            </View> 
+            <View style = {{flex:1, marginTop:10}}>
+                <TouchableOpacity onPress={()=> handleFollow()} style={[styles.TouchableOpacity, {width: '100%'}]}>
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:20, color: 'white'}}>
+                        {isFollowed ? "Following" : "Follow"}
+                    </Text>
+                </TouchableOpacity>
+            </View> 
+        </Modal>
+      </Portal>
+    </Provider>
+      )
+    }
+
+    useEffect(() => {
+      CheckName();
+  }, [isFocused, SelectedUser])
+
+  const CheckName = async() => {
+      const jwtToken = await AsyncStorage.getItem("userData");
+      const currentUser = await axios.get("http://localhost:5001/user/getUserSecure", {
+          headers: {
+              'x-auth-token': jwtToken,
+          }
+      })
+      //setUser(currentUser.data.username.toString());
+      setIsFollowed(currentUser.data.following.includes(SelectedUser._id));
+      setUser(currentUser.data)
+  }
+  /*
+  useEffect(()=> {
+    if(user.following.includes(SelectedUser._id)){
+        isFollowed=true;
+    } else {
+        isFollowed=false;
+    }
+  }, [SelectedUser])
+  */
+
+    useEffect(()=>{
+    async function getAllUsers(){
+        const Users = await axios.get("http://localhost:5001/user/getAllUser");
+        setAllUsers(Users.data);
+        setFullData(Users.data);
+
+    }
+    getAllUsers();
+    }, [isFocused])
+
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -25,6 +176,28 @@ const SocialExplore = ({navigation}) =>{
             handleLogout();
         }
     }, [loggedIn]);
+
+    const handleSearch = text => {
+        const formattedQuery = text.toLowerCase();
+        const filteredData = filter(fullData, user => {
+          return contains(user, formattedQuery);
+        });
+        if(formattedQuery != ''){
+        setAllUsers(filteredData);
+        } else {
+        setAllUsers(fullData);
+        }
+        setQuery(text);
+      };
+      
+    const contains = ({ username, firstName , lastName }, query) => {
+        if (username.toLowerCase().includes(query) || firstName.toLowerCase().includes(query) || lastName.toLowerCase().includes(query) || (firstName+lastName).toLowerCase().includes(query)  || (firstName+" "+lastName).toLowerCase().includes(query)) {
+            return true;
+        }
+        return false;
+    };
+
+    //console.log(SelectedUser);
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -59,13 +232,51 @@ const SocialExplore = ({navigation}) =>{
                     </Text>
                 </TouchableOpacity> 
             </View>
+
+            <View style={styles.container}>
+
+                <FlatList
+                    ListHeaderComponent={
+                      <Searchbar
+                      icon = {({ color, size }) => (
+                          <Ionicons name="search-outline" color={color} size={size} />
+                          )}
+                      placeholder='Search for Users!' style={{paddingLeft:10}}
+                      value = {query}
+                      onChangeText = {queryText => handleSearch(queryText)}
+                      clearIcon = {({ color, size }) => (
+                          <Ionicons name="trash" color={color} size={size} />
+                      )}
+                  />
+                    }
+                    data={AllUsers}
+                    keyExtractor={item => item._id}
+                    renderItem={({ item }) => (
+                    <TouchableOpacity onPress={ () => {showModal(); setSelectedUser(item) }}>
+                    <View style={styles.listItem}>
+                        <Image
+                        source={{ uri: ImagesExample }}
+                        style={styles.coverImage}
+                        />
+                        <View style={styles.metaInfo}>
+                        <Text style={styles.title}>{`${item.username}`}</Text>
+                        <Text style={styles.subtitle}>{`${item.firstName} ${item.lastName}`}</Text>
+                        </View>
+                    </View>
+                    </TouchableOpacity>
+                    )
+                  }
+                />
+                <ViewProfile></ViewProfile>
+            </View>
+
     </View>
     );
 }
 
 const styles = StyleSheet.create({
     root:{
-        padding: 30,
+        padding: 10,
     },
     inputView:{
         height: 60,
@@ -94,7 +305,47 @@ const styles = StyleSheet.create({
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
         alignItems: 'center',
-    }
+    },
+    container: {
+        flex: 1.2,
+        backgroundColor: '#f8f8f8',
+        alignItems: 'center'
+      },
+      text: {
+        fontSize: 20,
+        color: '#101010',
+        fontWeight: '700'
+      },
+      listItem: {
+        marginTop: 10,
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        backgroundColor: '#fff',
+        flexDirection: 'row'
+      },
+      coverImage: {
+        width: 100,
+        height: 100,
+        borderRadius: 8
+      },
+      metaInfo: {
+        marginLeft: 10
+      },
+      title: {
+        fontSize: 18,
+        width: 200,
+        padding: 10
+      },
+      subtitle: {
+        fontSize: 14,
+        width: 200,
+        padding: 10
+      },
+      image: {
+        width: 150,
+        height: 150,
+        borderRadius: 1000,
+      },
 });
 
 export default SocialExplore;

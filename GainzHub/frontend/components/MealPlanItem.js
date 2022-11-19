@@ -3,26 +3,36 @@ import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
-const MealPlanItem = ({mealPlanId, navigation, handlePublish}) => {
+const MealPlanItem = ({mealPlanId, navigation, handlePublish, profile}) => {
     const [obj, setObj] = useState({planName: "", published: false});
     const [published, setPublished] = useState(false);
+    const [isPrivate, setIsPrivate] = useState(true);
     const isFocused = useIsFocused();
     
     useEffect(()=>{
         async function getMealFromDb(){
             const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: mealPlanId}});
-            setObj(mealPlanObj.data);
+             setObj(mealPlanObj.data);
         }
-
         getMealFromDb();
     }, [isFocused])
 
+    
     useEffect(() =>{
         setPublished(obj ? obj.published ? obj.published : false : false);
     }, [obj], [isFocused])
-    
+
+
+    useEffect(() =>{
+        if(obj.private){
+            setIsPrivate(true);
+        }
+        else{
+            setIsPrivate(false);
+        }
+    }, [obj], [isFocused])
+
     const handlePublishWrapper = async() => {
-        
         if(published){
             await axios.patch("http://localhost:5001/nutrition/unPublishMealPlan", {mealPlanId: mealPlanId});
             setPublished(false);
@@ -31,9 +41,37 @@ const MealPlanItem = ({mealPlanId, navigation, handlePublish}) => {
             await axios.patch("http://localhost:5001/nutrition/publishMealPlan", {mealPlanId: mealPlanId});
             setPublished(true);
         }
-        handlePublish(obj);
     }
 
+    const handlePrivateWrapper = async() => {
+        if(isPrivate){
+            await axios.patch("http://localhost:5001/nutrition/unPrivateMealPlan", {mealPlanId: mealPlanId});
+            setIsPrivate(false);
+        }
+        else{
+            await axios.patch("http://localhost:5001/nutrition/privateMealPlan", {mealPlanId: mealPlanId});
+            setIsPrivate(true);
+        }
+    }
+
+
+    if(profile){
+        return (
+            <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
+                
+                <Text style={[styles.inputView, {width: '75%'}]}>
+                    <Text style={styles.inputText}>{obj ? obj.planName : ""}</Text>
+                </Text>
+    
+                <TouchableOpacity onPress={()=> handlePrivateWrapper()} style={[styles.TouchableOpacityList]} >
+                    <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
+                        {isPrivate ? "Private" : "Public"}
+                    </Text>
+                </TouchableOpacity>
+    
+            </View>
+        ); 
+    }
     return (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
             

@@ -136,6 +136,27 @@ const unPublishMealPlan = async(req, res) => {
     }
 }
 
+const privateMealPlan = async(req, res) => {
+    const {mealPlanId} = req.body
+    
+    try{
+        await MealPlan.findOneAndUpdate({_id: mealPlanId}, {$set:{private: true}});
+        return res.status(200).send("Meal Plan Now Private");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+const unPrivateMealPlan = async(req, res) => {
+    const {mealPlanId} = req.body
+    try{
+        await MealPlan.findOneAndUpdate({_id: mealPlanId}, {$set:{private: false}});
+        return res.status(200).send("Meal Plan Now Public");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
 const getPersonalMealPlans = async(req, res) =>{
     const userId = req.user;
 
@@ -185,6 +206,6 @@ const deleteMealPlan = async(req, res) => {
 }
 
 
-module.exports = {getFoodLog, logFood, getMealPlan, getPublishedMealPlans, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans, editMealPlan, editReview, deleteMealPlan}
+module.exports = {privateMealPlan, unPrivateMealPlan, getFoodLog, logFood, getMealPlan, getPublishedMealPlans, getCalorieGoal, getCaloriesAte, addMealPlan, changeCalorieGoal, publishMealPlan, unPublishMealPlan, getPersonalMealPlans, editMealPlan, editReview, deleteMealPlan}
 
 

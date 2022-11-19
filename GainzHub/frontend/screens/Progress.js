@@ -8,13 +8,39 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
+import BodyWeightItem from '../components/BodyWeightItem';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
 
+const getUser = async() =>{
+    const value = await AsyncStorage.getItem('userData');
+    return value;
+}
 
 const Progresss = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
+    const isFocused = useIsFocused();
+    const [bodyWeight, setBodyWeight] = useState({});
+    useEffect(() => {
+        const getStoredBodyWeight = async() => {
+            const token = await AsyncStorage.getItem("userData");
+            const response  = await axios.get('http://localhost:5001/progress/getUserBodyWeights', {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            response.data.reverse();
+            setBodyWeight(response.data);
+        }
+
+        getStoredBodyWeight();
+    }, [isFocused]);
+
+    const renderBodyWeight = ({ item }) => (
+        <BodyWeightItem bodyWeightId={item._id} navigation={navigation}/>
+    );
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -63,11 +89,23 @@ const Progresss = ({navigation}) =>{
             </View>
             <View style={{paddingLeft: 5}}>
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:black, marginBottom:20}}>
-                        logs appear here
+                        Logs
                 </Text>
             </View>
-            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutAddPlan')} style={[styles.TouchableOpacity]}>
+
+            <View style={{flex:1}}>
+                <ScrollView style={{flexGrow: 0, height: 280}}>
+                    <FlatList
+                        data={bodyWeight}
+                        renderItem={renderBodyWeight}
+                        keyExtractor={item => item._id}
+                        scrollEnabled={true}
+                    />
+                </ScrollView>
+            </View>
+
+            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>                
+                <TouchableOpacity onPress={()=> navigation.navigate('AddBodyWeight')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                         Add Entry
                     </Text>

@@ -29,6 +29,18 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    bio:{
+        type: String,
+        requried: false
+    },
+    following:[{
+        type: String,
+        required: true
+    }],
+    followers:[{
+        type: String,
+        required: true
+    }],
     food:[{
         foodName:{
             type: String

@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 //Screens
 import Login from '../screens/Login'
 import Register from '../screens/Register';
-import TempLanding from '../screens/TempLanding';
+import Profile from '../screens/Profile';
 import NavBar from '../components/NavBar';
 import CalorieCalculator from '../screens/CalorieCalculator';
 import Nutrition from '../screens/Nutrition';
@@ -21,13 +21,17 @@ import WorkoutLogs from '../screens/WorkoutLogs';
 import Progresss from '../screens/Progress';
 import ProgressBMI from '../screens/ProgressBMI';
 import ProgressBF from '../screens/ProgressBF';
+import ProgressAddBodyWeight from '../screens/ProgressAddBodyWeight';
 import BMICalculator from '../screens/BMICalculator';
+import BFCalculator from '../screens/BFCalculator';
 import NutritionMealPlanEditor from '../screens/NutritionMealPlanEditor';
 import ReviewMealPlan from '../screens/ReviewMealPlan';
 import Social from '../screens/Social';
 import SocialHome from '../screens/SocialHome';
 import SocialExplore from '../screens/SocialExplore';
 import SocialCreate from '../screens/SocialCreate';
+import Profile_Edit from '../screens/Profile_Edit';
+import ViewProfile from '../screens/ViewProfile';
 
 const Stack = createStackNavigator();
 
@@ -40,7 +44,7 @@ const AppStack = ()=>{
                             }}>
                 <Stack.Screen name = "Login" component={Login}/>
                 <Stack.Screen name = "Register" component={Register}/>
-                <Stack.Screen name = "TempLanding" component={TempLanding}/>
+                <Stack.Screen name = "Profile" component={Profile}/>
                 <Stack.Screen name = "NavBar" component={NavBar}/>
                 <Stack.Screen name = "CalorieCalculator" component={CalorieCalculator}/>
                 <Stack.Screen name = "NutritionAddFood" component={NutritionAddFood}/>
@@ -56,12 +60,12 @@ const AppStack = ()=>{
                 <Stack.Screen name = "ProgressBMI" component={ProgressBMI}/>
                 <Stack.Screen name = "ProgressBF" component={ProgressBF}/>
                 <Stack.Screen name = "BMICalculator" component={BMICalculator}/>
+                <Stack.Screen name = "BFCalculator" component={BFCalculator}/>
                 <Stack.Screen name = "NutritionMealPlanEditor" component={NutritionMealPlanEditor}/>
                 <Stack.Screen name = "ReviewMealPlan" component={ReviewMealPlan}/>
-                <Stack.Screen name = "Social" component={Social}/>
-                <Stack.Screen name = "SocialHome" component={SocialHome}/>
-                <Stack.Screen name = "SocialExplore" component={SocialExplore}/>
-                <Stack.Screen name = "SocialCreate" component={SocialCreate}/>
+                <Stack.Screen name = "AddBodyWeight" component={ProgressAddBodyWeight}/>
+                <Stack.Screen name = "Profile_Edit" component={Profile_Edit}/>
+                <Stack.Screen name = "ViewProfile" component={ViewProfile}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

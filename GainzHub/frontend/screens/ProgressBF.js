@@ -8,6 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
+import BFItem from '../components/BFItem';
+import { ScrollView } from 'react-native-gesture-handler';
+import {LineChart} from 'react-native-chart-kit';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
@@ -15,6 +18,8 @@ const Tab = createBottomTabNavigator();
 
 const ProgressBF = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
+    const isFocused = useIsFocused();
+    const [BF, setBF] = useState({});
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -27,7 +32,24 @@ const ProgressBF = ({navigation}) =>{
         }
     }, [loggedIn]);
 
+    useEffect(() => {
+        const getStoredBF = async() => {
+            const token = await AsyncStorage.getItem("userData");
+            const response  = await axios.get('http://localhost:5001/progress/getUserBFs', {
+                headers: {
+                    'x-auth-token': token,
+                }
+            })
+            response.data.reverse();
+            setBF(response.data);
+        }
 
+        getStoredBF();
+    }, [isFocused]);
+
+    const renderBF = ({ item }) => (
+        <BFItem BFid={item._id} navigation={navigation}/>
+    );
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
@@ -63,11 +85,37 @@ const ProgressBF = ({navigation}) =>{
             </View>
             <View style={{paddingLeft: 5}}>
                 <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:25, color:black, marginBottom:20}}>
-                        logs appear here
+                        Logs
+                </Text>
+            </View>
+            <View>
+                <Text style={{fontFamily: "Inter-Medium", fontSize: 20, fontWeight:"800",color:black, textAlign:'center', marginBottom:10}}>
+                   Body Fat % Progress
                 </Text>
             </View>
             <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
-                <TouchableOpacity onPress={()=> navigation.navigate('WorkoutAddPlan')} style={[styles.TouchableOpacity]}>
+                    <LineChart data={{labels: [],
+                                    datasets: [{data: [16,17,17,18,19,19,18],strokeWidth: 3},],}}
+                                    width={300}
+                                    height={250}
+                                    chartConfig={{backgroundColor: '#FF0000',backgroundGradientFrom: '#F6F6F6',
+                                    backgroundGradientTo: '#F6F6F6', decimalPlaces: 0, color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
+                                    style: {borderRadius: 16,},}}
+                                    style={{ marginVertical: 20, borderRadius: 16, }} />
+            </View>
+            <View style={{flex:1}}>
+                <ScrollView style={{flexGrow: 0, height: 280}}>
+                    <FlatList
+                        data={BF}
+                        renderItem={renderBF}
+                        keyExtractor={item => item._id}
+                        scrollEnabled={true}
+                    />
+                </ScrollView>
+            </View>
+
+            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
+                <TouchableOpacity onPress={()=> navigation.navigate('BFCalculator')} style={[styles.TouchableOpacity]}>
                     <Text style={{fontFamily:"Inter-Medium", fontWeight:"500", fontSize: 16, color: "white"}}>
                         Add Entry
                     </Text>
@@ -107,7 +155,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: '#8D0A0A',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'center'
     }
 });
 
