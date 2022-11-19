@@ -10,7 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import BMIitem from '../components/BMIitem';
 import { ScrollView } from 'react-native-gesture-handler';
-import {LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart} from 'react-native-chart-kit';
+import {LineChart} from 'react-native-chart-kit';
 
 
 const {maroon, black} = Colors;
@@ -95,7 +95,16 @@ const ProgressBMI = ({navigation}) =>{
                    BMI Progress
                 </Text>
             </View>
-            
+            <View style={{paddingBottom:15, alignItems:'center', paddingTop: 10}}>
+                    <LineChart data={{labels: [],
+                                    datasets: [{data: [20,21,21,22,23,22,21],strokeWidth: 3},],}}
+                                    width={300}
+                                    height={250}
+                                    chartConfig={{backgroundColor: '#FF0000',backgroundGradientFrom: '#F6F6F6',
+                                    backgroundGradientTo: '#F6F6F6', decimalPlaces: 0, color: (opacity = 255) => `rgba(0, 0, 0, ${opacity})`,
+                                    style: {borderRadius: 16,},}}
+                                    style={{ marginVertical: 20, borderRadius: 16, }} />
+            </View>
             <View style={{flex:1}}>
                 <ScrollView style={{flexGrow: 0, height: 280}}>
                     <FlatList
