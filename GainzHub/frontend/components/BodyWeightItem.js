@@ -3,19 +3,63 @@ import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
-const BodyWeightItem = ({bodyWeightId, navigation}) => {
+const BodyWeightItem = ({bodyWeightId, navigation, profile}) => {
     const [obj, setObj] = useState({weight: ""});
     const isFocused = useIsFocused();
-    
+    const [isPrivate, setIsPrivate] = useState(true);
+
+
     useEffect(()=>{
         async function getbodyWeightFromDb(){
             const bodyWeightObj = await axios.get("http://localhost:5001/progress/getBodyWeights", {params:{bodyWeightId: bodyWeightId}});
             setObj(bodyWeightObj.data);
         }
-
         getbodyWeightFromDb();
     }, [isFocused])
 
+    useEffect(() =>{
+        if(obj.private){
+            setIsPrivate(true);
+        }
+        else{
+            setIsPrivate(false);
+        }
+    }, [obj], [isFocused])
+
+    const handlePrivateWrapper = async() => {
+        if(isPrivate){
+            await axios.patch("http://localhost:5001/progress/unPrivateBodyWeight", {mealPlanId: bodyWeightId});
+            setIsPrivate(false);
+        }
+        else{
+            await axios.patch("http://localhost:5001/progress/privateBodyWeight", {mealPlanId: bodyWeightId});
+            setIsPrivate(true);
+        }
+    }
+
+    
+    if(profile){
+        return (
+            <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
+                
+                <Text style={[styles.inputView, {width: '75%', height: 45}]}>
+                    <Text style={styles.inputText}>
+                        Weight: {obj ? obj.weight : "hello"} Kg
+                    </Text>
+                    <Text style={styles.inputText}>
+                        Date: {obj ? obj.date : "hello"}
+                    </Text>
+                </Text>
+                <TouchableOpacity onPress={()=> handlePrivateWrapper()} style={[styles.TouchableOpacityList]} >
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:14, color: "white"}}>
+                    {isPrivate ? "Private" : "Public"}
+                </Text>
+            </TouchableOpacity>
+            </View>
+
+
+        );
+    }
     
     return (
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>

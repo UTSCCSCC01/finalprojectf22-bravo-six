@@ -95,4 +95,24 @@ const getIndividualBF = async(req, res) => {
         return res.status(400).send(err.message);
     }
 }
-module.exports = {addBodyWeight, getBodyWeight, getIndividualBodyWeight, addBMI, getIndividualBMI, getBMI, addBF, getBF, getIndividualBF};
+const privateBodyWeight = async(req, res) => {
+    const {mealPlanId} = req.body
+    try{
+        await BodyWeight.findOneAndUpdate({_id: mealPlanId}, {$set:{private: true}});
+        return res.status(200).send("Meal Plan Now Private");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+const unPrivateBodyWeight = async(req, res) => {
+    const {mealPlanId} = req.body
+    try{
+        await BodyWeight.findOneAndUpdate({_id: mealPlanId}, {$set:{private: false}});
+        return res.status(200).send("Meal Plan Now Public");
+    }catch(err){
+        return res.status(400).send(err.message);
+    }
+}
+
+module.exports = {privateBodyWeight, unPrivateBodyWeight, addBodyWeight, getBodyWeight, getIndividualBodyWeight, addBMI, getIndividualBMI, getBMI, addBF, getBF, getIndividualBF};
