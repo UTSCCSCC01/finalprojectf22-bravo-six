@@ -93,8 +93,8 @@ const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile, h
 
 const styles = StyleSheet.create({
     planCardContainer: {
-        width:'80%',
-        height:"100%",
+        width:'10em',
+        height:"10em",
         borderRadius:10,
         borderWidth: 3,
         borderColor:'#545454',

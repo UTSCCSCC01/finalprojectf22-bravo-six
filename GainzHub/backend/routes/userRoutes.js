@@ -17,7 +17,7 @@ router.post("/addFollower", JWTAuth, addFollower);
 router.post("/unfollowUser", JWTAuth, unfollowUser);
 router.post("/removeFollower", JWTAuth, removeFollower);
 router.get("/getUserFromWorkoutPlan", getUserFromWorkoutPlan);
-router.patch("addPublishedWorkoutPlan", addPublishedWorkoutPlan);
-router.patch("removePublishedWorkoutPlan", removePublishedWorkoutPlan);
+router.patch("/addPublishedWorkoutPlan", JWTAuth, addPublishedWorkoutPlan);
+router.patch("/removePublishedWorkoutPlan", JWTAuth, removePublishedWorkoutPlan);
 
 module.exports = (router);

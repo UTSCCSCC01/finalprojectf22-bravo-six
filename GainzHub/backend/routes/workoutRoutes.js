@@ -10,7 +10,6 @@ const { searchWorkouts,
     unPrivateWorkout,
     getPrivate,
     getWorkoutPlan} = require('../controllers/workoutController');
-const { searchWorkouts, getWorkout, addWorkoutPlanToCollection, getWorkoutPlans, getPublishedWorkoutPlans, publishWorkoutPlan, unpublishWorkoutPlan, getWorkoutPlan} = require('../controllers/workoutController');
 const router = express.Router();
 const { JWTAuth } = require('../middleware/JWTAuth');
 

@@ -13,7 +13,6 @@ const WorkoutPlanInfo = ({route, navigation}) =>{
     const [workoutOBJ, setWorkoutOBJ] = useState({});
     const isFocused = useIsFocused();
 
-
     const {planName, description, workouts} = route.params.plan;
     console.log(workouts);
 

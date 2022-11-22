@@ -191,4 +191,31 @@ const removeFollower = async(req, res)=> {
     }
 }
 
-module.exports = {getUserFromWorkoutPlan, getUserData, getAllUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic, getProfilePicOther, followUser, addFollower, unfollowUser, removeFollower};
+const addPublishedWorkoutPlan = asyncHandler(async(req,res) => {
+    const userId = req.params;
+    const {workoutPlanId} = req.params;
+
+    try{
+        await User.updateOne({_id: userId}, {$push: {addedWorkoutPlans: workoutPlanId}});
+        res.status(200).send("Successfully added workout plan");
+    } catch (err) {
+        return res.status(400).send(err.message);
+    }
+});
+
+const removePublishedWorkoutPlan = asyncHandler(async(req,res) => {
+    const userId = req.params;
+    const {workoutPlanId} = req.params;
+
+    try{
+        const userObj = await User.findOne({_id:userId});
+        userObj.addedWorkoutPlans= userObj.addedWorkoutPlans.filter((workout) => workout != workoutPlanId);
+        await userObj.save();
+        res.status(200).send("Success unadding workout plan");
+    } catch (err){
+        return res.status(400).send(err.message);
+    }
+});
+
+
+module.exports = {removePublishedWorkoutPlan, addPublishedWorkoutPlan, getUserFromWorkoutPlan, getUserData, getAllUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic, getProfilePicOther, followUser, addFollower, unfollowUser, removeFollower};
