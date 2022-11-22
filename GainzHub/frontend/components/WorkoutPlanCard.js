@@ -12,7 +12,6 @@ const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile, h
     const [isPrivate, setIsPrivate] = useState(true);
     const isFocused = useIsFocused();
 
-<<<<<<< HEAD
     useEffect(()=>{
         async function getPrivate(){
             const mealPlanObj = await axios.get("http://localhost:5001/workout/getprivate", {params:{workoutPlanId: workoutId}});
@@ -36,18 +35,6 @@ const WorkoutPlanCard = ({workoutId, priv, planName, planDescription, profile, h
         else{
             await axios.patch("http://localhost:5001/workout/privateWorkout", {mealPlanId: workoutId});
             setIsPrivate(true);
-=======
-const WorkoutPlanCard = ({navigation, handleClick, plan, planName, planDescription, planPrivacy}) => {
-    const [privacy, setPrivacy] = useState(planPrivacy);
-    
-    const togglePrivacy = async() =>{
-        setPrivacy(priv => !priv);
-        if(privacy === true){
-            const res = await axios.patch('http://localhost:5001/workout/unpublishWorkoutPlan', {params:{workoutPlanID: plan._id }});
-        } else{
-            const res = await axios.patch('http://localhost:5001/workout/publishWorkoutPlan', {params:{ workoutPlanID: plan._id }});
-            console.log(res);
->>>>>>> deef618 (BRAV-11 Completed Workout Explore)
         }
     }
 
@@ -126,10 +113,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         fontSize: '2px',
         backgroundColor: 'black'
-<<<<<<< HEAD
-=======
-
->>>>>>> deef618 (BRAV-11 Completed Workout Explore)
     }
 });
 
