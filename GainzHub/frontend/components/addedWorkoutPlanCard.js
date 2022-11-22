@@ -15,8 +15,10 @@ const AddedWorkoutPlanCard = ({navigation, plan}) => {
     const [plann, setPlann] = useState({});
     const [planUser, setPlanUser] = useState({});
     const isFocused = useIsFocused();
+    const [value, setValue] = useState(0);
     
     const dict = {true: 'Unpublish', false: 'Publish'};
+
 
     useEffect(() => {
         async function getCurrentUser()  {
