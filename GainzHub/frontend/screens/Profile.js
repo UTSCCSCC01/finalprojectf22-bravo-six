@@ -16,8 +16,6 @@ import { Searchbar, Modal, Portal , Provider } from 'react-native-paper';
 import MealPlanItem from '../components/MealPlanItem';
 import WorkoutPlanCard from '../components/WorkoutPlanCard';
 import BodyWeightItem from '../components/BodyWeightItem';
-import BodyWeightItem from '../components/BodyWeightItem';
-import WorkoutPlanCard from '../components/WorkoutPlanCard';
 //import CircularProgress from 'react-native-circular-progress-indicator';
 //import "./reanimated2/js-reanimated/global";
 // import CircularProgress from 'react-native-circular-progress-indicator';
@@ -215,14 +213,6 @@ const Profile = ({navigation}) =>{
         
     }
 
-    const renderBodyWeight = ({ item }) => (
-        <BodyWeightItem bodyWeightId={item._id} navigation={navigation}/>
-    );
-
-    const renderWorkoutPlans = ({item}) => (
-        <WorkoutPlanCard planName={item.planName} planDescription={item.description}/>
-    )
-    
     const renderMeals = ({ item }) => (
         <MealPlanItem mealPlanId={item._id} navigation={navigation} handlePublish={handlePublish} profile={true}/>
     );
