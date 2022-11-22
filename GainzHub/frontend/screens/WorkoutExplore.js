@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar} from 'react-native'
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button, SafeAreaView, FlatList, TouchableWithoutFeedback, StatusBar, ScrollView} from 'react-native'
 import {Colors} from '../components/colors'
 import axios from 'axios';
 import Toast from 'react-native-root-toast';
@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Progress from 'react-native-progress';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
+import PublishedWorkoutPlanCard from '../components/PublishedWorkoutPlanCard';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
@@ -15,6 +16,39 @@ const Tab = createBottomTabNavigator();
 
 const WorkoutExplore = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
+    const [publishedWorkoutPlans, setPublishedWorkoutPlans] = useState([]);
+
+    useEffect(()=>{
+        async function getPublishedWorkoutPlans(){
+            try{
+                const publishedWorkoutPlans = await axios.get("http://localhost:5001/workout/getPublishedWorkoutPlans");
+                setPublishedWorkoutPlans(publishedWorkoutPlans.data);
+            } catch (err){
+                console.log(err);
+            }
+        }
+        getPublishedWorkoutPlans();
+    }, [publishedWorkoutPlans]);
+
+
+    useEffect(() => {
+        async function getCurrentUser()  {
+            try{
+                const token = await AsyncStorage.getItem("userData");
+                const response = await axios.get("http://localhost:5001/user/getUserData", {
+                    headers: {
+                        "x-auth-token": token
+                    }
+                });
+                console.log(response.data);
+            }catch(err){
+                console.log(err);
+            }
+        }    
+
+    })
+
+
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -27,7 +61,11 @@ const WorkoutExplore = ({navigation}) =>{
         }
     }, [loggedIn]);
 
-
+    const renderPublishedWorkoutPlans = ({item}) => (
+        <PublishedWorkoutPlanCard navigation = {navigation} 
+            plan = {item} userId = {item.userId} planName = {item.planName} 
+            planDescription = {item.description} planPrivacy = {item.published}/>
+    );
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
             <View style={{flexDirection:'row', justifyContent:'left', paddingBottom: 5}}>
@@ -66,6 +104,16 @@ const WorkoutExplore = ({navigation}) =>{
                         Workout Explore
                 </Text>
             </View>
+
+            <ScrollView>
+                <FlatList
+                    style={{height:160}}
+                    scrollEnabled={true}
+                    horizontal={true}
+                    data={publishedWorkoutPlans}
+                    renderItem={renderPublishedWorkoutPlans}
+                    />
+            </ScrollView>
         </View>
     );
 }

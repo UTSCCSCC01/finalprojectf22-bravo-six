@@ -10,6 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import WorkoutPlanCard from '../components/WorkoutPlanCard';
 import { ScrollView } from 'react-native-gesture-handler';
+import AddedWorkoutPlanCard from '../components/addedWorkoutPlanCard';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
@@ -19,6 +20,8 @@ const WorkoutLanding = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
     const isFocused = useIsFocused();
     const [workoutPlans, setWorkoutPlans] = useState(true);
+    const [addedWorkoutPlans, setAddedWorkoutPlans] = useState([]);
+    const [currUser, setCurrUser] = useState([]);
 
     useEffect(()=>{
         const handleLogout = async() =>{
@@ -31,6 +34,28 @@ const WorkoutLanding = ({navigation}) =>{
         }
     }, [loggedIn]);
 
+    useEffect(() => {
+        async function getCurrentUser()  {
+            try{
+                const token = await AsyncStorage.getItem('userData');
+                const response = await axios.get("http://localhost:5001/user/getUserSecure", {
+                    headers: {
+                        "x-auth-token": token
+                    }
+                });
+                setCurrUser(response.data.addedWorkoutPlans);
+                setAddedWorkoutPlans(response.data.addedWorkoutPlans);
+
+
+            }catch(err){
+                console.log(err);
+            }
+        } 
+        getCurrentUser();   
+    }, [isFocused]);
+
+
+
     useEffect(()=>{
         const getWorkoutPlans = async ()=>{
             const token = await AsyncStorage.getItem("userData");
@@ -42,12 +67,20 @@ const WorkoutLanding = ({navigation}) =>{
             setWorkoutPlans(workoutPlans.data);
         }
         getWorkoutPlans();
-    }, [isFocused])
+    }, [isFocused]);
+
+    const clickHandler = () => {
+        navigation.navigate("WorkoutPlanInfo");
+    }
+    
 
 
     const renderWorkoutPlans = ({item}) => (
-        <WorkoutPlanCard planName={item.planName} planDescription={item.description}/>
+        <WorkoutPlanCard navigation = {navigation} plan = {item} planName={item.planName} planPrivacy = {item.published}/>
     )
+
+    const renderAddedWorkoutPlans = ({item}) => (
+        <AddedWorkoutPlanCard navigation = {navigation} plan = {item} planId = {item.userId} />);
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -90,11 +123,26 @@ const WorkoutLanding = ({navigation}) =>{
 
             <ScrollView>
                 <FlatList
-                    style={{height:140}}
+                    style={{height:160}}
                     scrollEnabled={true}
                     horizontal={true}
                     data={workoutPlans}
                     renderItem={renderWorkoutPlans}
+                    />
+            </ScrollView>
+            <View style={{paddingLeft: 5}}>
+                <Text style={{fontFamily: "Inter-Medium", fontWeight: '600', fontSize:24, color:black, marginBottom:20}}>
+                        Added Workout Plans
+                </Text>
+            </View>
+
+            <ScrollView>
+                <FlatList
+                    style={{height:160}}
+                    scrollEnabled={true}
+                    horizontal={true}
+                    data={addedWorkoutPlans}
+                    renderItem={renderAddedWorkoutPlans}
                     />
             </ScrollView>
 

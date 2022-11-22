@@ -18,8 +18,8 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
     useEffect(()=>{
         async function intializeUseStates(){
             const mealPlanObj = await axios.get("http://localhost:5001/nutrition/getMealPlan", {params:{mealPlanId: mealPlanId}});
-            console.log(mealPlanId);
             setObj(mealPlanObj.data);
+            console.log(mealPlanObj.data);
 
             const token = mealPlanObj.data.userId;
             const userInfo = await axios.get("http://localhost:5001/user/getUser", {
@@ -37,6 +37,7 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
                 }
             })
             console.log(currentUser.data);
+            console.log(obj);
             setUser(currentUser);
 
             //Check if the meal plan was already added or if it was created by them
@@ -115,12 +116,12 @@ const PublishedMeal = ({mealPlanId, navigation}) => {
         <View style={[{flexDirection: 'row'}, {display: 'flex'}, {justifyContent: 'space-between'}, {paddingHorizontal: 5}]}>
             
             <TouchableOpacity onPress={()=> navigation.navigate('ReviewMealPlan', {obj})} style={[styles.inputView, {width: '60%'}]}>
-                <Text style={styles.inputText}>{obj.planName}</Text>
+                <Text style={styles.inputText}>{obj == null ? "" : obj.planName}</Text>
                 <Text style={styles.inputText}>
                     Creator: {creator.username}
                 </Text>
                 <Text style={styles.inputText}>
-                    Review: {Number(obj.review).toFixed(2)}
+                    Review: {Number(obj == null ? "" : obj.review).toFixed(2)}
                 </Text>
             </TouchableOpacity>
 

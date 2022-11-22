@@ -35,6 +35,11 @@ const WorkoutPlanSchema = new mongoose.Schema({
     private:{
         type: Boolean,
         default: false,
+    },
+    published: {
+        type: Boolean,
+        default: false,
+        required:true
     }
 });
 

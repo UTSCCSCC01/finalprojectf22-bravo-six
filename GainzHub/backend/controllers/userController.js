@@ -76,6 +76,16 @@ const editProfile = async(req, res) => {
     } catch(err){
         return res.status(400).send(err.message);
     }
+}  
+
+const getUserFromWorkoutPlan = async(req, res) => {
+    const {userID} = req.query;
+    try{
+        const result = await User.findOne({_id: userID});
+        return res.status(200).json(result);
+    } catch (err){
+        return res.status(400).send(err.message);
+    }
 }
 
 /*
@@ -181,4 +191,39 @@ const removeFollower = async(req, res)=> {
     }
 }
 
-module.exports = {getUserData, getAllUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic, getProfilePicOther, followUser, addFollower, unfollowUser, removeFollower};
+const addPublishedWorkoutPlan = asyncHandler(async(req,res) => {
+    const userId = req.user;
+    const {workoutPlanId} = req.body;
+
+    try{
+        const user = await User.findOne({_id: userId});
+        if(!(user.addedWorkoutPlans.includes(workoutPlanId))){
+            await User.updateOne({_id: userId}, {$push: {addedWorkoutPlans: workoutPlanId}});
+            res.status(200).send("Successfully added workout plan"); 
+        }
+        else{
+            res.status(400).send("Workout plan already added");
+        }
+    } catch (err) {
+        return res.status(400).send(err.message);
+    }
+});
+
+const removePublishedWorkoutPlan = asyncHandler(async(req,res) => {
+    const userId = req.user;
+    const {workoutPlanId} = req.body;
+
+    try{
+        const userObj = await User.findOne({_id:userId});
+        if((userObj.addedWorkoutPlans.includes(workoutPlanId))){
+            await User.updateOne({_id: userId}, {$pull: {addedWorkoutPlans: workoutPlanId}});
+            res.status(200).send("Successfully removed workout plan"); 
+        }
+        res.status(400).send("Workout does not exist in User's library");
+    } catch (err){
+        return res.status(400).send(err.message);
+    }
+});
+
+
+module.exports = {removePublishedWorkoutPlan, addPublishedWorkoutPlan, getUserFromWorkoutPlan, getUserData, getAllUserData, removeAddedMealPlan, addPublishedMealPlan, getUserDataSecure, editProfile, uploadProfilePic, getProfilePic, getProfilePicOther, followUser, addFollower, unfollowUser, removeFollower};
