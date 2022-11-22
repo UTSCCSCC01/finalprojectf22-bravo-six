@@ -18,6 +18,9 @@ const BodyWeightItem = ({bodyWeightId, navigation, profile}) => {
     }, [isFocused])
 
     useEffect(() =>{
+        if(obj == null){
+            return;
+        }
         if(obj.private){
             setIsPrivate(true);
         }

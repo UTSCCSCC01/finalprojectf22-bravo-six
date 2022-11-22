@@ -50,6 +50,9 @@ const Profile = ({navigation}) =>{
     const [tabselect, setTAB] = useState("posts");
     const [caloriesAte, setCaloriesAte] = useState(0);
     const [calorieGoal, setCalorieGoal] = useState('');
+    useEffect(()=>{
+        console.log(workoutPlans);
+    }, [workoutPlans])
 
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
@@ -169,6 +172,7 @@ const Profile = ({navigation}) =>{
         }
         getStoredUser();
     }, [])
+    
 
     useEffect(() => {
         const getUser = async() => {
@@ -209,46 +213,15 @@ const Profile = ({navigation}) =>{
             </TouchableOpacity>
         </View>
     )
-    const handlePublish = (obj) =>{
-        
-    }
-
+    
     const renderMeals = ({ item }) => (
-        <MealPlanItem mealPlanId={item._id} navigation={navigation} handlePublish={handlePublish} profile={true}/>
+        <MealPlanItem mealPlanId={item._id} navigation={navigation} profile={true}/>
     );
-
-
-    useEffect(()=>{
-        const getWorkoutPlans = async ()=>{
-            const token = await AsyncStorage.getItem("userData");
-            const workoutPlans = await axios.get("http://localhost:5001/workout/getWorkoutPlans", {
-                headers:{
-                    "x-auth-token": token
-                }
-            });
-            setWorkoutPlans(workoutPlans.data);
-        }
-        getWorkoutPlans();
-    }, [isFocused])
 
     const renderWorkoutPlans = ({item}) => (
         <WorkoutPlanCard workoutId = {item._id} planName={item.planName} planDescription={item.description} profile = {true} priv = {item.private}/>
     )
 
-    useEffect(() => {
-        const getStoredBodyWeight = async() => {
-            const token = await AsyncStorage.getItem("userData");
-            const response  = await axios.get('http://localhost:5001/progress/getUserBodyWeights', {
-                headers: {
-                    'x-auth-token': token,
-                }
-            })
-            response.data.reverse();
-            setBodyWeight(response.data);
-        }
-
-        getStoredBodyWeight();
-    }, [isFocused]);
     const renderBodyWeight = ({ item }) => (
         <BodyWeightItem bodyWeightId={item._id} navigation={navigation} profile = {true}/>
     );
@@ -434,7 +407,7 @@ const Profile = ({navigation}) =>{
             </View>
 
             <ScrollView>
-                {renderElement()}
+                {userPosts()}
             </ScrollView>
 
 

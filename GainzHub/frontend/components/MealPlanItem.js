@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, TextInput, TouchableOpacity, Button} from 'react
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
-const MealPlanItem = ({mealPlanId, navigation, handlePublish, profile}) => {
+const MealPlanItem = ({mealPlanId, navigation, profile}) => {
     const [obj, setObj] = useState({planName: "", published: false});
     const [published, setPublished] = useState(false);
     const [isPrivate, setIsPrivate] = useState(true);
