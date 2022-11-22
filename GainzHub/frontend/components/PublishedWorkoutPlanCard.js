@@ -89,7 +89,6 @@ const PublishedWorkoutPlanCard = ({navigation, plan, planName, userId, planPriva
                 <Card.Title title = {plan.planName}/>
                 <Card.Content style={{display: 'flex',  minHeight:"60%", height:"60%"}}>
                     <Text style = {{color: maroon, fontStyle: 'bold'}}>{user.username}</Text>
-
                     {renderButton()}
                 </Card.Content>
             </Card>

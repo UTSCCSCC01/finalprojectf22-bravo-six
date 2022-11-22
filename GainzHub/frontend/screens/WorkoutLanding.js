@@ -10,6 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useIsFocused } from '@react-navigation/native';
 import WorkoutPlanCard from '../components/WorkoutPlanCard';
 import { ScrollView } from 'react-native-gesture-handler';
+import AddedWorkoutPlanCard from '../components/addedWorkoutPlanCard';
 
 const {maroon, black} = Colors;
 const Tab = createBottomTabNavigator();
@@ -19,7 +20,7 @@ const WorkoutLanding = ({navigation}) =>{
     const [loggedIn, setLoggedIn] = useState(true);
     const isFocused = useIsFocused();
     const [workoutPlans, setWorkoutPlans] = useState(true);
-    const [addedWorkoutPlans, setAddedWorkoutPlans] = useState(true);
+    const [addedWorkoutPlans, setAddedWorkoutPlans] = useState([]);
     const [currUser, setCurrUser] = useState([]);
 
     useEffect(()=>{
@@ -42,8 +43,8 @@ const WorkoutLanding = ({navigation}) =>{
                         "x-auth-token": token
                     }
                 });
-                console.log(response.data);
                 setCurrUser(response.data.addedWorkoutPlans);
+                setAddedWorkoutPlans(response.data.addedWorkoutPlans);
 
 
             }catch(err){
@@ -68,8 +69,6 @@ const WorkoutLanding = ({navigation}) =>{
         getWorkoutPlans();
     }, [isFocused]);
 
-
-
     const clickHandler = () => {
         navigation.navigate("WorkoutPlanInfo");
     }
@@ -79,6 +78,9 @@ const WorkoutLanding = ({navigation}) =>{
     const renderWorkoutPlans = ({item}) => (
         <WorkoutPlanCard navigation = {navigation} plan = {item} planName={item.planName} planPrivacy = {item.published}/>
     )
+
+    const renderAddedWorkoutPlans = ({item}) => (
+        <AddedWorkoutPlanCard navigation = {navigation} plan = {item} planId = {item.userId} />);
 
     return (
         <View style={[styles.root, {paddingLeft: 20}, {flex:1}]}>
@@ -140,7 +142,7 @@ const WorkoutLanding = ({navigation}) =>{
                     scrollEnabled={true}
                     horizontal={true}
                     data={addedWorkoutPlans}
-                    renderItem={renderWorkoutPlans}
+                    renderItem={renderAddedWorkoutPlans}
                     />
             </ScrollView>
 

@@ -27,6 +27,6 @@ router.get("/getPrivate", getPrivate);
 router.get("/getPublishedWorkoutPlans", getPublishedWorkoutPlans);
 router.patch("/publishWorkoutPlan", publishWorkoutPlan);
 router.patch("/unpublishWorkoutPlan", unpublishWorkoutPlan);
-router.get("/getWorkoutPlan", JWTAuth, getWorkoutPlan);
+router.get("/getWorkoutPlan", getWorkoutPlan);
 
 module.exports = (router);

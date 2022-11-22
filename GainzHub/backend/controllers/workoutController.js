@@ -119,7 +119,7 @@ const unpublishWorkoutPlan = async(req,res) => {
 }
 
 const getWorkoutPlan = async(req, res) => {
-    const {workoutPlanID} = req.params;
+    const {workoutPlanID} = req.query;
     try{
         const result = await WorkoutPlan.findOne({_id: workoutPlanID});
         return res.status(200).json(result);

@@ -196,8 +196,8 @@ const addPublishedWorkoutPlan = asyncHandler(async(req,res) => {
     const {workoutPlanId} = req.body;
 
     try{
-        const exists = await User.findOne({_id: userId}, {addedWorkoutPlans: [workoutPlanId]});
-        if(!exists){
+        const user = await User.findOne({_id: userId});
+        if(!(user.addedWorkoutPlans.includes(workoutPlanId))){
             await User.updateOne({_id: userId}, {$push: {addedWorkoutPlans: workoutPlanId}});
             res.status(200).send("Successfully added workout plan"); 
         }
@@ -215,9 +215,11 @@ const removePublishedWorkoutPlan = asyncHandler(async(req,res) => {
 
     try{
         const userObj = await User.findOne({_id:userId});
-        userObj.addedWorkoutPlans= userObj.addedWorkoutPlans.filter((workout) => workout != workoutPlanId);
-        await userObj.save();
-        res.status(200).send("Success unadding workout plan");
+        if((userObj.addedWorkoutPlans.includes(workoutPlanId))){
+            await User.updateOne({_id: userId}, {$pull: {addedWorkoutPlans: workoutPlanId}});
+            res.status(200).send("Successfully removed workout plan"); 
+        }
+        res.status(400).send("Workout does not exist in User's library");
     } catch (err){
         return res.status(400).send(err.message);
     }
