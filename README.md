@@ -24,6 +24,15 @@ Gainzhub was created to build and strengthen the fitness community. You can now 
 * node v16.17.0
 * expo v46.0.13
 
+## The GainzHub Team
+* Porom Kamal
+* Dominik Luszczynski
+* Ryan Ramroop
+* Bryan Wan
+* Kevin Xiong
+* Aviraj Waraich
+* Jason Kenneth Setiawan
+
 ### Build and Run Procedure
 
 Download and build all files from the main repository. \
