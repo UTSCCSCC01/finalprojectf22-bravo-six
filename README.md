@@ -6,9 +6,9 @@ Gainzhub is your one-stop fitness platform, taking all the features that you'd e
 
 and combining it with social media, and content creation where you can:
 
-* Upload your gym pics!
-* Publish your nutrition, and workout plans for the community!
-* Amass a large following, and build your fitness reputation!
+* Upload your gym pics
+* Publish your nutrition, and workout plans for the community
+* Amass a large following, and build your fitness reputation
 
 ## Motivation
 
