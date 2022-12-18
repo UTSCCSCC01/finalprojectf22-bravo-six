@@ -8,7 +8,7 @@ and combining it with social media, and content creation where you can:
 
 * Upload your gym pics
 * Publish your nutrition, and workout plans for the community
-* Amass a large following, and build your reputation as a content creator/influencer
+* Amass a large following, and build your reputation as a content-creator/influencer
 
 ## Motivation
 
