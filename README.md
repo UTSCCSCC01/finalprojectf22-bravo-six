@@ -1,4 +1,4 @@
-# finalproject22-bravo-six
+# GAINZHUB
 Gainzhub is your one-stop fitness platform, taking all the features that you'd expect from a fitness app, such as:
 * Nutrition Tracking
 * Creating Workouts
