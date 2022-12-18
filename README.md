@@ -1,39 +1,43 @@
 # finalproject22-bravo-six
-Gainzhub is a social media platform designed to aid and motivate anyone who’s passionate about fitness or ready to begin their fitness journey. 
+Gainzhub is your one-stop fitness platform, taking all the features that you'd expect from a fitness app, such as:
+* Nutrition Tracking
+* Creating Workouts
+* Tracking your progress 
+
+and combining it with social media, and content creation where you can:
+
+* Upload your gym pics!
+* Publish your nutrition, and workout plans for the community!
+* Amass a large following, and build your fitness reputation!
 
 ## Motivation
 
-Gainzhub blends both fitness advice and instruction, with connection to friends so you and your connections can motivate one another to be the healthiest you possible. 
-In addition, you will no longer need multiple apps to track calories, meal plans, workout plans, and to record your workouts. Gainzhub will allow you to 
-keep track of personal gains and socialize with others who are also setting personal goals for themselves.
-## Installation Requirements
-### Database
-We will be using MongoDB. Install [Here](https://www.mongodb.com/docs/manual/administration/install-community/).
+Gainzhub was created to build and strengthen the fitness community. You can now view how your friends, family, and favourite influencers eat, workout, and progress throughout their fitness journey. Providing you with the empowerment and resources to do the same.
 
-### Build and Run Procedure 
-Requires installation of Node.js and expo client along with a modern browser. Download and build all files from the main repository. \
-Type the command when in the directory: `finalprojectf22-bravo-six\GainzHub\frontend`
-```
-$ npm install -g expo-cli
-$ npm install --force
-$ expo start
-```
-Type the following command to start the server when in the directory: `finalprojectf22-bravo-six\GainzHub\backend`
-```
-$ node index.js
-```
-## Contribution
-Gainzhub utilizes Git flow to promote agile development and frequent deployment. \
-Our branches are named accordingly:
-* Main - Working Repository
-  * Develop - Repository for Testing
-    * Feature1
-    * Feature2
-    
-### Github Issues
-Most issues will be discussed in discord and Github’s integrated issues board. 
 
-### Pull Request
+## Previews
+<img src="https://user-images.githubusercontent.com/62628923/208286213-6a0024b5-2942-4262-b5e9-533db7a33daf.png" alt="alt text" width="331" height="700">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/62628923/208286218-f8509223-179a-4b3d-b956-a552a13a5ec4.png" alt="alt text" width="331" height="700">
 
-Development team should be notified if any features are added via a pull request.
+<img src="https://user-images.githubusercontent.com/62628923/208286292-bc40a5ff-dfa6-4cac-9131-6340aad566b1.png" alt="alt text" width="331" height="700">&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://user-images.githubusercontent.com/62628923/208286298-accb78af-aa61-4591-812f-f2f9cdf6a66e.png" alt="alt text" width="331" height="700">
+
+## Installation/Build Requirements
+* node v16.17.0
+* expo v46.0.13
+
+### Build and Run Procedure
+
+Download and build all files from the main repository. \
+Type the command when in the directory: `cd %PROJECT_ROOT%\GainzHub\frontend`
+```
+$ npm i --force
+$ npm start
+
+When prompted click 'w'
+```
+Type the following command to start the server when in the directory: `cd %PROJECT_ROOT%\finalprojectf22-bravo-six\GainzHub\backend`
+```
+$ npm i
+$ npm start
+```
+
 
